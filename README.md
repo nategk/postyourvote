@@ -1,0 +1,20 @@
+# Vote Remote 2020
+Getting out the vote since 2020 also only in 2020
+
+## App overview
+- Express.js with scaffolding from generator `express --view=pug --css=sass`
+- Pug view engine (formerly Jade) & Sass CSS engine
+
+## Get started
+- Mac: Update Xcode & developer tools
+- Install Homebrew
+- Install Node & NPM with `brew install node`
+- Clone git repo `https://github.com/culturegraphic/voteremote`
+- Install dependencies `npm install`
+- Start! `npm app.js`
+
+## Housekeeping
+- Keep commits tidy with verb to describe changes made "Updates CSS for primary flow"
+
+## Deploy
+- Pushes to git master automatically deploy to Heroku
