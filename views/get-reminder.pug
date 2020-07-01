@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h2 Would you like to be reminded when it’s time to mail in your ballot?
+  p Minnesota voters should get their ballot in the mail by October 15, 2020. You may be able to send it later, but this is a good date to beat the rush.
+  ul
+    li
+      a Download calendar reminder
+    li 
+      a Send me an email
+  p 
+    strong Ready to go to your mail-in ballot?
+  p
+    h3
+      a#go-to-state-site(onclick="goToStateSite()", target="_blank", href="https://mnvotes.sos.state.mn.us/ABRegistration/ABRegistrationStep1.aspx") State of Minnesota Absentee Ballot Request form 
+  block footer
