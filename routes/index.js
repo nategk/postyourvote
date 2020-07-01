@@ -16,9 +16,9 @@ router.get('/change-location/', function(req, res, next) {
   res.render('change-location', { title: 'Change your location' });
 });
 
-router.get('/get-reminder/', function(req, res, next) {
+router.get('/get-mail-in-ballot-reminder/', function(req, res, next) {
   res.locals.path = req.path;
-  res.render('get-reminder', { title: 'Get a reminder' });
+  res.render('get-mail-in-ballot-reminder', { title: 'Get a reminder' });
 });
 
 router.get('/about/', function(req, res, next) {
