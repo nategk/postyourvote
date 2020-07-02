@@ -14,20 +14,24 @@ html
       gtag('js', new Date());
       gtag('config', 'UA-171025406-1');
   body
-    header 
-      h1= title
-    block content
+    block header
+      header 
+        //p.vote-remote-logo Vote Remote #[bold 2020]
+        h1= title
+    section
+      block content
     block footer
-      hr
-      ul
-        unless path === '/'
-          li
-            a(href="/") Home
-        li
-          a(href="/about/") About
-        li
-          a(href="/get-voter-registration-status/") Am I registered?
-        li
-          a(href="/get-mail-in-ballot-status/") Get mail-in ballot status
-        li
-          a(href="/share/") Tell your friends
+      footer
+        nav
+          ul
+            unless path === '/'
+              li
+                a(href="/") Home
+            li
+              a(href="/about/") About
+            li
+              a(href="/get-voter-registration-status/") Am I registered?
+            li
+              a(href="/get-mail-in-ballot-status/") Get mail-in ballot status
+            li
+              a(href="/share/") Tell your friends

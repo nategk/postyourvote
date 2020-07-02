@@ -1,6 +1,37 @@
-body
-  padding: 50px
-  font: 14px "San Francisco", Helvetica, Arial, sans-serif
+// Temporary values
+$color: black
+$color-secondary: blue
+$color-tersiary: grey
+$background: #d0d0d0
+$font: "San Francisco", Helvetica, Arial, sans-serif
 
-a
-  color: #00B7FF
+html, body
+  width: 100%
+  height: 100%
+  display: block
+  position: relative
+  margin: 0
+
+body
+  font: 16px $font
+  color: $color
+  background-color: $background
+
+header, section
+  padding: 2em
+section
+  background-color: white
+
+a, a:visited
+  color: $color-secondary
+  &:hover
+    color: $color-tersiary
+
+footer
+  padding: 2em
+  ul
+    margin: 0
+    padding: 0
+    li
+      display: inline-block
+      margin-right: 1em
