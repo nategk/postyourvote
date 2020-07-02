@@ -8,7 +8,7 @@ html, body {
 body {
   font: 16px "San Francisco", Helvetica, Arial, sans-serif;
   color: black;
-  background-color: #d0d0d0; }
+  background-color: #ECECEC; }
 
 header, section {
   padding: 2em; }
@@ -17,9 +17,9 @@ section {
   background-color: white; }
 
 a, a:visited {
-  color: blue; }
+  color: #6194BC; }
   a:hover, a:visited:hover {
-    color: grey; }
+    color: #E4001B; }
 
 footer {
   padding: 2em; }
