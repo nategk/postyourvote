@@ -10,20 +10,6 @@
     "prestart": "npm run -s build",
     "test": "eslint src"
   },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    },
-    "env": {
-      "node": true
-    },
-    "rules": {
-      "no-console": 0,
-      "no-unused-vars": 1
-    }
-  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",

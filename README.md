@@ -13,7 +13,8 @@ Getting out the vote since 2020 also only in 2020
 - Install Node & NPM with `brew install node`
 - Clone git repo `https://github.com/culturegraphic/voteremote`
 - Install dependencies `npm install`
-- Start! `npm app.js`
+- Start! `npm run dev`
+- Open http://localhost:3000 in your browser
 
 ## Housekeeping
 - Keep commits tidy with verb to describe changes made "Updates CSS for primary flow"
