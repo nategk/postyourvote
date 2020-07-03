@@ -2,19 +2,50 @@
   "name": "voteremote",
   "version": "0.0.0",
   "private": true,
+  "main": "dist",
   "scripts": {
-    "start": "node ./bin/www"
+    "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build": "babel src -s -D -d dist --presets es2015,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "^4.17.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.0",
     "node-sass-middleware": "0.11.0",
-    "pug": "^3.0.0"
+    "nodemon": "^2.0.4",
+    "papaparse": "^5.2.0",
+    "pug": "^3.0.0",
+    "resource-router-middleware": "^0.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^7.3.1"
   }
 }
