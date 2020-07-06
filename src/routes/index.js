@@ -1,12 +1,24 @@
-// var express = require('express');
 import { Router } from 'express'
+import loadData from '../lib/dataloader.js'
+import getIpLocation from '../lib/iplocation.js'
+
 var router = Router();
 
-import loadData from '../lib/dataloader.js'
-
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
   res.locals.path = req.path;
-  res.render('index', { title: 'Vote Remote 2020' });
+  let location = await getIpLocation(req);
+
+  if (location.status == "success" && !location.mobile) {
+    //TODO: render location-specific page
+    res.render('index', {
+      title: 'Vote Remote 2020', 
+      state: location.regionName, 
+      city: location.city 
+    });
+  } else {
+    // Render generic landing page
+    res.render('index', { title: 'Vote Remote 2020' });
+  }
 });
 
 router.get('/state-rules/', function(req, res, next) {
