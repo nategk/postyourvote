@@ -37,6 +37,7 @@ async function get() {
     });
   }
   catch (err) {
+    console.error("Error getting CSV data", err);
     return err;
   }
 }

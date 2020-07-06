@@ -26,7 +26,7 @@ app.use(cors({
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.set('cache', new cache(60));
+app.set('cache', new cache(config.defaultCacheSeconds));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
