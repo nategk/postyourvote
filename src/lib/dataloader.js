@@ -17,12 +17,13 @@ function csvToObject(csvData) {
   return objects
 }
 
+// TODO: replace this URL with the real one once it's shared
 const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz5HKCcy6mx9fLRUE8kHKx2m6fEz__7btFGx8LrsZtQGmLP75tSLBCCs-irzCkFFfrxPiI6dviQMiD/pub?gid=415018427&single=true&output=csv";
 async function get() {
   try {
-    let response = await fetch(url);
-    let csvText = await response.text();
-    return new Promise(resolve => {
+    return new Promise(async (resolve) => {
+      let response = await fetch(url);
+      let csvText = await response.text();
       Papa.parse(csvText, {
         complete: (results, file) => {
           // console.log("Parsing complete:", results, file);

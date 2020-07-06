@@ -11,6 +11,7 @@ import config from './config.json'
 import cache from './lib/cache.js'
 
 import indexRouter from './routes/index.js'
+import connectToDB from './lib/db.js'
 
 let app = express();
 app.server = http.createServer(app);
@@ -57,8 +58,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.server.listen(process.env.PORT || config.port, () => {
-  console.log(`Started on port ${app.server.address().port}`);
+// Connect to DB and block
+connectToDB().then(client => {
+  app.set('db', client);
+  app.server.listen(process.env.PORT || config.port, () => {
+    console.log(`Started on port ${app.server.address().port}`);
+  });
 });
 
 export default app

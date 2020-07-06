@@ -21,3 +21,29 @@ Getting out the vote since 2020 also only in 2020
 
 ## Deploy
 - Pushes to git master automatically deploy to Heroku
+
+# Technical Details
+
+## Connect to the Mongo database
+
+
+
+## Updating postal code database
+
+Postal codes are stored in Mongodb and the data is sources from the free downloadable Geonames database. See `database.md` for more information on our mongo database.
+
+http://www.geonames.org/export/
+or directly, 
+https://download.geonames.org/export/zip/US.zip
+
+The zip contains a CSV file. If you need to update the postal codes, you can import the CSV into mongo. First make sure to delete the existing postalcodes to avoid duplicate data:
+
+```
+mongo "mongodb+srv://cluster0.fe6lk.mongodb.net/voteremote" --username <user>
+> db.postalcodes.truncate()
+```
+
+Then import the data from the CSV file. Since it doesn't have a header row we need to specify the header on the command line.
+```
+TODO
+```
