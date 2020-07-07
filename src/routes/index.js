@@ -1,5 +1,8 @@
-var express = require('express');
-var router = express.Router();
+// var express = require('express');
+import { Router } from 'express'
+var router = Router();
+
+import loadData from '../lib/dataloader.js'
 
 router.get('/', function(req, res, next) {
   res.locals.path = req.path;
@@ -41,4 +44,11 @@ router.get('/get-voter-registration-status/', function(req, res, next) {
   res.render('get-voter-registration-status', { title: 'Voter registration status' });
 });
 
-module.exports = router;
+router.get('/raw-data', async function(req, res, next) {
+  // let csvData = await loadData();
+  let csvData = await req.app.get('cache').get('states', loadData);
+  res.send(csvData);
+});
+
+// module.exports = router;
+export default router;

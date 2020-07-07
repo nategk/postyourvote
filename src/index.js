@@ -1,18 +1,32 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
+import createError from 'http-errors'
+import http from 'http';
+import express from 'express'
+import cors from 'cors'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
+import logger from 'morgan'
+import sassMiddleware from 'node-sass-middleware'
+import config from './config.json'
+import cache from './lib/cache.js'
 
-var indexRouter = require('./routes/index');
+import indexRouter from './routes/index.js'
 
-var app = express();
+let app = express();
+app.server = http.createServer(app);
+
+app.use(bodyParser.json({
+	limit : config.bodyLimit
+}));
+
+app.use(cors({
+	exposedHeaders: config.corsHeaders
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
+app.set('cache', new cache(config.defaultCacheSeconds));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,4 +57,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+app.server.listen(process.env.PORT || config.port, () => {
+  console.log(`Started on port ${app.server.address().port}`);
+});
+
+export default app
