@@ -26,7 +26,14 @@ Getting out the vote since 2020 also only in 2020
 
 ## Connect to the Mongo database
 
+1. Make sure you have your own DB developer user/pass at https://cloud.mongodb.com/v2/5f00c43c699a9d770b8db9b4#security/database/users. This is different from your DB web dashboard login.
+2. Make sure your IP address is listed in https://cloud.mongodb.com/v2/5f00c43c699a9d770b8db9b4#security/network/whitelist. Click on *Add IP Address* and the "My current IP Address".
+3. Make a copy of `dbConfig.template.json` as `dbConfig.json` and add your credentials. This file is in `.gitignore` and will not be checked in. **DO NOT COMMIT ANY CREDENTIALS TO GIT**
 
+You can also connect to the database with the mongo shell on the CLI. You will be prompted for you PW.
+```
+mongo "mongodb+srv://cluster0.fe6lk.mongodb.net/<dbname>" --username <username>
+```
 
 ## Updating postal code database
 
