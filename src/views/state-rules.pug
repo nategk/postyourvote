@@ -2,11 +2,22 @@ extends layout
 
 block content
   h2 What you need to know
-  ul.instructions
-    li One thing you should know before you continue
-    li Another thing you should know
+  table.instructions
+    tr
+      th(scope='row') Do I need to be registered to vote first?
+      td (Let’s add a field for this?)&nbsp;
+        a(href="/get-voter-registration-status/") Check voter registration status
+    tr
+      th(scope='row') How can I request a ballot?
+      td= ballotRequestMethod
+    tr
+      th(scope='row') What will I need to request online?
+      td= ballotRequestRequirements
+    tr
+      th(scope='row') When should I send my ballot in the mail?
+      td= ballotRequestDeadline
   p
-    a(href="/get-mail-in-ballot-reminder")
+    a(href=`/${URL}/mail-in-ballot-reminder/`)
       h3 Continue
   p
     a(href="/change-location") Change location
