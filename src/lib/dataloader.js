@@ -17,8 +17,7 @@ function csvToObject(csvData) {
   return objects
 }
 
-// TODO: replace this URL with the real one once it's shared
-const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz5HKCcy6mx9fLRUE8kHKx2m6fEz__7btFGx8LrsZtQGmLP75tSLBCCs-irzCkFFfrxPiI6dviQMiD/pub?gid=415018427&single=true&output=csv";
+const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMKrjGL05YBTjuuviiAcbmyPy8aw_NZ0ViaZohWdWgZVDm_dsMKpR0yUSktNbKC6D_JKVmO6042FH7/pub?gid=415018427&single=true&output=csv";
 async function get() {
   try {
     return new Promise(async (resolve) => {

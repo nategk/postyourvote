@@ -21,6 +21,13 @@ a, a:visited {
   a:hover, a:visited:hover {
     color: #E4001B; }
 
+table * {
+  border: 0;
+  padding: 0; }
+  table * th, table * td {
+    text-align: left;
+    padding: 0 1em .5em 0; }
+
 footer {
   padding: 2em; }
   footer ul {

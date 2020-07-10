@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h2 Looks like you’re in #{city}, #{state}
+  h2 Tell us what state you’re in
   h3 You can request your mail-in ballot online!
   p It’s easy. We’re here to help because everyone who can vote should, and we care about you. 💌
   ul.value-props
@@ -9,7 +9,5 @@ block content
     li Register with official state sites
     li It’s easy
   p
-    a(href="/state-rules")
-      h3 Get started
-  p
-    a(href="/change-location") Change location
+    a(href="/change-location")
+      h3 Choose a location
