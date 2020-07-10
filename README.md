@@ -52,5 +52,5 @@ mongo "mongodb+srv://cluster0.fe6lk.mongodb.net/voteremote" --username <user>
 
 Then import the data from the CSV file. Since it doesn't have a header row we need to specify the header on the command line.
 ```
-TODO
+mongoimport --uri="mongodb+srv://zac@cluster0.fe6lk.mongodb.net/voteremote" --collection postalcodes --fields "country code,postal code,place name,admin name1,admin code1,admin name2,admin code2,admin name3,admin code3,latitude,longitude,accuracy" --type csv --stopOnError --file ~/Desktop/us_postal_codes/US.txt
 ```

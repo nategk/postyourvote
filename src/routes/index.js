@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import loadData from '../lib/dataloader.js'
 import getIpLocation from '../lib/iplocation.js'
+import queryLocation from '../lib/placesearch.js'
 
 var router = Router();
 
@@ -57,9 +58,13 @@ router.get('/get-voter-registration-status/', function(req, res, next) {
 });
 
 router.get('/raw-data', async function(req, res, next) {
-  // let csvData = await loadData();
   let csvData = await req.app.get('cache').get('states', loadData);
   res.send(csvData);
+});
+
+router.get('/location-query', async function(req, res, next) {
+  let locationResults = await queryLocation(req.query.q);
+  res.json(locationResults);
 });
 
 // module.exports = router;
