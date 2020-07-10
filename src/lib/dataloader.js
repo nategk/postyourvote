@@ -20,9 +20,9 @@ function csvToObject(csvData) {
 const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMKrjGL05YBTjuuviiAcbmyPy8aw_NZ0ViaZohWdWgZVDm_dsMKpR0yUSktNbKC6D_JKVmO6042FH7/pub?gid=415018427&single=true&output=csv";
 async function get() {
   try {
-    let response = await fetch(url);
-    let csvText = await response.text();
-    return new Promise(resolve => {
+    return new Promise(async (resolve) => {
+      let response = await fetch(url);
+      let csvText = await response.text();
       Papa.parse(csvText, {
         complete: (results, file) => {
           // console.log("Parsing complete:", results, file);

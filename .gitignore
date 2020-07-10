@@ -64,3 +64,4 @@ typings/
 .next
 
 dist
+src/dbConfig.json
