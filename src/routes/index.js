@@ -30,6 +30,10 @@ router.get('/change-location', function(req, res, next) {
   res.render('change-location', { title: 'Change your location' });
 });
 
+router.post('/change-location', function(req, res, next) {
+
+});
+
 router.get('/about', function(req, res, next) {
   res.locals.path = req.path;
   res.render('about', { title: 'About' });
@@ -60,7 +64,7 @@ router.get('/location-query', async function(req, res, next) {
   res.json(locationResults);
 });
 
-  // Variable paths
+// Variable paths
 
 router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
   let csvData = await req.app.get('cache').get('states', loadData);
@@ -76,7 +80,13 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
 
 router.get('/:state', async function(req, res, next) {
   let csvData = await req.app.get('cache').get('states', loadData);
-  var thisState = csvData[req.params.state];
+  var stateKey = req.params.state.toLowerCase();
+  var thisState = csvData[stateKey]; 
+  if (thisState == undefined) {
+    console.error("Couldn't find state", stateKey);
+    res.sendStatus(404);
+    return;
+  }
   console.log(thisState);
   res.locals.path = req.path;
   res.render('state-rules', {
