@@ -60,7 +60,7 @@ router.get('/raw-data', async function(req, res, next) {
 });
 
 router.get('/location-query', async function(req, res, next) {
-  let locationResults = await queryLocation(req.query.q);
+  let locationResults = await queryLocation(req.app.get('db'), req.query.q);
   res.json(locationResults);
 });
 

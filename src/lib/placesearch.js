@@ -8,7 +8,7 @@ const queryParams = {
   featureCode: ['ADM1', 'ADM2', 'ADM3', 'PPLA2']
 };
 const urlBase = "http://api.geonames.org/searchJSON";
-async function get(q) {
+async function getGeonames(q) {
   return new Promise(async (resolve) => {
     try {
       var params = {
@@ -48,4 +48,44 @@ async function get(q) {
   });
 }
 
-export default get;
+async function getPostalcode(db, postalcode) {
+  postalcode = parseInt(postalcode);
+  return new Promise(async (resolve) => {
+    let result = await db.collection('postalcodes').findOne({"postal code": postalcode});
+    if (result) {
+      resolve({
+        status: "success",
+        data: [
+          {
+            name: result["place name"],
+            lng: result.longitude,
+            lat: result.latitude,
+            state: result["admin name1"],
+            stateCode: result["admin code1"],
+            county: result["admin name2"]
+          }
+        ]
+      });
+    } else {
+      resolve({
+        status: "error", message: "no result"
+      });
+    }
+  });
+}
+
+function isPostalcode(q) {
+  // Determine if the q is a 5 digit number
+  return (!isNaN(parseInt(q)) && q.length == 5);
+}
+
+async function get(db, q) {
+  if (isPostalcode(q)) {
+    return getPostalcode(db, q);
+  } else {
+    return getGeonames(q);
+  }
+}
+
+export { getGeonames, getPostalcode, isPostalcode, get };
+export default get

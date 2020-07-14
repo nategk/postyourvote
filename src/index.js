@@ -63,7 +63,7 @@ app.use(function(err, req, res, next) {
 
 // Connect to DB and block
 connectToDB().then(client => {
-  app.set('db', client);
+  app.set('db', client.db());
   app.server.listen(process.env.PORT || config.port, () => {
     console.log(`Started on port ${app.server.address().port}`);
   });
