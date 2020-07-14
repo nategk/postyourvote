@@ -10,15 +10,15 @@ var router = Router();
 router.get('/', async function(req, res, next) {
   let csvData = await req.app.get('cache').get('states', loadData);
   let location = await getIpLocation(req);
-  
   res.locals.path = req.path;
   if (location.status == "success" && !location.mobile && csvData[location.regionName.toLowerCase()] != undefined) {
     var stateName = location.regionName.toLowerCase();
     var thisState = csvData[stateName];
-    res.render('index-state', {
+    res.render('index-located', {
       title: 'Vote Remote 2020',
-      URL: thisState.URL,
-      name: thisState.Name
+      URL: thisState['State URL'],
+      name: thisState['State Name'],
+      requestOnline: thisState['Online Ballot Request URL']
     });
   } else {
     res.render('index-generic', { title: 'Vote Remote 2020' });
@@ -71,17 +71,39 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
   var thisState = csvData[req.params.state];
   res.locals.path = req.path;
   res.render('get-mail-in-ballot-reminder', {
-    title: `${thisState.Name} reminder to mail in ballot`,
-    name: thisState.Name,
+    title: `${thisState['State Name']} reminder to mail ballot`,
+    name: thisState['State Name'],
     ballotRequestDeadline: thisState['Ballot Request Deadline'],
     onlineBallotRequestURL: thisState['Online Ballot Request URL']
   });
 });
 
-router.get('/:state', async function(req, res, next) {
+router.get('/:state/:county', async function(req, res, next) {
   let csvData = await req.app.get('cache').get('states', loadData);
   var stateKey = req.params.state.toLowerCase();
-  var thisState = csvData[stateKey]; 
+  var thisState = csvData[stateKey];
+  if (thisState == undefined) {
+    console.error("Couldn't find county", stateKey);
+    res.sendStatus(404);
+    return;
+  }
+  console.log(thisState);
+  res.locals.path = req.path;
+  res.render('location-rules', {
+    title: `${thisState['State Name']} county rules`,
+    URL: thisState['State URL'],
+    name: thisState['State Name'],
+    ballotRequestMethod: thisState['Ballot Request Method'],
+    vbmDueDate: thisState['VBM Due Date'],
+    ballotRequestRequirements: thisState['Ballot Request Requirements'],
+    onlineBallotRequestURL: thisState['Online Ballot Request URL']
+  });
+});
+
+router.get('/:state/', async function(req, res, next) {
+  let csvData = await req.app.get('cache').get('states', loadData);
+  var stateKey = req.params.state.toLowerCase();
+  var thisState = csvData[stateKey];
   if (thisState == undefined) {
     console.error("Couldn't find state", stateKey);
     res.sendStatus(404);
@@ -89,13 +111,15 @@ router.get('/:state', async function(req, res, next) {
   }
   console.log(thisState);
   res.locals.path = req.path;
-  res.render('state-rules', {
-    title: `${thisState.Name} state rules`,
-    URL: thisState.URL,
-    name: thisState.Name,
+  res.render('location-rules', {
+    title: `${thisState['State Name']} state rules`,
+    URL: thisState['State URL'],
+    name: thisState['State Name'],
     ballotRequestMethod: thisState['Ballot Request Method'],
     ballotRequestDeadline: thisState['Ballot Request Deadline'],
-    ballotRequestRequirements: thisState['Ballot Request Requirements']
+    ballotRequestRequirements: thisState['Ballot Request Requirements'],
+    reasonsNeeded: thisState['VBM Reason(s) Needed'],
+    onlineBallotRequestURL: thisState['Online Ballot Request URL']
   });
 });
 

@@ -1,7 +1,8 @@
 // Temporary values
-$color: black
+$color-text: black
+$color-text-light: grey
 $color-emphasis: #E4001B
-$color-secondary: #6194BC
+$color-link: #6194BC
 $color-tersiary: #A5D1F3
 $background: #ECECEC
 $font: "San Francisco", Helvetica, Arial, sans-serif
@@ -15,7 +16,7 @@ html, body
 
 body
   font: 16px $font
-  color: $color
+  color: $color-text
   background-color: $background
 
 header, section
@@ -24,7 +25,7 @@ section
   background-color: white
 
 a, a:visited
-  color: $color-secondary
+  color: $color-link
   &:hover
     color: $color-emphasis
 
@@ -34,6 +35,22 @@ table *
   th, td
     text-align: left
     padding: 0 1em .5em 0
+
+ol#progress
+  color: $color-text-light
+  margin: -1em 0 0
+  padding: 0 2em 1em
+  li
+    display: inline-block
+    margin-right: .5em
+    &.active
+      color: $color-text
+    &:after
+      content: '→'
+      color: $color-text-light
+      padding-left: .5em
+    &:last-child:after
+      content: ''
 
 footer
   padding: 2em

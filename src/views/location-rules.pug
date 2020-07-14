@@ -1,0 +1,43 @@
+extends layout
+
+block append header
+  - var flowStep = "requirements" // location · requirements · reminder · request
+  include components/flow-progress.pug
+
+block content
+  table.instructions
+        
+    if onlineBallotRequestURL
+      tr
+        th(scope='row') Can I request my mail-in ballot online?
+        td
+          strong Yes!
+      tr
+        th(scope='row') Do I need a reason or excuse to vote by mail?
+        td= reasonsNeeded
+      tr
+        th(scope='row') Do I need to be registered to vote first?
+        td (Let’s add a field for this?)&nbsp;
+          a(href="/get-voter-registration-status/") Check voter registration status
+      tr
+        th(scope='row') What should I have ready?
+        td= ballotRequestRequirements
+      tr
+        th(scope='row') When is the deadline?
+        td= vbmDueDate
+
+    else 
+      tr
+        th(scope='row') Can I request my mail-in ballot online?
+        td Unfortunately, no. (This text shows up when there’s no online ballot URL)
+      tr
+        th(scope='row') What should I have ready?
+        td= ballotRequestRequirements
+      tr
+        th(scope='row') When should I send my ballot in the mail?
+        td= ballotRequestDeadline
+  p
+    a(href=`/${URL}/mail-in-ballot-reminder/`)
+      h3 Continue
+  p
+    a(href="/change-location") Change location

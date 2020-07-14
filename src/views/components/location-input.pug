@@ -1,0 +1,25 @@
+form#change-location(action="/change-location")
+  p
+    // Todo: prefill placeholder if guessed location or if coming from location
+    input(name="query" type="number" placeholder="Zip" value="94110")
+  p
+    input(type="submit")
+
+ul(id="location-results" style="display:none;")
+  
+script(src="/assets/jquery.min.js")
+script.
+  $("form#change-location").submit(function(event) {
+    console.log("form submit", event);
+    var queryValue = $("input[name=query]").val();
+    console.log("query value", queryValue);
+    $.getJSON("/location-query", {"q": queryValue}, function(results) {
+      console.log("query results", results);
+      var locationResults = $("#location-results");
+      locationResults.show();
+      results.data.forEach(function(loc) {
+        locationResults.append($("<li><a href=/"+loc.state+">"+loc.name+", "+loc.state+"</a></li>"));
+      })
+    });
+    event.preventDefault();
+  });

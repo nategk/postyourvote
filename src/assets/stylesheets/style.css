@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html, body {
   width: 100%;
   height: 100%;
@@ -29,21 +28,9 @@ table * {
     text-align: left;
     padding: 0 1em .5em 0; }
 
-ol#progress {
-  color: grey;
-  margin: -1em 0 0;
-  padding: 0 2em 1em; }
-  ol#progress li {
-    display: inline-block;
-    margin-right: .5em; }
-    ol#progress li.active {
-      color: black; }
-    ol#progress li:after {
-      content: '→';
-      color: grey;
-      padding-left: .5em; }
-    ol#progress li:last-child:after {
-      content: ''; }
+ol#progress, ol#progress li {
+  display: inline-block;
+  color: #6194BC; }
 
 footer {
   padding: 2em; }

@@ -1,29 +1,9 @@
 extends layout
 
+block append header
+  - var flowStep = "location" // location · requirements · reminder · request
+  include components/flow-progress.pug
+
 block content
-  script(src="/assets/jquery.min.js")
   h2 Enter your home zip code
-  form(action="/change-location")
-    p
-      input(name="query" type="number" placeholder="55111")
-    p
-      input(type="submit")
-
-  ul(id="location-results" style="display:none;")
-    
-
-  script.
-    $("form").submit(function(event) {
-      console.log("form submit", event);
-      var queryValue = $("input[name=query]").val();
-      console.log("query value", queryValue);
-      $.getJSON("/location-query", {"q": queryValue}, function(results) {
-        console.log("query results", results);
-        var locationResults = $("#location-results");
-        locationResults.show();
-        results.data.forEach(function(loc) {
-          locationResults.append($("<li><a href=/"+loc.state+">"+loc.name+", "+loc.state+"</a></li>"));
-        })
-      });
-      event.preventDefault();
-    });
+  include components/location-input.pug

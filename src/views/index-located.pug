@@ -1,8 +1,15 @@
 extends layout
 
+block append header
+  - var flowStep = "location" // location · requirements · reminder · request
+  include components/flow-progress.pug
+
 block content
   h2 Looks like you’re in #{name}
-  h3 You can request your mail-in ballot online!
+  if requestOnline
+    h3 You can request your mail-in ballot online!
+  else 
+    h3 We’ll show you how to get your mail-in ballot
   p It’s easy. We’re here to help because everyone who can vote should, and we care about you. 💌
   ul.value-props
     li No data collection
