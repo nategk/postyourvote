@@ -35,6 +35,7 @@ app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
+	prefix: '/assets',
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
