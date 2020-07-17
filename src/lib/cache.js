@@ -8,7 +8,7 @@ class Cache {
   async get(key, getFromOriginFn) {
     var value = this.cache.get(key);
     if (value !== undefined) {
-      console.log("Got", key, " from cache");
+      console.log("Got", key, "from cache");
       return value;
     }
 

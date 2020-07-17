@@ -1,0 +1,11 @@
+extends layout
+
+block append header
+  - var flowStep = "requirements" // location · requirements · reminder · request
+  include components/flow-progress.pug
+
+block content
+  ul
+    each county in counties
+      li
+        a(href='/'+county['State URL']+'/'+county['County URL'])= county['County Name']
