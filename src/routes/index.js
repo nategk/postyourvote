@@ -33,14 +33,23 @@ router.get('/', async function(req, res, next) {
 
 router.post('/change-location', async function(req, res, next) {
   console.log("location query", req.body.query);
-  let locationResults = await queryLocation(req.app.get('db'), req.body.query);
-  console.log("Location", locationResults);
-  if (locationResults.status == 'success' && locationResults.data.length == 1) {
-    res.redirect(301, "/"+urlFriendly(locationResults.data[0].state));
+  let postalResults = await queryLocation(req.app.get('db'), req.body.query);
+  console.log("Postal results", postalResults);
+  if (postalResults.status == 'success' && postalResults.data.length == 1) {
+    let stateUrl = urlFriendly(postalResults.data[0].state);
+    let countyUrl = urlFriendly(postalResults.data[0].county);
+    let csvData = await req.app.get('cache').get('states', loadData);
+    let locationResults = csvData[stateUrl];
+    if (locationResults.counties && locationResults.counties[countyUrl]) {
+      locationResults = locationResults.counties[countyUrl];
+      res.redirect(301, "/"+locationResults['State URL']+'/'+locationResults['County URL']);
+    } else {
+      res.redirect(301, "/"+locationResults['State URL']);
+    }
   } else {
     res.render('index', {
       title: 'Change your location',
-      error: "Use a valid US zip code. <a href='https://tools.usps.com/go/zip-code-lookup.htm' target='_blank'>Find my zip</a>"
+      error: "Sorry, we couldn't find that postal code"
     });
   }
 });
@@ -92,47 +101,62 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
 router.get('/:state/:county', async function(req, res, next) {
   let csvData = await req.app.get('cache').get('states', loadData);
   var stateKey = req.params.state.toLowerCase();
-  var thisState = csvData[stateKey];
-  if (thisState == undefined) {
-    console.error("Couldn't find county", stateKey);
-    res.sendStatus(404);
-    return;
-  }
-  console.log(thisState);
-  res.locals.path = req.path;
-  res.render('location-rules', {
-    title: `${thisState['State Name']} county rules`,
-    URL: thisState['State URL'],
-    name: thisState['State Name'],
-    ballotRequestMethod: thisState['Ballot Request Method'],
-    vbmDueDate: thisState['VBM Due Date'],
-    ballotRequestRequirements: thisState['Ballot Request Requirements'],
-    onlineBallotRequestURL: thisState['Online Ballot Request URL']
-  });
-});
-
-router.get('/:state/', async function(req, res, next) {
-  let csvData = await req.app.get('cache').get('states', loadData);
-  var stateKey = req.params.state.toLowerCase();
+  var countyKey = req.params.county.toLowerCase();
   var thisState = csvData[stateKey];
   if (thisState == undefined) {
     console.error("Couldn't find state", stateKey);
     res.sendStatus(404);
     return;
   }
-  console.log(thisState);
+  var thisLocation = thisState.counties[countyKey];
+  if (thisLocation == undefined) {
+    console.error("Couldn't find county", countyKey, "in state", countyKey);
+    // TODO go to county index
+    res.sendStatus(404);
+    return;
+  }
+
+  console.log(thisLocation);
   res.locals.path = req.path;
   res.render('location-rules', {
-    title: `${thisState['State Name']} state rules`,
-    URL: thisState['State URL'],
-    name: thisState['State Name'],
-    ballotRequestMethod: thisState['Ballot Request Method'],
-    ballotRequestDeadline: thisState['Ballot Request Deadline'],
-    ballotRequestRequirements: thisState['Ballot Request Requirements'],
-    reasonsNeeded: thisState['VBM Reason(s) Needed'],
-    onlineBallotRequestURL: thisState['Online Ballot Request URL']
+    title: `${thisLocation['County Name']} County, ${thisLocation['State Name']} rules`,
+    URL: thisLocation['State URL']+'/'+thisLocation['County URL'],
+    name: thisLocation['State Name'],
+    ballotRequestMethod: thisLocation['Ballot Request Method'],
+    vbmDueDate: thisLocation['VBM Due Date'],
+    ballotRequestRequirements: thisLocation['Ballot Request Requirements'],
+    onlineBallotRequestURL: thisLocation['Online Ballot Request URL']
   });
 });
 
-// module.exports = router;
+router.get('/:state/', async function(req, res, next) {
+  let csvData = await req.app.get('cache').get('states', loadData);
+  var stateKey = req.params.state.toLowerCase();
+  var thisLocation = csvData[stateKey];
+  if (thisLocation == undefined) {
+    console.error("Couldn't find state", stateKey);
+    res.sendStatus(404);
+    return;
+  }
+  console.log(thisLocation);
+  res.locals.path = req.path;
+  if (thisLocation.counties) {
+    res.render('state-counties-list', {
+      title: `${thisLocation['State Name']} counties`,
+      counties: thisLocation.counties
+    });
+  } else {
+    res.render('location-rules', {
+      title: `${thisLocation['State Name']} state rules`,
+      URL: thisLocation['State URL'],
+      name: thisLocation['State Name'],
+      ballotRequestMethod: thisLocation['Ballot Request Method'],
+      ballotRequestDeadline: thisLocation['Ballot Request Deadline'],
+      ballotRequestRequirements: thisLocation['Ballot Request Requirements'],
+      reasonsNeeded: thisLocation['VBM Reason(s) Needed'],
+      onlineBallotRequestURL: thisLocation['Online Ballot Request URL']
+    });
+  }
+});
+
 export default router;

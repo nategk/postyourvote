@@ -11,8 +11,19 @@ function csvToObject(csvData) {
         return;
       }
       obj[fields[i]] = el;
-    })
-    objects[row[0]] = obj;
+    });
+    if (obj['County URL']) {
+      if (!objects[obj['State URL']]) {
+        objects[obj['State URL']] = {
+          "State URL": obj['State URL'],
+          "State Name": obj['State Name'],
+          counties: {}
+        };
+      }
+      objects[obj['State URL']].counties[obj['County URL']] = obj;
+    } else {
+      objects[obj['State URL']] = obj;
+    }
   })
   return objects
 }
