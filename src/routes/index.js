@@ -31,7 +31,7 @@ router.get('/', async function(req, res, next) {
 //   res.render('change-location', { title: 'Change your location' });
 // });
 
-router.post('/', async function(req, res, next) {
+router.post('/change-location', async function(req, res, next) {
   console.log("location query", req.body.query);
   let locationResults = await queryLocation(req.app.get('db'), req.body.query);
   console.log("Location", locationResults);
