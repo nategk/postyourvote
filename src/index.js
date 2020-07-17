@@ -41,7 +41,8 @@ app.use(sassMiddleware({
 }));
 app.use('/assets', [
   express.static(path.join(__dirname, 'public')),
-  express.static(path.join(__dirname, '../node_modules/jquery/dist'))
+  express.static(path.join(__dirname, '../node_modules/jquery/dist')),
+  express.static(path.join(__dirname, '../node_modules/jquery-mask-plugin/dist'))
 ]);
 
 app.use('/', indexRouter);
