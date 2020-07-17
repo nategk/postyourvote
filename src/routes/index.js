@@ -15,21 +15,21 @@ router.get('/', async function(req, res, next) {
   if (location.status == "success" && !location.mobile && csvData[location.regionName.toLowerCase()] != undefined) {
     var stateName = location.regionName.toLowerCase();
     var thisState = csvData[stateName];
-    res.render('index-located', {
+    res.render('index', {
       title: 'Vote Remote 2020',
       URL: thisState['State URL'],
       name: thisState['State Name'],
       requestOnline: thisState['Online Ballot Request URL']
     });
   } else {
-    res.render('index-generic', { title: 'Vote Remote 2020' });
+    res.render('index', { title: 'Vote Remote 2020' });
   }
 });
 
-router.get('/change-location', function(req, res, next) {
-  res.locals.path = req.path;
-  res.render('change-location', { title: 'Change your location' });
-});
+// router.get('/change-location', function(req, res, next) {
+//   res.locals.path = req.path;
+//   res.render('change-location', { title: 'Change your location' });
+// });
 
 router.post('/change-location', async function(req, res, next) {
   console.log("location query", req.body.query);
@@ -38,9 +38,9 @@ router.post('/change-location', async function(req, res, next) {
   if (locationResults.status == 'success' && locationResults.data.length == 1) {
     res.redirect(301, "/"+urlFriendly(locationResults.data[0].state));
   } else {
-    res.render('change-location', { 
-      title: 'Change your location', 
-      error: "Sorry, we couldn't find that postal code" 
+    res.render('index', {
+      title: 'Change your location',
+      error: "Sorry, we couldn't find that postal code"
     });
   }
 });
