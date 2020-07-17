@@ -22,6 +22,21 @@ a, a:visited {
   a:hover, a:visited:hover {
     color: #E4001B; }
 
+form, fieldset {
+  border: 0;
+  padding: 0; }
+
+fieldset#zip input {
+  margin-right: .5em;
+  max-width: 5em; }
+
+input {
+  padding: .5em;
+  font-size: 1.2em; }
+
+.icon {
+  margin-right: .25em; }
+
 table * {
   border: 0;
   padding: 0; }

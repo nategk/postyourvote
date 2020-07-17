@@ -1,12 +1,25 @@
-form#change-location(action="/change-location" method="POST")
-  p
+form#choose-location(action="/" method="POST")
+  fieldset
     // Todo: prefill placeholder if guessed location or if coming from location
-    input(name="query" type="number" placeholder="Zip" value="94110")
-  p
-    input(type="submit")
+    p
+      input(name="query" type="number" pattern="[0-9]{5}" placeholder="90210" maxlength="5")#zip
+    if error
+      p(class="error")= error
+  input(type="submit" value="Continue")
 
-ul(id="location-results" style="display:none;")
-  
+script(src="/assets/jquery.min.js")
+script.
+  if (navigator.geolocation) {
+    //browser supports asking location
+    console.log("Browser supports asking for location");
+    $("form#choose-location fieldset").append("<p id='detect-location'><a href='#'><img src='assets/iconic-svg/location.svg' class='icon' alt='location icon' /> Use current location</a></p>");
+    $("p#detect-location a").click(function() {
+      navigator.geolocation.getCurrentPosition(position => {
+          console.log(position.coords);
+      });
+    });
+  };
+
 //- script(src="/assets/jquery.min.js")
 //- script.
 //-   $("form#change-location").submit(function(event) {
