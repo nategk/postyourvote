@@ -5,12 +5,12 @@ import { MongoClient } from 'mongodb';
 async function connectToDB() {
   return new Promise(async (resolve) => {
     let dbConfig;
-    const dbConfigPath = path.resolve(path.join(__dirname, '../dbConfig.json'));
     try {
+      const dbConfigPath = path.resolve(path.join(__dirname, '../dbConfig.json'));
       dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
     }
     catch (err) {
-      console.error("Couldn't get dbConfig.json", err)
+      console.error("Couldn't get dbConfig.json", err);
       dbConfig = {}
     }
     const username = process.env.MONGO_USER || dbConfig.username;

@@ -64,10 +64,16 @@ app.use(function(err, req, res, next) {
 
 // Connect to DB and block
 connectToDB().then(client => {
+  if (!client) {
+    console.error("Couldn't connect to DB");
+  }
   app.set('db', client.db());
   app.server.listen(process.env.PORT || config.port, () => {
     console.log(`Started on port ${app.server.address().port}`);
   });
+})
+.catch(reason => {
+  console.error("Exception connectig to DB", reason);
 });
 
 export default app

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import loadData from '../lib/dataloader.js'
 import getIpLocation from '../lib/iplocation.js'
 import queryLocation from '../lib/placesearch.js'
+import {urlFriendly } from '../lib/utils.js'
 
 var router = Router();
 
@@ -30,8 +31,18 @@ router.get('/change-location', function(req, res, next) {
   res.render('change-location', { title: 'Change your location' });
 });
 
-router.post('/change-location', function(req, res, next) {
-
+router.post('/change-location', async function(req, res, next) {
+  console.log("location query", req.body.query);
+  let locationResults = await queryLocation(req.app.get('db'), req.body.query);
+  console.log("Location", locationResults);
+  if (locationResults.status == 'success' && locationResults.data.length == 1) {
+    res.redirect(301, "/"+urlFriendly(locationResults.data[0].state));
+  } else {
+    res.render('change-location', { 
+      title: 'Change your location', 
+      error: "Sorry, we couldn't find that postal code" 
+    });
+  }
 });
 
 router.get('/about', function(req, res, next) {
@@ -59,7 +70,7 @@ router.get('/raw-data', async function(req, res, next) {
   res.send(csvData);
 });
 
-router.get('/location-query', async function(req, res, next) {
+router.get('/location-query.json', async function(req, res, next) {
   let locationResults = await queryLocation(req.app.get('db'), req.query.q);
   res.json(locationResults);
 });

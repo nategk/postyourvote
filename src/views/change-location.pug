@@ -5,5 +5,8 @@ block append header
   include components/flow-progress.pug
 
 block content
+  if error
+    p(class="error")= error
+
   h2 Enter your home zip code
   include components/location-input.pug
