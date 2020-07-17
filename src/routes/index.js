@@ -40,7 +40,7 @@ router.post('/change-location', async function(req, res, next) {
   } else {
     res.render('index', {
       title: 'Change your location',
-      error: "Sorry, we couldn't find that postal code"
+      error: "Use a valid US zip code. <a href='https://tools.usps.com/go/zip-code-lookup.htm' target='_blank'>Find my zip</a>"
     });
   }
 });

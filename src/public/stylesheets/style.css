@@ -34,8 +34,20 @@ input {
   padding: .5em;
   font-size: 1.2em; }
 
-.icon {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; }
+
+.error {
+  color: #E4001B; }
+
+.icon-before {
   margin-right: .25em; }
+
+.icon-after {
+  margin-left: .25em; }
 
 table * {
   border: 0;
