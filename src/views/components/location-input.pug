@@ -1,10 +1,11 @@
-form#choose-location(action="/change-location" method="POST")
+form#choose-location(action="/choose-location" method="POST")
   fieldset
     if error
       p(class="error") Enter a US zip code. 
         a(href='https://tools.usps.com/go/zip-code-lookup.htm' target='_blank')
           span Help me
-          img(src='assets/iconic-svg/external-link.svg' class='icon-after')
+          svg.feather.icon-right
+            use(xlink:href='assets/feather-sprite.svg#help-circle')
     // Todo: prefill placeholder if guessed location or if coming from location
     p
       input(name="query" type="number" pattern="[0-9]{5}" placeholder="90210" maxlength="5")#zip
@@ -20,7 +21,7 @@ script.
   if (navigator.geolocation) {
     //browser supports asking location
     console.log("Browser supports asking for location");
-    $("form#choose-location fieldset").append("<p id='detect-location'><a href='#'><img src='assets/iconic-svg/location.svg' class='icon-before' alt='location icon' /> Use current location</a></p>");
+    $("form#choose-location fieldset").append("<p id='detect-location'><a href='#'><svg class='feather icon-left'><use xlink:href='assets/feather-sprite.svg#navigation'></use></svg> Use current location</a></p>");
     $("p#detect-location a").click(function() {
       navigator.geolocation.getCurrentPosition(position => {
           console.log(position.coords);

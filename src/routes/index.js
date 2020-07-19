@@ -15,23 +15,23 @@ router.get('/', async function(req, res, next) {
   if (location.status == "success" && !location.mobile && csvData[location.regionName.toLowerCase()] != undefined) {
     var stateName = location.regionName.toLowerCase();
     var thisState = csvData[stateName];
-    res.render('index', {
+    res.render('home', {
       title: 'Vote Remote 2020',
       URL: thisState['State URL'],
       name: thisState['State Name'],
       requestOnline: thisState['Online Ballot Request URL']
     });
   } else {
-    res.render('index', { title: 'Vote Remote 2020' });
+    res.render('home', { title: 'Vote Remote 2020' });
   }
 });
 
-// router.get('/change-location', function(req, res, next) {
-//   res.locals.path = req.path;
-//   res.render('change-location', { title: 'Change your location' });
-// });
+router.get('/choose-location', function(req, res, next) {
+   res.locals.path = req.path;
+   res.render('choose-location', { title: 'Choose a location' });
+ });
 
-router.post('/change-location', async function(req, res, next) {
+router.post('/choose-location', async function(req, res, next) {
   console.log("location query", req.body.query);
   let postalResults = await queryLocation(req.app.get('db'), req.body.query);
   console.log("Postal results", postalResults);
@@ -47,8 +47,8 @@ router.post('/change-location', async function(req, res, next) {
       res.redirect(301, "/"+locationResults['State URL']);
     }
   } else {
-    res.render('index', {
-      title: 'Change your location',
+    res.render('choose-location', {
+      title: 'Choose your location',
       error: "Sorry, we couldn't find that postal code"
     });
   }
@@ -119,7 +119,7 @@ router.get('/:state/:county', async function(req, res, next) {
   console.log(thisLocation);
   res.locals.path = req.path;
   res.render('location-rules', {
-    title: `${thisLocation['County Name']} County, ${thisLocation['State Name']} rules`,
+    title: `${thisLocation['County Name']} county, ${thisLocation['State Name']} rules`,
     URL: thisLocation['State URL']+'/'+thisLocation['County URL'],
     name: thisLocation['State Name'],
     ballotRequestMethod: thisLocation['Ballot Request Method'],

@@ -1,11 +1,20 @@
-// Temporary values
+// Imports
+
+//@import "https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap"
+
+// Variables
+
 $color-text: black
 $color-text-light: grey
-$color-emphasis: #E4001B
+$color-emphasis: #EF4F2B
+$color-bright: #2CBDFB
 $color-link: #6194BC
 $color-tersiary: #A5D1F3
-$background: #ECECEC
-$font: "San Francisco", Helvetica, Arial, sans-serif
+$background: white
+$font-body: "San Francisco", Helvetica, Arial, sans-serif
+//$font-header: 'Abril Fatface', 'Garamond', cursive
+
+// Standards
 
 html, body
   width: 100%
@@ -13,16 +22,16 @@ html, body
   display: block
   position: relative
   margin: 0
+  padding: 0
 
 body
-  font: 16px $font
+  font: 16px $font-body
   color: $color-text
   background-color: $background
+  width: auto
 
-header, section
-  padding: 2em
-section
-  background-color: white
+h1, h2, h3, h4, h5, h6
+//  font: $font-header
 
 a, a:visited
   color: $color-link
@@ -33,29 +42,16 @@ form, fieldset
   border: 0
   padding: 0
 
-fieldset#zip
-  input
-    margin-right: .5em
-    max-width: 5em
-
 input
   padding: .5em
   font-size: 1.2em
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
   /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
+  -webkit-appearance: none
   margin: 0
 input[type=number]
   -moz-appearance:textfield
-
-.error
-  color: $color-emphasis
-
-.icon-before
-  margin-right: .25em
-.icon-after
-  margin-left: .25em
 
 table *
   border: 0
@@ -64,27 +60,132 @@ table *
     text-align: left
     padding: 0 1em .5em 0
 
+a.button, input[type="submit"]
+  padding: .5em 1em
+  background: $color-bright
+  display: inline-block
+  color: white
+  text-decoration: none
+  font-weight: normal
+  border: 0
+  border-radius: 9999px
+  box-sizing: border-box
+  -webkit-appearance: none
+  &:hover
+    cursor: pointer
+    background: $color-emphasis
+    color: white
+
+.error
+  color: $color-emphasis
+
+// Icons
+
+.feather
+  width: 18px
+  height: 18px
+  stroke: currentColor
+  stroke-width: 2
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
+  padding: 0
+  display: inline-block
+  vertical-align: text-bottom
+.icon-left
+  margin-right: .25em
+.icon-right
+  margin-left: .25em
+
+// Layout
+
+.wrapper
+  min-height: 100%
+  margin-bottom: -5em
+.footer-push, footer
+  min-height: 4em
+
+header, section, footer
+  margin: 0 auto
+  padding: 0 2em
+
+header
+  padding-top: 10%
+  padding-bottom: 1em
+  text-align: center
+  h1.logo
+    display: block
+    margin: auto
+
+footer
+  padding-bottom: 0
+
+header, section, footer nav
+  max-width: 960px
+  margin: auto
+
+section
+  max-width: 520px
+  text-align: center
+
+footer
+  font-size: .95em
+  ul
+    padding: 0
+    border-top: 1px solid #A5D1F3
+    padding-top: 1em
+    // padding-bottom: 1em
+    li
+      display: inline-block
+      margin-right: 1em
+      // margin-bottom: .5em
+
+// One-offs
+
+h1.logo
+  width: 100%
+  max-width: 360px
+  height: 200px
+  background-image: url('../img/vote-remote-logo.svg')
+  background-size: 100% auto
+  background-repeat: no-repeat
+  background-position: right top
+  text-align: right
+  margin: 0 0 1em
+  span
+    position: absolute
+    top: -100em
+    left: -100em
+
+fieldset#zip
+  input
+    margin-right: .5em
+    max-width: 5em
+
 ol#progress
   color: $color-text-light
-  margin: -1em 0 0
-  padding: 0 2em 1em
+  padding: 0
   li
     display: inline-block
+    background-repeat: no-repeat
+    background-position: left
     margin-right: .5em
     &.active
       color: $color-text
     &:after
+      font-size: .9em
       content: '→'
       color: $color-text-light
       padding-left: .5em
     &:last-child:after
       content: ''
 
-footer
-  padding: 2em
-  ul
-    margin: 0
-    padding: 0
-    li
-      display: inline-block
-      margin-right: 1em
+// Responsive overrides
+
+@media only screen and (max-width: 600px)
+  header, section, footer
+    padding: 1em
+  ol#progress
+    font-size: .9em
+  footer
+    font-size: .9em

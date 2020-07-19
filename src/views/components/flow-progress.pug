@@ -1,5 +1,17 @@
 ol#progress 
-  li#location(class={active: flowStep === 'location'}) Choose location
-  li#requirements(class={active: flowStep === 'requirements'}) Local voting rules
-  li#reminder(class={active: flowStep === 'reminder'}) Get a reminder
-  li#request(class={active: flowStep === 'request'}) Request mail-in ballot
+  li#location(class={active: flowStep === 'location'}) 
+    svg.feather.icon-left
+      use(xlink:href='assets/feather-sprite.svg#map-pin')
+    span Zip
+  li#requirements(class={active: flowStep === 'requirements'})
+    svg.feather.icon-left
+      use(xlink:href='assets/feather-sprite.svg#help-circle')
+    span Rules
+  li#reminder(class={active: flowStep === 'reminder'})
+    svg.feather.icon-left
+      use(xlink:href='assets/feather-sprite.svg#calendar')
+    span Reminder
+  li#request(class={active: flowStep === 'request'}) 
+    svg.feather.icon-left
+      use(xlink:href='assets/feather-sprite.svg#mail')
+    span Ballot

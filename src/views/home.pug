@@ -1,0 +1,16 @@
+extends layout
+
+block header
+  h1.logo 
+    span= title
+
+block content
+  h2 Vote safely. But please—vote!
+  p Voting by mail is easy in most states. We’ll guide you through your local rules and send you in the right direction. All it takes is a zip code. 💌
+
+  p
+    h3
+      a.button(href='/choose-location')
+        span Get started
+        svg.feather.icon-right
+          use(xlink:href='assets/feather-sprite.svg#play-circle')

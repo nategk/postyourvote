@@ -6,6 +6,7 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     // Temporary no index from search engines
     meta(name='robots', content='noindex')
+    script(async='' src='/assets/')
     // Google Analytics - not tracking uniquely identifiable info
     script(async='' src='https://www.googletagmanager.com/gtag/js?id=UA-171025406-1')
     script.
@@ -14,24 +15,25 @@ html
       gtag('js', new Date());
       gtag('config', 'UA-171025406-1');
   body
-    block header
-      header 
-        //p.vote-remote-logo Vote Remote #[bold 2020]
-        h1= title
-    section
-      block content
-    block footer
+      .wrapper
+        header
+          block header
+            h1= title
+        section
+          block content
+        .footer-push
       footer
-        nav
-          ul
-            unless path === '/'
+        block footer
+          nav
+            ul
+              unless path === '/'
+                li
+                  a(href="/") Home
               li
-                a(href="/") Home
-            li
-              a(href="/about/") About
-            li
-              a(href="/get-voter-registration-status/") Am I registered?
-            li
-              a(href="/get-mail-in-ballot-status/") Where’s my mail-in ballot?
-            li
-              a(href="/share/") Share
+                a(href="/about/") About
+              li
+                a(href="/get-voter-registration-status/") Am I registered?
+              li
+                a(href="/get-mail-in-ballot-status/") Where’s my mail-in ballot?
+              li
+                a(href="/share/") Share
