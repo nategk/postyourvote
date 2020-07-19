@@ -9,7 +9,6 @@ import logger from 'morgan'
 import sassMiddleware from 'node-sass-middleware'
 import config from './config.json'
 import cache from './lib/cache.js'
-
 import indexRouter from './routes/index.js'
 import connectToDB from './lib/db.js'
 
@@ -36,11 +35,15 @@ app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
 	prefix: '/assets',
+	outputStyle: 'compressed',
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
+
+// load assets
 app.use('/assets', [
   express.static(path.join(__dirname, 'public')),
+  express.static(path.join(__dirname, '../node_modules/feather-icons/dist')),
   express.static(path.join(__dirname, '../node_modules/jquery/dist')),
   express.static(path.join(__dirname, '../node_modules/jquery-mask-plugin/dist'))
 ]);
