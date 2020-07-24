@@ -5,12 +5,38 @@ block header
     span= title
 
 block content
-  h2 Vote safely. But please—vote!
-  p Voting by mail is easy in most states. We’ll guide you through your local rules and send you in the right direction. All it takes is a zip code. 💌
 
+  // For Zaccie! Wire meh
+  -var located = true
+  
+  if located 
+    /// For zaccie tell me the city/town
+    h2 Hellooo St. Paul, Minnesota!
+  else 
+    h2 Vote safely. But please—vote!
+  
+  p Voting by mail is safe and easy. Take a few minutes to see just how easy it is. Do it for democracy, do it to be heard.
+  ul#value-props
+    li 
+      svg.feather.icon-left
+        use(xlink:href='/assets/feather-sprite.svg#clock')
+      span Takes 5 minutes
+    li 
+      svg.feather.icon-left
+        use(xlink:href='/assets/feather-sprite.svg#lock')
+      span No personal data
   p
     h3
-      a.button(href='/choose-location')
-        span Get started
-        svg.feather.icon-right
-          use(xlink:href='assets/feather-sprite.svg#play-circle')
+      if located
+        // For Zaccie! Fix me if I’m located eh
+        a.button(href='/minnesota/')
+          span Get your mail-in ballot ⭢
+      else 
+        a.button(href='/choose-location/')
+          span Enter your home zip ⭢
+  
+  if located
+    p.lighter-text
+      br
+      span Live somewhere else? &nbsp;
+      a(href='/choose-location') Choose a different location
