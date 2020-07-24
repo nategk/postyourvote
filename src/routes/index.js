@@ -148,13 +148,16 @@ router.get('/:state/', async function(req, res, next) {
     });
   } else {
     res.render('location-rules', {
-      title: `${thisLocation['State Name']} state rules`,
+      title: `Vote by mail in ${thisLocation['State Name']}`,
       URL: thisLocation['State URL'],
       name: thisLocation['State Name'],
       ballotRequestMethod: thisLocation['Ballot Request Method'],
-      ballotRequestDeadline: thisLocation['Ballot Request Deadline'],
+      ballotRequestDeadline: thisLocation['VBM Estimated Request-By Date'],
+      ballotMailDeadline: thisLocation['VBM Estimated Mail-By Date'],
       ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
-      reasonsNeeded: thisLocation['VBM Reason(s) Needed'],
+      needToBeRegistered: thisLocation['Need to be registered to VBM?'],
+      needReason: thisLocation['Need a reason or excuse to VBM?'],
+      reasonsNeeded: thisLocation['Reasons or excuses needed to VBM'],
       onlineBallotRequestURL: thisLocation['Online Ballot Request URL'],
       markdown: markdown
     });

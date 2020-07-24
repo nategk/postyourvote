@@ -5,39 +5,56 @@ block append header
   include components/flow-progress.pug
 
 block content
-  table.instructions
+          
+  if onlineBallotRequestURL
+    p
+      span We’ll take you to the official #{name} site so you can request your ballot officially & directly. We don’t collect any personal info. 
+      strong Here’s what you need to know:
+      
+    table.instructions
+
+      // Registration required?
+      tr
+        td
+          svg.feather.icon-left
+            use(xlink:href='/assets/feather-sprite.svg#check-circle')
+        if needToBeRegistered === "TRUE"
+          td
+            span #[strong You need to be registered to vote] before you can request your ballot online in #{name}. Unsure if you’re registered to vote? 
+            a(href="/get-voter-registration-status/") Check your status
+        else
+          td You #[strong do not] need to already be registered to vote in order to request your ballot. Requesting your ballot also registers you to vote in #{name}.
+
+      // Reason needed?
+      tr
+        td
+          svg.feather.icon-left
+            use(xlink:href='/assets/feather-sprite.svg#message-square')
+        if needReason === "TRUE"
+          td
+            span You #[strong need one of the following reasons or excuses] to vote by mail:
+            if reasonsNeeded
+              != markdown(reasonsNeeded)
+        else 
+          td You #[strong do not] need any reason or excuse to vote by mail. Good job, #{name}!
         
-    if onlineBallotRequestURL
+      // What will I need?
       tr
-        th(scope='row') Can I request my mail-in ballot online?
         td
-          strong Yes!
-      tr
-        th(scope='row') Do I need a reason or excuse to vote by mail?
-        td= reasonsNeeded
-      tr
-        th(scope='row') Do I need to be registered to vote first?
-        td (Let’s add a field for this?)&nbsp;
-          a(href="/get-voter-registration-status/") Check voter registration status
-      tr
-        th(scope='row') What should I have ready?
-        td
+          svg.feather.icon-left
+            use(xlink:href='/assets/feather-sprite.svg#list')
+        td #[strong You will need:]
           != markdown(ballotRequestRequirements)
 
-    else 
+      // Deadline to request online
       tr
-        th(scope='row') Can I request my mail-in ballot online?
-        td Unfortunately, no. (This text shows up when there’s no online ballot URL)
-      tr
-        th(scope='row') What should I have ready?
         td
-          //ul!= ballotRequestRequirements
+          svg.feather.icon-left
+            use(xlink:href='/assets/feather-sprite.svg#calendar')
+        td 
+          span #[strong You should request your ballot by #{ballotRequestDeadline}] and put your ballot in the mail by #{ballotMailDeadline}. If you’ll miss these dates, vote safely in person.
 
-      tr
-        th(scope='row') When should I send my ballot in the mail?
-        td= ballotRequestDeadline
-  p
     h3
-      a.button(href=`/${URL}/mail-in-ballot-reminder/`) Continue
+      a.button(href=`/${URL}/mail-in-ballot-reminder/`) Let’s GO ⭢
   p
     a(href="/choose-location/") Change location
