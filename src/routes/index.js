@@ -3,6 +3,7 @@ import loadData from '../lib/dataloader.js'
 import getIpLocation from '../lib/iplocation.js'
 import queryLocation from '../lib/placesearch.js'
 import {urlFriendly } from '../lib/utils.js'
+import markdown from 'marked'
 
 var router = Router();
 
@@ -124,7 +125,7 @@ router.get('/:state/:county', async function(req, res, next) {
     name: thisLocation['State Name'],
     ballotRequestMethod: thisLocation['Ballot Request Method'],
     vbmDueDate: thisLocation['VBM Due Date'],
-    ballotRequestRequirements: thisLocation['Ballot Request Requirements'],
+    ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
     onlineBallotRequestURL: thisLocation['Online Ballot Request URL']
   });
 });
@@ -152,9 +153,10 @@ router.get('/:state/', async function(req, res, next) {
       name: thisLocation['State Name'],
       ballotRequestMethod: thisLocation['Ballot Request Method'],
       ballotRequestDeadline: thisLocation['Ballot Request Deadline'],
-      ballotRequestRequirements: thisLocation['Ballot Request Requirements'],
+      ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
       reasonsNeeded: thisLocation['VBM Reason(s) Needed'],
-      onlineBallotRequestURL: thisLocation['Online Ballot Request URL']
+      onlineBallotRequestURL: thisLocation['Online Ballot Request URL'],
+      markdown: markdown
     });
   }
 });

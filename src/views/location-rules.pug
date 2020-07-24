@@ -21,10 +21,8 @@ block content
           a(href="/get-voter-registration-status/") Check voter registration status
       tr
         th(scope='row') What should I have ready?
-        td= ballotRequestRequirements
-      tr
-        th(scope='row') When is the deadline?
-        td= vbmDueDate
+        td
+          != markdown(ballotRequestRequirements)
 
     else 
       tr
@@ -32,7 +30,9 @@ block content
         td Unfortunately, no. (This text shows up when there’s no online ballot URL)
       tr
         th(scope='row') What should I have ready?
-        td= ballotRequestRequirements
+        td
+          //ul!= ballotRequestRequirements
+
       tr
         th(scope='row') When should I send my ballot in the mail?
         td= ballotRequestDeadline
