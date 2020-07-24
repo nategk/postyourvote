@@ -9,6 +9,11 @@ form#choose-location(action="/choose-location" method="POST")
     // Todo: prefill placeholder if guessed location or if coming from location
     p
       input(name="query" type="number" placeholder="90210" maxlength="5" data-mask="00/00/0000")#zip
+    p#detect-location
+      a(href="javascript:void(0);")
+        svg.feather.icon-left
+          use(xlink:href='assets/feather-sprite.svg#navigation')
+        span Use current location
   input(type="submit" value="Continue ⭢")
 
 script(src="/assets/jquery.min.js")
@@ -22,12 +27,19 @@ script.
 
   if (navigator.geolocation) {
     //browser supports asking location
-    console.log("Browser supports asking for location");
-    $("form#choose-location fieldset").append("<p id='detect-location'><a href='#'><svg class='feather icon-left'><use xlink:href='/assets/feather-sprite.svg#navigation'></use></svg>Use current location</a></p>");
     $("p#detect-location a").click(function() {
-      navigator.geolocation.getCurrentPosition(position => {
-          console.log(position.coords);
-      });
+      console.log("Asking for location");
+      function positionSuccess(position) {
+        console.log("success", position);
+      }
+      function positionError(error) {
+        console.log("error", error);
+      }
+      var positionOptions = {
+        maximumAge: 30000, 
+        timeout: 27000
+      }
+      navigator.geolocation.getCurrentPosition(positionSuccess, positionError, positionOptions);
     });
   };
 
