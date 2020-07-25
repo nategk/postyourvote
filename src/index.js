@@ -11,6 +11,7 @@ import config from './config.json'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
 import connectToDB from './lib/db.js'
+import enforce from 'express-sslify'
 
 let app = express();
 app.server = http.createServer(app);
