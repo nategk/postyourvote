@@ -9,16 +9,21 @@ form#choose-location(action="/choose-location" method="POST")
     // Todo: prefill placeholder if guessed location or if coming from location
     p
       input(name="query" type="number" placeholder="90210" maxlength="5" data-mask="00/00/0000")#zip
-    p#detect-location
+    p(style="display:none;")#detect-location
       a(href="javascript:void(0);")
         svg.feather.icon-left
           use(xlink:href='assets/feather-sprite.svg#navigation')
         span Use current location
+    p(style="display:none;")#location-loading Finding your location...
+    p(style="display:none;").error#location-error Error
   input(type="submit" value="Continue ⭢")
 
 script(src="/assets/jquery.min.js")
 script(src="/assets/jquery.mask.min.js")
 script.
+  function urlFriendly(value) {
+    return value == undefined ? '' : value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
+  }
 
   // Numbers only input
   $(document).ready(function(){
@@ -27,13 +32,24 @@ script.
 
   if (navigator.geolocation) {
     //browser supports asking location
+    $("p#detect-location").show();
     $("p#detect-location a").click(function() {
       console.log("Asking for location");
+      $("#location-loading").show();
       function positionSuccess(position) {
         console.log("success", position);
+        var queryParams = {"lat": position.coords.latitude, "lng": position.coords.longitude};
+        $.getJSON("/location-query.json", queryParams, function(results) {
+          console.log("Got results", results);
+          if (results.status == 'success' && results.data.length > 0) {
+            window.location = "/"+urlFriendly(results.data[0].state);
+          }
+        });
       }
       function positionError(error) {
         console.log("error", error);
+        $("#location-error").show().text(error.message);
+        $("#location-loading").hide();
       }
       var positionOptions = {
         maximumAge: 30000, 
@@ -49,7 +65,7 @@ script.
 //-     console.log("form submit", event);
 //-     var queryValue = $("input[name=query]").val();
 //-     console.log("query value", queryValue);
-//-     $.getJSON("/location-query", {"q": queryValue}, function(results) {
+//-     $.getJSON("/location-query.json", {"q": queryValue}, function(results) {
 //-       console.log("query results", results);
 //-       var locationResults = $("#location-results");
 //-       locationResults.show();

@@ -53,7 +53,12 @@ async function queryLatLng(db, lat, lng) {
   lng = parseFloat(lng);
   let postalcode = 53208;
   return new Promise(async (resolve) => {
-    let result = await db.collection('postalcodes').findOne({"postal code": postalcode});
+    let result = await db.collection('postalcodes').findOne({
+      center: {$near: {
+        $geometry: {type: "Point", coordinates: [-122.41273609999999, 37.7646157]}, 
+        $maxDistance: 10000
+      }}
+    });
     if (result) {
       resolve({
         status: "success",

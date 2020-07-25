@@ -14,6 +14,10 @@ import connectToDB from './lib/db.js'
 
 let app = express();
 app.server = http.createServer(app);
+if (process.env.NODE_ENV == 'production') {
+  // Enforce https and the proto header is required for heroku
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 app.use(bodyParser.json({
 	limit : config.bodyLimit
