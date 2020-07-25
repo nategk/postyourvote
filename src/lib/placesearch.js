@@ -48,6 +48,39 @@ async function getGeonames(q) {
   });
 }
 
+async function queryLatLng(db, lat, lng) {
+  lat = parseFloat(lat);
+  lng = parseFloat(lng);
+  let postalcode = 53208;
+  return new Promise(async (resolve) => {
+    let result = await db.collection('postalcodes').findOne({
+      center: {$near: {
+        $geometry: {type: "Point", coordinates: [-122.41273609999999, 37.7646157]}, 
+        $maxDistance: 10000
+      }}
+    });
+    if (result) {
+      resolve({
+        status: "success",
+        data: [
+          {
+            name: result["place name"],
+            lng: result.longitude,
+            lat: result.latitude,
+            state: result["admin name1"],
+            stateCode: result["admin code1"],
+            county: result["admin name2"]
+          }
+        ]
+      });
+    } else {
+      resolve({
+        status: "error", message: "no result"
+      });
+    }
+  });
+}
+
 async function getPostalcode(db, postalcode) {
   postalcode = parseInt(postalcode);
   return new Promise(async (resolve) => {
@@ -87,5 +120,5 @@ async function get(db, q) {
   }
 }
 
-export { getGeonames, getPostalcode, isPostalcode, get };
+export { getGeonames, queryLatLng, getPostalcode, isPostalcode, get };
 export default get

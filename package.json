@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
     "feather-icons": "^4.28.0",
     "http-errors": "~1.6.3",
     "jquery": "^3.5.1",
@@ -40,6 +41,7 @@
     "@babel/node": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
-    "eslint": "^7.5.0"
+    "eslint": "^7.5.0",
+    "migrate-mongo": "^8.1.1"
   }
 }

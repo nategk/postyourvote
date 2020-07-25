@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import loadData from '../lib/dataloader.js'
 import getIpLocation from '../lib/iplocation.js'
-import queryLocation from '../lib/placesearch.js'
-import {urlFriendly } from '../lib/utils.js'
+import { get as queryLocation, queryLatLng } from '../lib/placesearch.js'
+import { urlFriendly } from '../lib/utils.js'
 import markdown from 'marked'
 
 var router = Router();
@@ -81,7 +81,13 @@ router.get('/raw-data', async function(req, res, next) {
 });
 
 router.get('/location-query.json', async function(req, res, next) {
-  let locationResults = await queryLocation(req.app.get('db'), req.query.q);
+  if (req.query.q) {
+    var locationResults = await queryLocation(req.app.get('db'), req.query.q);
+  } else if (req.query.lat && req.query.lng) {
+    var locationResults = await queryLatLng(req.app.get('db'), req.query.lat, req.query.lng);
+  } else {
+    res.status(400).json({status: "error", message: "either q or lat/lng queries required"});
+  }
   res.json(locationResults);
 });
 
