@@ -130,9 +130,14 @@ router.get('/:state/:county', async function(req, res, next) {
     URL: thisLocation['State URL']+'/'+thisLocation['County URL'],
     name: thisLocation['State Name'],
     ballotRequestMethod: thisLocation['Ballot Request Method'],
-    vbmDueDate: thisLocation['VBM Due Date'],
+    ballotRequestDeadline: thisLocation['VBM Estimated Request-By Date'],
+    ballotMailDeadline: thisLocation['VBM Estimated Mail-By Date'],
     ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
-    onlineBallotRequestURL: thisLocation['Online Ballot Request URL']
+    needToBeRegistered: thisLocation['Need to be registered to VBM?'],
+    needReason: thisLocation['Need a reason or excuse to VBM?'],
+    reasonsNeeded: thisLocation['Reasons or excuses needed to VBM'],
+    onlineBallotRequestURL: thisLocation['Online Ballot Request URL'],
+    markdown: markdown
   });
 });
 

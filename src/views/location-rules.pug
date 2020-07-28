@@ -39,12 +39,13 @@ block content
           td You #[strong do not] need any reason or excuse to vote by mail. Good job, #{name}!
         
       // What will I need?
-      tr
-        td
-          svg.feather.icon-left
-            use(xlink:href='/assets/feather-sprite.svg#list')
-        td #[strong You will need:]
-          != markdown(ballotRequestRequirements)
+      if ballotRequestRequirements
+        tr
+          td
+            svg.feather.icon-left
+              use(xlink:href='/assets/feather-sprite.svg#list')
+          td #[strong You will need:]
+            != markdown(ballotRequestRequirements)
 
       // Deadline to request online
       tr
