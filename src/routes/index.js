@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import loadData from '../lib/dataloader.js'
 import getIpLocation from '../lib/iplocation.js'
-import { get as queryLocation, queryLatLng } from '../lib/placesearch.js'
-import { urlFriendly } from '../lib/utils.js'
+import chooseLocationRouter from './chooselocation.js'
 import markdown from 'marked'
 
 var router = Router();
@@ -18,42 +17,17 @@ router.get('/', async function(req, res, next) {
     var thisState = csvData[stateName];
     res.render('home', {
       title: 'Vote Remote 2020',
-      URL: thisState['State URL'],
-      name: thisState['State Name'],
-      requestOnline: thisState['Online Ballot Request URL']
+      URL: thisState.stateUrl,
+      name: thisState.stateName,
+      ...thisState
     });
   } else {
     res.render('home', { title: 'Vote Remote 2020' });
   }
 });
 
-router.get('/choose-location', function(req, res, next) {
-   res.locals.path = req.path;
-   res.render('choose-location', { title: 'Choose a location' });
- });
-
-router.post('/choose-location', async function(req, res, next) {
-  console.log("location query", req.body.query);
-  let postalResults = await queryLocation(req.app.get('db'), req.body.query);
-  console.log("Postal results", postalResults);
-  if (postalResults.status == 'success' && postalResults.data.length == 1) {
-    let stateUrl = urlFriendly(postalResults.data[0].state);
-    let countyUrl = urlFriendly(postalResults.data[0].county);
-    let csvData = await req.app.get('cache').get('states', loadData);
-    let locationResults = csvData[stateUrl];
-    if (locationResults.counties && locationResults.counties[countyUrl]) {
-      locationResults = locationResults.counties[countyUrl];
-      res.redirect(301, "/"+locationResults['State URL']+'/'+locationResults['County URL']);
-    } else {
-      res.redirect(301, "/"+locationResults['State URL']);
-    }
-  } else {
-    res.render('choose-location', {
-      title: 'Choose your location',
-      error: "Sorry, we couldn't find that postal code"
-    });
-  }
-});
+// Add all the location choosing routes
+router.use(chooseLocationRouter);
 
 router.get('/about', function(req, res, next) {
   res.locals.path = req.path;
@@ -75,22 +49,6 @@ router.get('/get-voter-registration-status', function(req, res, next) {
   res.render('get-voter-registration-status', { title: 'Voter registration status' });
 });
 
-router.get('/raw-data', async function(req, res, next) {
-  let csvData = await req.app.get('cache').get('states', loadData);
-  res.send(csvData);
-});
-
-router.get('/location-query.json', async function(req, res, next) {
-  if (req.query.q) {
-    var locationResults = await queryLocation(req.app.get('db'), req.query.q);
-  } else if (req.query.lat && req.query.lng) {
-    var locationResults = await queryLatLng(req.app.get('db'), req.query.lat, req.query.lng);
-  } else {
-    res.status(400).json({status: "error", message: "either q or lat/lng queries required"});
-  }
-  res.json(locationResults);
-});
-
 // Variable paths
 
 router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
@@ -98,10 +56,9 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
   var thisState = csvData[req.params.state];
   res.locals.path = req.path;
   res.render('get-mail-in-ballot-reminder', {
-    title: `${thisState['State Name']} reminder to mail ballot`,
-    name: thisState['State Name'],
-    ballotRequestDeadline: thisState['Ballot Request Deadline'],
-    onlineBallotRequestURL: thisState['Online Ballot Request URL']
+    title: `${thisState.stateName} reminder to mail ballot`,
+    name: thisState.stateName,
+    ...thisState
   });
 });
 
@@ -126,17 +83,9 @@ router.get('/:state/:county', async function(req, res, next) {
   console.log(thisLocation);
   res.locals.path = req.path;
   res.render('location-rules', {
-    title: `${thisLocation['County Name']} county, ${thisLocation['State Name']} rules`,
-    URL: thisLocation['State URL']+'/'+thisLocation['County URL'],
-    name: thisLocation['State Name'],
-    ballotRequestMethod: thisLocation['Ballot Request Method'],
-    ballotRequestDeadline: thisLocation['VBM Estimated Request-By Date'],
-    ballotMailDeadline: thisLocation['VBM Estimated Mail-By Date'],
-    ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
-    needToBeRegistered: thisLocation['Need to be registered to VBM?'],
-    needReason: thisLocation['Need a reason or excuse to VBM?'],
-    reasonsNeeded: thisLocation['Reasons or excuses needed to VBM'],
-    onlineBallotRequestURL: thisLocation['Online Ballot Request URL'],
+    title: `${thisLocation.countyName} county, ${thisLocation.stateName} rules`,
+    URL: thisLocation.stateUrl+'/'+thisLocation.countyUrl,
+    ...thisLocation,
     markdown: markdown
   });
 });
@@ -154,22 +103,15 @@ router.get('/:state/', async function(req, res, next) {
   res.locals.path = req.path;
   if (thisLocation.counties) {
     res.render('state-counties-list', {
-      title: `${thisLocation['State Name']} counties`,
+      title: `${thisLocation.stateName} counties`,
       counties: thisLocation.counties
     });
   } else {
     res.render('location-rules', {
-      title: `Vote by mail in ${thisLocation['State Name']}`,
-      URL: thisLocation['State URL'],
-      name: thisLocation['State Name'],
-      ballotRequestMethod: thisLocation['Ballot Request Method'],
-      ballotRequestDeadline: thisLocation['VBM Estimated Request-By Date'],
-      ballotMailDeadline: thisLocation['VBM Estimated Mail-By Date'],
-      ballotRequestRequirements: thisLocation['Online Ballot Request Requirements'],
-      needToBeRegistered: thisLocation['Need to be registered to VBM?'],
-      needReason: thisLocation['Need a reason or excuse to VBM?'],
-      reasonsNeeded: thisLocation['Reasons or excuses needed to VBM'],
-      onlineBallotRequestURL: thisLocation['Online Ballot Request URL'],
+      title: `Vote by mail in ${thisLocation.stateName}`,
+      URL: thisLocation.stateUrl,
+      name: thisLocation.stateName,
+      ...thisLocation,
       markdown: markdown
     });
   }
