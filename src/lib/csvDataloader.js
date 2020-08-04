@@ -68,7 +68,7 @@ async function get() {
       let response = await fetch(url);
       let csvText = await response.text();
       Papa.parse(csvText, {
-        complete: (results, file) => {
+        complete: (results) => {
           // console.log("Parsing complete:", results, file);
           let data = csvToObject(results.data);
           resolve(data);

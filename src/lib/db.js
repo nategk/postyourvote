@@ -1,9 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { MongoClient } from 'mongodb';
+import Airtable from 'airtable';
+
+var dbConfig = {};
 
 function getDbConfig() {
-  var dbConfig = {};
+  if (Object.keys(dbConfig).length) {
+    return dbConfig;
+  }
   try {
     const dbConfigPath = path.resolve(path.join(__dirname, '../dbConfig.json'));
     dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
@@ -12,6 +17,8 @@ function getDbConfig() {
     console.error("Couldn't get dbConfig.json", err);
   }
   dbConfig = {
+    airtableKey: process.env.AIRTABLE_KEY || dbConfig.airtableKey,
+    airtableBaseName: process.env.AIRTABLE_BASE_NAME || dbConfig.airtableBaseName,
     username: process.env.MONGO_USER || dbConfig.username,
     password: process.env.MONGO_PASS || dbConfig.password,
     dbName: process.env.MONGO_DB_NAME || dbConfig.dbName,
@@ -43,5 +50,11 @@ async function connectToDB() {
   });
 }
 
-export { connectToDB, getURI }
+function connectToAirtable() {
+  const { airtableKey, airtableBaseName } = getDbConfig();
+  var base = new Airtable({apiKey: airtableKey}).base(airtableBaseName);
+  return base;
+}
+
+export { connectToDB, getURI, connectToAirtable }
 export default connectToDB

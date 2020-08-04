@@ -5,13 +5,10 @@ block header
     span= title
 
 block content
-
-  // For Zaccie! Wire meh
-  -var located = true
   
   if located 
     /// For zaccie tell me the city/town
-    h2 Hellooo St. Paul, Minnesota!
+    h2 Hellooo #{name}!
   else 
     h2 Vote safely. But please—vote!
   
@@ -29,7 +26,7 @@ block content
     h3
       if located
         // For Zaccie! Fix me if I’m located eh
-        a.button(href='/minnesota/')
+        a.button(href=url)
           span Get your mail-in ballot ⭢
       else 
         a.button(href='/choose-location/')

@@ -12,7 +12,7 @@ form#choose-location(action="/choose-location" method="POST")
     p(style="display:none;")#detect-location
       a(href="javascript:void(0);")
         svg.feather.icon-left
-          use(xlink:href='assets/feather-sprite.svg#navigation')
+          use(xlink:href='/assets/feather-sprite.svg#navigation')
         span Use current location
     p(style="display:none;")#location-loading Finding your location...
     p(style="display:none;").error#location-error Error

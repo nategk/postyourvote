@@ -8,4 +8,4 @@ block content
   ul
     each county in counties
       li
-        a(href='/'+county['State URL']+'/'+county['County URL'])= county['County Name']
+        a(href='/'+county.url)= county.countyName
