@@ -14,7 +14,7 @@ function getDbConfig() {
     dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
   }
   catch (err) {
-    console.error("Couldn't get dbConfig.json", err);
+    console.warn("Couldn't get dbConfig.json");
   }
   dbConfig = {
     airtableKey: process.env.AIRTABLE_KEY || dbConfig.airtableKey,
@@ -35,7 +35,7 @@ function getURI() {
 }
 
 async function connectToDB() {
-  return new Promise(async (resolve) => {
+  return new Promise((resolve) => {
     const uri = getURI();
     const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {

@@ -9,7 +9,6 @@ const queryParams = {
 };
 const urlBase = "http://api.geonames.org/searchJSON";
 async function getGeonames(q) {
-  return new Promise(async (resolve) => {
     try {
       var params = {
         q,
@@ -39,54 +38,51 @@ async function getGeonames(q) {
           stateCode: result.adminCode1
         }
       });
-      resolve({status: "success", data});
+      return {status: "success", data};
     }
     catch (err) {
       console.error("Error getting CSV data", err);
-      resolve({status: "error", message: err});
+      return {status: "error", message: err};
     }
-  });
 }
 
 async function queryLatLng(db, lat, lng) {
   lat = parseFloat(lat);
   lng = parseFloat(lng);
-  let postalcode = 53208;
-  return new Promise(async (resolve) => {
-    let result = await db.collection('postalcodes').findOne({
-      center: {$near: {
-        $geometry: {type: "Point", coordinates: [-122.41273609999999, 37.7646157]}, 
-        $maxDistance: 10000
-      }}
-    });
-    if (result) {
-      resolve({
-        status: "success",
-        data: [
-          {
-            name: result["place name"],
-            lng: result.longitude,
-            lat: result.latitude,
-            state: result["admin name1"],
-            stateCode: result["admin code1"],
-            county: result["admin name2"]
-          }
-        ]
-      });
-    } else {
-      resolve({
-        status: "error", message: "no result"
-      });
-    }
+  // let postalcode = 53208;
+
+  let result = await db.collection('postalcodes').findOne({
+    center: {$near: {
+      $geometry: {type: "Point", coordinates: [lng, lat]}, 
+      $maxDistance: 10000
+    }}
   });
+  if (result) {
+    return {
+      status: "success",
+      data: [
+        {
+          name: result["place name"],
+          lng: result.longitude,
+          lat: result.latitude,
+          state: result["admin name1"],
+          stateCode: result["admin code1"],
+          county: result["admin name2"]
+        }
+      ]
+    };
+  } else {
+    return {
+      status: "error", message: "no result"
+    };
+  }
 }
 
 async function getPostalcode(db, postalcode) {
   postalcode = parseInt(postalcode);
-  return new Promise(async (resolve) => {
     let result = await db.collection('postalcodes').findOne({"postal code": postalcode});
     if (result) {
-      resolve({
+      return {
         status: "success",
         data: [
           {
@@ -98,13 +94,12 @@ async function getPostalcode(db, postalcode) {
             county: result["admin name2"]
           }
         ]
-      });
+      };
     } else {
-      resolve({
+      return {
         status: "error", message: "no result"
-      });
+      };
     }
-  });
 }
 
 function isPostalcode(q) {

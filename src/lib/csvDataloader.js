@@ -64,20 +64,18 @@ function csvToObject(csvData) {
 const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMKrjGL05YBTjuuviiAcbmyPy8aw_NZ0ViaZohWdWgZVDm_dsMKpR0yUSktNbKC6D_JKVmO6042FH7/pub?gid=415018427&single=true&output=csv";
 async function get() {
   try {
-    return new Promise(async (resolve) => {
-      let response = await fetch(url);
-      let csvText = await response.text();
-      Papa.parse(csvText, {
-        complete: (results) => {
-          // console.log("Parsing complete:", results, file);
-          let data = csvToObject(results.data);
-          resolve(data);
-        },
-        error: (error, file) => {
-          console.log("Error", error, file)
-          resolve(error);
-        }
-      });
+    let response = await fetch(url);
+    let csvText = await response.text();
+    Papa.parse(csvText, {
+      complete: (results) => {
+        // console.log("Parsing complete:", results, file);
+        let data = csvToObject(results.data);
+        return data;
+      },
+      error: (error, file) => {
+        console.log("Error", error, file)
+        return error;
+      }
     });
   }
   catch (err) {
