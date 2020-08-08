@@ -93,6 +93,28 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res) {
   });
 });
 
+router.get('/:state/:county/mail-in-ballot-reminder', async function(req, res) {
+  var stateKey = urlFriendly(req.params.state);
+  var countyKey = urlFriendly(req.params.county);
+  let cache = req.app.get('cache');
+  let regions = await cache.get(stateKey, async () => {
+    let airtable = req.app.get('airtable');
+    return await airtableDataloader(airtable, stateKey);
+  });
+  if (regions.length != 1 || !regions[0].counties || !regions[0].counties[countyKey]) {
+    console.error("Couldn't find state", stateKey);
+    res.sentStatus(404);
+    return;
+  }
+  let region = regions[0].counties[countyKey]
+  console.log(region);
+  res.render('get-mail-in-ballot-reminder', {
+    name: `${region.countyName} County, ${region.stateName}`,
+    ...region,
+    markdown
+  });
+});
+
 router.get('/:state/:county', async function(req, res) {
   var stateKey = urlFriendly(req.params.state);
   var countyKey = urlFriendly(req.params.county);
