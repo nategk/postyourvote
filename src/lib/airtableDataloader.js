@@ -12,6 +12,7 @@ const fieldNameMap = {
   needReason: 'VBM Excuse Required?',
   reasonsNeeded: 'Reasons or excuses needed to VBM',
   onlineBallotRequestURL: 'Online Ballot Request URL',
+  timezone: 'Timezone'
 }
 
 function mapValue(val) {
@@ -74,11 +75,14 @@ async function getRegion(airtableBase, stateKey, countyKey) {
             stateKey: region.stateKey,
             stateName: region.stateName,
             url: region.stateKey,
+            name: region.stateName,
             counties: {}
           }
         }
+        region.name = `${region.countyName} County, ${region.stateName}`;
         regions[region.stateKey].counties[region.countyKey] = region;
       } else {
+        region.name = region.stateName;
         regions[region.url] = region;
       }
     });
