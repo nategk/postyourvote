@@ -10,7 +10,7 @@ var router = Router();
 
 function createRequestBallotIcal(req, region) {
   const cal = ical({
-    timezone: region.timezone, 
+    timezone: region.timezone,
     domain: req.get('host'),
     prodId: {company: req.app.get('config').product, product: req.app.get('config').product},
     name: req.app.get('config').product

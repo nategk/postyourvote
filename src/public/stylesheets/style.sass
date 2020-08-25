@@ -4,12 +4,24 @@
 
 // Variables
 
-$color-text: black
-$color-text-light: #5c5c5c
-$color-emphasis: #EF4F2B
-$color-bright: #2CBDFB
-$color-link: #6194BC
-$color-tersiary: #A5D1F3
+$brand-color-blue-dark: #1C2E5A
+$brand-color-blue-light: #017FFF
+$brand-color-red: #EE3227
+$brand-color-purple-dark: #72286F
+$brand-color-purple: #9452A0
+$brand-color-purple-light: #C09DC9
+
+$color-text: $brand-color-blue-dark
+$color-text-light: $brand-color-purple-light
+$color-text-error: $brand-color-red
+$color-link: $brand-color-blue-light
+$color-link-hover: $brand-color-red
+$color-button: $brand-color-red
+$color-button-hover: #FF000A
+
+$color-emphasis: $brand-color-red
+$color-bright: $brand-color-red
+
 $background: white
 $font-body: 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
 $font-header: 'Crete Round', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
@@ -27,22 +39,49 @@ html, body
 body
   font: 18px $font-body
   line-height: 1.4em
-  color: $color-text
+  color: $brand-color-blue-dark
   background-color: $background
   width: auto
-  background-image: url('../img/changing-channels-on-the-tv-with-a-remote.jpg')
-  background-repeat: no-repeat
-  background-position: center 100%
-  background-size: 70% auto
-  background-attachment: fixed
+
+// Text, type
 
 h1, h2, h3, h4, h5, h6
   font-family: $font-header
+  font-weight: normal
+h1
+  font-size: 2.4em
+h2
+  font-size: 2em
 
 a, a:visited
   color: $color-link
   &:hover
-    color: $color-emphasis
+    color: $color-link-hover
+
+a.button, input[type="submit"]
+  padding: .5em 1em
+  background: $color-button
+  display: inline-block
+  color: white
+  text-decoration: none
+  font-weight: normal
+  border: 0
+  border-radius: 9999px
+  box-sizing: border-box
+  vertical-align: text-bottom
+  -webkit-appearance: none
+  &:hover
+    cursor: pointer
+    background: $color-button-hover
+    color: white
+
+.error
+  color: $color-text-error
+
+.lighter-text
+  color: $color-text-light
+
+// Forms & inputs
 
 form, fieldset
   border: 0
@@ -59,35 +98,18 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 input[type=number]
   -moz-appearance:textfield
 
+input[type="text"]
+  border: 1px solid $color-button
+
+
+// Tables
+
 table *
   border: 0
   padding: 0
   th, td
     text-align: left
     padding: 0 1em .5em 0
-
-a.button, input[type="submit"]
-  padding: .5em 1em
-  background: $color-bright
-  display: inline-block
-  color: white
-  text-decoration: none
-  font-weight: normal
-  border: 0
-  border-radius: 9999px
-  box-sizing: border-box
-  vertical-align: text-bottom
-  -webkit-appearance: none
-  &:hover
-    cursor: pointer
-    background: $color-emphasis
-    color: white
-
-.error
-  color: $color-emphasis
-
-.lighter-text
-  color: $color-text-light
 
 // Icons
 
@@ -156,9 +178,9 @@ footer
 
 h1.logo
   width: 100%
-  max-width: 360px
+  max-width: 220px
   height: 200px
-  background-image: url('../img/vote-remote-logo.svg')
+  background-image: url('../img/post-your-vote-logo.svg')
   background-size: 100% auto
   background-repeat: no-repeat
   background-position: right top

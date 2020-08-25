@@ -24,6 +24,7 @@
     "express-sslify": "^1.2.0",
     "feather-icons": "^4.28.0",
     "google-calendar-url": "0.0.5",
+    "heroku-ssl-redirect": "^0.1.1",
     "http-errors": "~1.6.3",
     "ical-generator": "^1.14.0",
     "jquery": "^3.5.1",
