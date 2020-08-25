@@ -13,6 +13,9 @@ Getting out the vote since 2020 also only in 2020
 - Install Node & NPM with `brew install node`
 - Clone git repo `https://github.com/culturegraphic/voteremote`
 - Install dependencies `npm install`
+- Make a copy of `dbConfig.template.json` as `dbConfig.json` and add your credentials. This file is in `.gitignore` and will not be checked in. **DO NOT COMMIT ANY CREDENTIALS TO GIT**
+  - mongo username and password are configured with your mongo atlas account (ask Zac)
+  - `airtableKey` is configured in your personal airtable account page
 - Start! `npm run dev`
 - Open http://localhost:3000 in your browser
 

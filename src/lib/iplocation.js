@@ -8,7 +8,6 @@ async function getIPLocation(req) {
     ipAddr = "157.131.203.252";
   }
 
-  console.log("IP addr", ipAddr);
   const url = `http://ip-api.com/json/${ipAddr}?fields=status,message,country,countryCode,region,regionName,city,zip,timezone,mobile,proxy,hosting,query`;
   try {
     let response = await fetch(url);

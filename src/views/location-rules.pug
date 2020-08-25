@@ -5,10 +5,10 @@ block append header
   include components/flow-progress.pug
 
 block content
-          
+
   if onlineBallotRequestURL
     p
-      span We’ll take you to the official #{name} site so you can request your ballot directly from your government. We don’t collect any personal info. 
+      span We’ll take you to the official #{name} site so you can request your ballot officially &amp; directly. We don’t collect any personal info. 
       strong Here’s what you need to know:
       
     table.instructions
@@ -18,7 +18,7 @@ block content
         td
           svg.feather.icon-left
             use(xlink:href='/assets/feather-sprite.svg#check-circle')
-        if needToBeRegistered === "TRUE"
+        if needToBeRegistered
           td
             span #[strong You need to be registered to vote] before you can request your ballot online in #{name}. Unsure if you’re registered to vote? 
             a(href="/get-voter-registration-status/") Check your status
@@ -30,7 +30,7 @@ block content
         td
           svg.feather.icon-left
             use(xlink:href='/assets/feather-sprite.svg#message-square')
-        if needReason === "TRUE"
+        if needReason
           td
             span You #[strong need one of the following reasons or excuses] to vote by mail:
             if reasonsNeeded
@@ -39,12 +39,13 @@ block content
           td You #[strong do not] need any reason or excuse to vote by mail. Good job, #{name}!
         
       // What will I need?
-      tr
-        td
-          svg.feather.icon-left
-            use(xlink:href='/assets/feather-sprite.svg#list')
-        td #[strong You will need:]
-          != markdown(ballotRequestRequirements)
+      if ballotRequestRequirements
+        tr
+          td
+            svg.feather.icon-left
+              use(xlink:href='/assets/feather-sprite.svg#list')
+          td #[strong You will need:]
+            != markdown(ballotRequestRequirements)
 
       // Deadline to request online
       tr
@@ -55,6 +56,6 @@ block content
           span #[strong You should request your ballot by #{ballotRequestDeadline}] and put your ballot in the mail by #{ballotMailDeadline}. If you’ll miss these dates, vote safely in person.
 
     h3
-      a.button(href=`/${URL}/mail-in-ballot-reminder/`) Let’s GO ⭢
+      a.button(href=`/${url}/mail-in-ballot-reminder/`) Let’s GO ⭢
   p
     a(href="/choose-location/") Change location

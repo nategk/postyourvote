@@ -10,10 +10,15 @@ import sassMiddleware from 'node-sass-middleware'
 import config from './config.json'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
-import connectToDB from './lib/db.js'
+import { connectToDB, connectToAirtable} from './lib/db.js'
+import enforce from 'express-sslify'
 
 let app = express();
 app.server = http.createServer(app);
+if (process.env.NODE_ENV == 'production') {
+  // Enforce https and the proto header is required for heroku
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 app.use(bodyParser.json({
 	limit : config.bodyLimit
@@ -47,6 +52,7 @@ app.use('/assets', [
   express.static(path.join(__dirname, '../node_modules/jquery/dist')),
   express.static(path.join(__dirname, '../node_modules/jquery-mask-plugin/dist'))
 ]);
+app.set('config', config);
 
 app.use('/', indexRouter);
 
@@ -56,7 +62,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -66,18 +72,25 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Connect to DB and block
-connectToDB().then(client => {
-  if (!client) {
-    console.error("Couldn't connect to DB");
+(async () => {
+  try {
+    // Execute these tasks in parallel
+    var mongoClientPromise = connectToDB();
+    var serverListenPromise = app.server.listen(process.env.PORT || config.port);
+
+    // Wait for the above tasks to complete
+    var mongoClient = await mongoClientPromise;
+    app.set('db', mongoClient.db());
+    app.set('airtable', connectToAirtable());
+    await serverListenPromise;
   }
-  app.set('db', client.db());
-  app.server.listen(process.env.PORT || config.port, () => {
-    console.log(`Started on port ${app.server.address().port}`);
-  });
-})
-.catch(reason => {
-  console.error("Exception connectig to DB", reason);
-});
+  catch(error) {
+    console.error("Exception connectig to DB", error);
+    process.exit(1);
+  }
+  
+  console.log(`Started on port ${app.server.address().port}`);
+})();
+
 
 export default app
