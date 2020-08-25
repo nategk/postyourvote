@@ -14,7 +14,7 @@ async function getRegion(req, state, county) {
   });
   if (county) {
     if (regions.length != 1 || !regions[0].counties || !regions[0].counties[countyKey]) {
-      // console.error("Couldn't find state", stateKey);
+      // logger.error("Couldn't find state", stateKey);
       // return next();
       throw `Couldn't find region for state: ${state} county: ${county}`;
     }

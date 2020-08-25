@@ -5,13 +5,14 @@ import cors from 'cors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
-import logger from 'morgan'
+import morgan from 'morgan'
 import sassMiddleware from 'node-sass-middleware'
 import config from './config.json'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
 import { connectToDB, connectToAirtable} from './lib/db.js'
 import enforce from 'express-sslify'
+import logger from './lib/logger.js';
 
 let app = express();
 app.server = http.createServer(app);
@@ -32,7 +33,9 @@ app.use(cors({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('cache', new cache(config.defaultCacheSeconds));
-app.use(logger('dev'));
+app.use(morgan('dev', { stream: {write: function (message) {
+  logger.info(message);
+}}}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -57,20 +60,23 @@ app.set('config', config);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
-app.use(function(err, req, res) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  let error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', error);
 });
+// app.use(function (err, req, res, next) {
+//   console.error(err.stack)
+//   res.status(500).send('Something broke!')
+// });
 
 (async () => {
   try {
@@ -85,11 +91,11 @@ app.use(function(err, req, res) {
     await serverListenPromise;
   }
   catch(error) {
-    console.error("Exception connectig to DB", error);
+    logger.error("Exception connectig to DB", error);
     process.exit(1);
   }
-  
-  console.log(`Started on port ${app.server.address().port}`);
+
+  logger.info(`Started on port ${app.server.address().port}`);
 })();
 
 

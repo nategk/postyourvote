@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import Papa from 'papaparse'
+import logger from './logger.js'
 
 const csvFieldToObjKey = {
   'State Name': 'stateName',
@@ -68,18 +69,18 @@ async function get() {
     let csvText = await response.text();
     Papa.parse(csvText, {
       complete: (results) => {
-        // console.log("Parsing complete:", results, file);
+        // logger.info("Parsing complete:", results, file);
         let data = csvToObject(results.data);
         return data;
       },
       error: (error, file) => {
-        console.log("Error", error, file)
+        logger.error("Error: %s %s", error, file)
         return error;
       }
     });
   }
   catch (err) {
-    console.error("Error getting CSV data", err);
+    logger.error("Error getting CSV data: %s", err);
     return err;
   }
 }

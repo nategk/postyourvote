@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { MongoClient } from 'mongodb';
 import Airtable from 'airtable';
+import logger from './logger.js'
 
 var dbConfig = {};
 
@@ -14,7 +15,7 @@ function getDbConfig() {
     dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
   }
   catch (err) {
-    console.warn("Couldn't get dbConfig.json");
+    logger.warn("Couldn't get dbConfig.json");
   }
   dbConfig = {
     airtableKey: process.env.AIRTABLE_KEY || dbConfig.airtableKey,
@@ -37,13 +38,13 @@ function getURI() {
 async function connectToDB() {
   return new Promise((resolve) => {
     const uri = getURI();
-    const client = new MongoClient(uri, { useNewUrlParser: true });
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     client.connect(err => {
       if (err) {
-        console.error("Couldn't connect to DB", err);
+        logger.error("Couldn't connect to DB: %s", err);
         resolve(err);
       } else {
-        console.log("Connected to the DB");
+        logger.info("Connected to the DB");
         resolve(client);
       }
     });

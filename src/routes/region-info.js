@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { getRegion } from '../lib/utils.js'
 import markdown from 'marked'
 import { createRequestBallotGoogle } from './reminders.js'
+import logger from '../lib/logger.js'
 
 var router = Router();
 
@@ -11,7 +12,7 @@ router.get('/:state/mail-in-ballot-reminder', async function(req, res, next) {
     region = await getRegion(req, req.params.state)
   }
   catch(err) {
-    console.error(err);
+    logger.error("Couldn't get region from %s: %s", req.params.state, err);
     return next();
   }
   
@@ -34,7 +35,7 @@ router.get('/:state/:county/mail-in-ballot-reminder', async function(req, res, n
     region = await getRegion(req, req.params.state, req.params.county);
   }
   catch(err) {
-    console.error("Couldn't get region from ", req.params.state);
+    logger.error("Couldn't get region from %s: %s", req.params.state, err);
     return next();
   }
 
@@ -53,10 +54,9 @@ router.get('/:state/:county', async function(req, res, next) {
     region = await getRegion(req, req.params.state, req.params.county);
   }
   catch(err) {
-    console.error("Couldn't get region from ", req.params.state);
+    logger.error("Couldn't get region from %s, %s: %s", req.params.state, req.params.county, err);
     return next();
   }
-  // console.log(region);
   res.render('location-rules', {
     ...region,
     markdown
@@ -69,10 +69,9 @@ router.get('/:state', async function(req, res, next) {
     region = await getRegion(req, req.params.state);
   }
   catch(err) {
-    console.error("Couldn't get region from ", req.params.state);
+    logger.error("Couldn't get region from %s: %s", req.params.state, err);
     return next();
   }
-  // console.log(region);
   if (region.counties) {
     res.render('state-counties-list', {
       ...region,

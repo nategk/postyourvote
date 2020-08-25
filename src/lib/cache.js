@@ -1,4 +1,5 @@
 import nodeCache from 'node-cache'
+import logger from './logger.js'
 
 class Cache {
   constructor(ttlSeconds) {
@@ -8,12 +9,12 @@ class Cache {
   async get(key, getFromOriginFn) {
     var value = this.cache.get(key);
     if (value !== undefined) {
-      console.log("Got", key, "from cache");
+      logger.info("Got %s from cache", key);
       return value;
     }
 
     value = await getFromOriginFn();
-    console.log("Got", key, "from origin");
+    logger.info("Got %s from origin", key);
     this.cache.set(key, value);
     return value;
   }

@@ -2,13 +2,14 @@
 // import { getURI, getDbConfig } from 'src/lib/db.js'
 var path = require('path');
 var fs = require('fs');
+var logger = require('./lib/logger.js');
+var dbConfig = {};
 try {
   const dbConfigPath = path.resolve(path.join(__dirname, 'src/dbConfig.json'));
   dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
 }
 catch (err) {
-  console.error("Couldn't get dbConfig.json", err);
-  dbConfig = {}
+  logger.error("Couldn't get dbConfig.json", err);
 }
 dbConfig = {
   username: process.env.MONGO_USER || dbConfig.username,

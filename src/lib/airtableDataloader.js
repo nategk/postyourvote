@@ -1,18 +1,36 @@
+import logger from './logger.js'
+
 const fieldNameMap = {
   url: 'URL',
   stateName: 'State Name',
   stateKey: 'State Key',
   countyName: 'County Name',
   countyKey: 'County Key',
+  PYVBucket: 'Bucket',
   ballotRequestMethod: 'Method- Ballot Request',
-  ballotRequestDeadline: 'Ballot Request Due',
-  ballotMailDeadline: 'Estimated Ballot Return Date',
-  ballotRequestRequirements: 'Ballot Request Needs',
-  needToBeRegistered: 'Need to be registered to VBM?',
   needReason: 'VBM Excuse Required?',
-  reasonsNeeded: 'Reasons or excuses needed to VBM',
+  covidAsExcuse: "Covid as excuse?",
+  needToBeRegistered: 'Need to be registered to VBM?',
+  timezone: 'Timezone',
+  voterRegistrationDeadline: 'Voter Registration Deadline',
+  officialBallotRequestDue: 'Official Ballot Request Due',
+  recommendedReceivedByDate: 'Recommended Received By Date',
+  officialBallotReturnDate: 'Official Ballot Return Date',
+  recommendedBallotReturnDate: 'Recommended Ballot Return Date',
+  ballotRequestRequirements: 'Ballot Request Needs',
   onlineBallotRequestURL: 'Online Ballot Request URL',
-  timezone: 'Timezone'
+  checkVoterRegistrationStatusUrl: 'Check Voter Registration Status URL',
+  checkVBMStatusUrl: 'Check VBM Status URL',
+  earlyVotingStartDate: 'Early Voting Start Date',
+  earlyVotingEndDate: 'Early Voting End Date',
+  officialBallotDueDate: 'Ballot Officially Due',
+  VBMBallotNeeds: 'VBM Ballot Needs',
+  ballotDuePostmarkedOrDelivered: 'Ballot Due Postmarked or Delivered',
+  returnBallotInPerson: 'VBM Ballot In-Person Delivery',
+  vbmRulesUrl: 'VBM/Absentee rules URL',
+  pdfApplicationLink: 'PDF Application Link',
+  countyClerkInfoLink: 'County Clerk Info Link',
+  ballotInstructions: 'Ballot Instructions'
 }
 
 function mapValue(val) {
@@ -28,11 +46,14 @@ function mapRecordToObject(record) {
   for (const key in fieldNameMap) {
     let fieldName = fieldNameMap[key];
     let value = record.get(fieldName);
+    if (value === undefined) {
+      logger.warn("Field \"%s\" is undefined", fieldName);
+    }
     try {
       obj[key] = mapValue(value);
     }
     catch (error) {
-      console.error("Couldn't understand value", value);
+      logger.error("Couldn't understand value %s", value);
       throw error;
     }
   }
@@ -40,7 +61,7 @@ function mapRecordToObject(record) {
 }
 
 async function getRegion(airtableBase, stateKey, countyKey) {
-  console.log("Getting regions for ", stateKey, countyKey);
+  logger.info("Getting regions for %s %s", stateKey, countyKey);
   var regions = {};
   let filterFormula = null;
   if (stateKey && countyKey) {
@@ -61,7 +82,7 @@ async function getRegion(airtableBase, stateKey, countyKey) {
   await airtableBase('State Rules').select({
     view: "Grid view",
     filterByFormula: filterFormula,
-    fields: Object.values(fieldNameMap)
+    // fields: Object.values(fieldNameMap)
   }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 

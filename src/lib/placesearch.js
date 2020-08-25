@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import logger from './logger.js'
 
 const queryParams = {
   username: "voteremote",
@@ -25,7 +26,7 @@ async function getGeonames(q) {
           })
           .join('&');
       let url = urlBase + '?' + query;
-      console.log("URL", url);
+      logger.info("Getting GeoName URL: %s", url);
       let response = await fetch(url);
       let responseJson = await response.json();
       let data = responseJson.geonames.map(result => {
@@ -41,7 +42,7 @@ async function getGeonames(q) {
       return {status: "success", data};
     }
     catch (err) {
-      console.error("Error getting CSV data", err);
+      logger.error("Error getting CSV data: %s", err);
       return {status: "error", message: err};
     }
 }

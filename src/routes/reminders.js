@@ -4,6 +4,7 @@ import { getRegion } from '../lib/utils.js'
 import ical from 'ical-generator'
 import moment from 'moment'
 import { googleCalendarEventUrl } from 'google-calendar-url'
+import logger from '../lib/logger.js'
 
 var router = Router();
 
@@ -31,7 +32,7 @@ function createRequestBallotGoogle(req, region) {
     title: "Last day to send back my ballot!",
     details: `${region.name} voters should have their ballots postmarked by now.`,
   });
-  console.log(createEventUrl)
+  logger.debug("google calendar event url: %s", createEventUrl);
   return createEventUrl;
 }
 
@@ -41,7 +42,7 @@ router.get('/:state/reminders/request-ballot.ics', async (req, res, next) => {
     region = await getRegion(req, req.params.state)
   }
   catch(err) {
-    console.error(err);
+    logger.error(err);
     return next();
   }
   if (region.counties) {
@@ -57,18 +58,12 @@ router.get('/:state/:county/reminders/request-ballot.ics', async (req, res, next
     region = await getRegion(req, req.params.state, req.params.county);
   }
   catch(err) {
-    console.error("Couldn't get region from ", req.params.state);
+    logger.error("Couldn't get region from ", req.params.state);
     return next();
   }
   const cal = createRequestBallotIcal(req, region);
   cal.serve(res);
 });
-
-// function generateBallotPostByDateReminderGoogle(region) {
-
-// }
-
-// export { generateBallotPostByDateReminderIcal, generateBallotPostByDateReminderGoogle }
 
 export { createRequestBallotGoogle };
 export default router;

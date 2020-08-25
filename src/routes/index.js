@@ -2,6 +2,7 @@ import { Router } from 'express'
 import getIpLocation from '../lib/iplocation.js'
 import { getRegion } from '../lib/utils.js'
 import { getPostalcode } from '../lib/placesearch.js'
+import logger from '../lib/logger.js';
 
 // Sub section routers
 import chooseLocationRouter from './chooselocation.js'
@@ -26,7 +27,7 @@ router.get('/', async function(req, res) {
         region = await getRegion(req, postalResults.data[0].state, postalResults.data[0].county);
       }
       catch(err) {
-        console.error("Couldn't get region from ", req.params.state, err);
+        logger.error("Couldn't get region from %s: %s", req.params.state, err);
       }
       if (region && !region.counties) {
         res.render('home', {
