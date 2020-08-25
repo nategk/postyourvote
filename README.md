@@ -1,6 +1,6 @@
-# Vote Remote 2020
+# Post Your Vote
 Getting out the vote since 2020 also only in 2020
-- [voteremote2020.com](https://voteremote2020.com)
+- [postyour.vote](https://postyour.vote)
 - Learn more from [1-pager](https://paper.dropbox.com/doc/Vote-Remote-Iyyot2jRrGwQz9s383GgE)
 
 ## App overview
