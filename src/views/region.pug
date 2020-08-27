@@ -5,10 +5,25 @@ block header
     span= title
 
 block content
-  h2 Wisconsin
-  p 53208 &nbsp;
-    a Change location
-  h3 I’m a big paragraph that gives you overall stuff you should know about this region.
+  h2= name
+  p 
+    a(href="/choose-location/") Change location
+  h4
+    if automaticallyMailed.includes('Ballot')
+      span All registered voters in #{name} will be sent a vote-by-mail ballot. Follow these steps:
+    else if automaticallyMailed.includes('Application')
+      span All registered voters in #{name} will be sent an Application for Absentee Ballot. Follow these steps:
+    else if needExcuse && !covidAsExcuse
+      span You need a valid reason to request a mail-in ballot. If the following reasons do not apply to you, we suggest voting in person:
+    else if needExcuse && covidAsExcuse
+      span [Need Excuse, covid accepted]
+    else
+      span Some sad text
+
+  if needExcuse
+    section
+      != markdown(vbmExcuses)
+
   section
     h4 Step 1
     include components/region-step-ballot-request.pug

@@ -6,31 +6,36 @@ const fieldNameMap = {
   stateKey: 'State Key',
   countyName: 'County Name',
   countyKey: 'County Key',
-  PYVBucket: 'Bucket',
+  bucket: 'Bucket',
+  automaticallyMailed: 'Automatically mailed',
   ballotRequestMethod: 'Method- Ballot Request',
-  needReason: 'VBM Excuse Required?',
-  covidAsExcuse: "Covid as excuse?",
+  needExcuse: 'VBM Excuse Required?',
+  covidAsExcuse: 'Covid is valid excuse',
   needToBeRegistered: 'Need to be registered to VBM?',
   timezone: 'Timezone',
-  voterRegistrationDeadline: 'Voter Registration Deadline',
+  voterRegistrationDeadline: 'Online Voter Registration Deadline',
   officialBallotRequestDue: 'Official Ballot Request Due',
-  recommendedReceivedByDate: 'Recommended Received By Date',
-  officialBallotReturnDate: 'Official Ballot Return Date',
+  recommendedReceivedByDate: 'Requested Ballots Received By Date',
   recommendedBallotReturnDate: 'Recommended Ballot Return Date',
-  ballotRequestRequirements: 'Ballot Request Needs',
+  ballotRequestNeeds: 'Ballot Request Needs',
   onlineBallotRequestURL: 'Online Ballot Request URL',
   checkVoterRegistrationStatusUrl: 'Check Voter Registration Status URL',
   checkVBMStatusUrl: 'Check VBM Status URL',
   earlyVotingStartDate: 'Early Voting Start Date',
   earlyVotingEndDate: 'Early Voting End Date',
   officialBallotDueDate: 'Ballot Officially Due',
-  VBMBallotNeeds: 'VBM Ballot Needs',
-  ballotDuePostmarkedOrDelivered: 'Ballot Due Postmarked or Delivered',
+  vbmVotingDirections: 'VBM Voting Directions',
   returnBallotInPerson: 'VBM Ballot In-Person Delivery',
-  vbmRulesUrl: 'VBM/Absentee rules URL',
-  pdfApplicationLink: 'PDF Application Link',
-  countyClerkInfoLink: 'County Clerk Info Link',
-  ballotInstructions: 'Ballot Instructions'
+  vbmExcuses: 'VBM Excuses',
+  vbmRulesUrl: 'VBM Rules URL',
+  pdfApplicationUrl: 'PDF Application URL',
+  countyClerkInfoUrl: 'County Clerk Info URL'
+}
+
+const defaultValues = {
+  automaticallyMailed: [],
+  ballotRequestMethod: [],
+
 }
 
 function mapValue(val) {
@@ -48,6 +53,7 @@ function mapRecordToObject(record) {
     let value = record.get(fieldName);
     if (value === undefined) {
       logger.warn("Field \"%s\" is undefined", fieldName);
+      value = defaultValues[key];
     }
     try {
       obj[key] = mapValue(value);

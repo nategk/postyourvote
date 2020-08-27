@@ -6,41 +6,26 @@ import logger from '../lib/logger.js'
 
 var router = Router();
 
-router.get('/:state/:county', async function(req, res, next) {
+router.get('/:state/:county', regionInfo);
+router.get('/:state', regionInfo);
+
+async function regionInfo(req, res, next) {
   var region = null;
   try {
     region = await getRegion(req, req.params.state, req.params.county);
   }
   catch(err) {
-    logger.error("Couldn't get region from %s, %s: %s", req.params.state, req.params.county, err);
+    logger.error("Couldn't get region from %s: %s", req.params, err);
     return next();
   }
-  res.render('region', {
-    ...region,
-    markdown
-  });
-});
-
-router.get('/:state', async function(req, res, next) {
-  var region = null;
-  try {
-    region = await getRegion(req, req.params.state);
-  }
-  catch(err) {
-    logger.error("Couldn't get region from %s: %s", req.params.state, err);
-    return next();
-  }
+  logger.info("Region: %s", region);
+  logger.info("methods: %s", region.ballotRequestMethod);
+  let data = {...region, markdown};
   if (region.counties) {
-    res.render('state-counties-list', {
-      ...region,
-      markdown
-    });
+    res.render('state-counties-list', data);
   } else {
-    res.render('region', {
-      ...region,
-      markdown
-    });
+    res.render('region', data);
   }
-});
+}
 
 export default router;

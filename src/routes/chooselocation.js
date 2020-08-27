@@ -7,7 +7,7 @@ import logger from '../lib/logger.js'
 var router = Router();
 
 router.get('/choose-location', function(req, res) {
-  res.render('choose-location', { title: 'Choose a location' });
+  res.render('home', { title: 'Change a location' });
 });
 
 router.post('/choose-location', async function(req, res) {

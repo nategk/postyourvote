@@ -67,8 +67,20 @@ app.use('/', indexRouter);
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  let error = req.app.get('env') === 'development' ? err : {};
-  logger.error(err);
+  let error = {};
+  if (req.app.get('NODE_ENV') === 'development') {
+    error = {
+      status: err.status,
+      message: err.message,
+      stacktrace: error.stack
+    }
+  } else {
+    error = {
+      message: res.statusMessage,
+      status: res.statusCode
+    }
+  }
+  logger.error("Error: %s\n%s", err, err.stack);
   // render the error page
   res.status(err.status || 500);
   res.render('error', error);
@@ -95,7 +107,7 @@ app.use(function (err, req, res, next) {
     process.exit(1);
   }
 
-  logger.info(`Started on port ${app.server.address().port}`);
+  logger.info('Started on port %s', app.server.address().port);
 })();
 
 
