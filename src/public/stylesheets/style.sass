@@ -5,16 +5,16 @@
 // Variables
 
 $brand-color-blue-dark: #1C2E5A
-$brand-color-blue-light: #017FFF
+$brand-color-blue-medium: #017FFF
+$brand-color-blue-light: #93DEFF
 $brand-color-red: #EE3227
 $brand-color-purple-dark: #72286F
 $brand-color-purple: #9452A0
-$brand-color-purple-light: #C09DC9
 
 $color-text: $brand-color-blue-dark
-$color-text-light: $brand-color-purple-light
+$color-text-light: #979797
 $color-text-error: $brand-color-red
-$color-link: $brand-color-blue-light
+$color-link: $brand-color-blue-medium
 $color-link-hover: $brand-color-red
 $color-button: $brand-color-red
 $color-button-hover: #FF000A
@@ -30,11 +30,12 @@ $font-header: 'Crete Round', 'San Francisco', 'Roboto', Helvetica, Arial, sans-s
 
 html, body
   width: 100%
-  height: 100%
+  min-height: 100vh
+  overflow: auto
   display: block
   position: relative
-  margin: 0
   padding: 0
+  margin: 0
 
 body
   font: 18px $font-body
@@ -42,6 +43,10 @@ body
   color: $brand-color-blue-dark
   background-color: $background
   width: auto
+  background-image: url('../img/mail-stripe.svg')
+  background-size: 3.2em auto
+  background-repeat: repeat-x
+  background-position: right top
 
 // Text, type
 
@@ -53,10 +58,35 @@ h1
 h2
   font-size: 2em
 
+h5
+  background-color: $brand-color-purple
+  color: white
+  display: inline-block
+  font-family: $font-body
+  text-transform: uppercase
+  letter-spacing: .05em
+  font-size: .85em
+  padding: .25em .5em
+
 a, a:visited
   color: $color-link
   &:hover
     color: $color-link-hover
+
+p
+  max-width: 22em
+  margin-left: auto
+  margin-right: auto
+  text-align: left
+
+.center
+  text-align: center
+
+small, .small
+  font-size: .9em
+
+.subhead
+  margin-top: -1em
 
 a.button, input[type="submit"]
   padding: .5em 1em
@@ -65,10 +95,9 @@ a.button, input[type="submit"]
   color: white
   text-decoration: none
   font-weight: normal
-  border: 0
-  border-radius: 9999px
+  border: 2px solid $color-button
+  border-radius: .2em
   box-sizing: border-box
-  vertical-align: text-bottom
   -webkit-appearance: none
   &:hover
     cursor: pointer
@@ -90,6 +119,9 @@ form, fieldset
 input
   padding: .5em
   font-size: 1.2em
+  border: 2px solid $color-button
+  border-radius: .2em
+  display: inline-block
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
   /* display: none; <- Crashes Chrome on hover */
@@ -100,7 +132,6 @@ input[type=number]
 
 input[type="text"]
   border: 1px solid $color-button
-
 
 // Tables
 
@@ -132,46 +163,40 @@ table *
 // Layout
 
 .wrapper
-  min-height: 100%
-  margin-bottom: -7em
-.footer-push, footer
-  min-height: 5em
+  padding-bottom: 5em
 
-header, section, footer
-  margin: 0 auto
-  padding: 0 2em
+header, section, footer nav
+  max-width: 960px
+  margin: auto
 
 header
-  padding-top: 10%
+  padding-top: 6%
   padding-bottom: 1em
   text-align: center
   h1.logo
     display: block
     margin: auto
 
-footer
-  padding-bottom: 1em
-  padding-top: 1em
-
-header, section, footer nav
-  max-width: 960px
-  margin: auto
-
 section
   max-width: 480px
   text-align: center
-  padding-bottom: 1em
 
 footer
-  font-size: .95em
+  padding: 0
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  height: 5rem
   ul
     padding: 0
-    border-top: 1px solid #A5D1F3
     padding-top: 1em
+    padding-left: 1em
     // padding-bottom: 1em
     li
       display: inline-block
       margin-right: 1em
+      font-size: .9em
       // margin-bottom: .5em
 
 // One-offs
@@ -193,14 +218,43 @@ h1.logo
 
 fieldset#zip
   input
-    margin-right: .5em
+    font-size: 1.3em
     max-width: 5em
+    letter-spacing: 0.05em
+    text-align: center
+    &[type="number"]
+      font-weight: bold
+  #detect-location
+
+  // input
+  //   color: #333
+  //   font-size: 1.2rem
+  //   margin: 0 auto
+  //   padding: 1.5rem 2rem
+  //   border-radius: 0.2rem
+  //   background-color: rgb(255, 255, 255)
+  //   border: 1px solid $color-button
+  //   display: block
+  //   border-bottom: 0.3rem solid transparent
+  //   transition: all 0.3s
+  //   &:placeholder-shown + label
+  //     opacity: 0
+  //     visibility: hidden
+  //     -webkit-transform: translateY(-4rem)
+  //     transform: translateY(-4rem)
+  // label
+  //   font-size: 1.2rem
+  //   margin-left: 2rem
+  //   margin-top: 0.7rem
+  //   display: block
+  //   transition: all 0.3s
+  //   transform: translateY(0rem)
 
 ul#value-props
   color: $color-text-light
   margin: 0
   padding: 0
-  font-size: .95em
+  font-size: .9em
   li
     list-style: none
     display: inline-block
@@ -249,10 +303,8 @@ table.instructions
     //   left: auto
 
 @media only screen and (max-width: 600px)
-  body
-    background-image: none
   header, section, footer
-    padding: 1em
+    padding: 0 1em
   header
     padding-top: 2em
   ol#progress

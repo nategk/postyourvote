@@ -6,9 +6,22 @@ block header
 
 block content
   h2= name
-  p 
-    a(href="/choose-location/") Change location
-  h4
+  p.subhead.center
+    small
+      a(href="/choose-location/")
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#map-pin')
+        span Change location
+        
+  // If you need to be registered first to VBM 
+  p
+    span You must be a registered voter to request a mail-in ballot. 
+    span
+      a(href="#") Check your status
+    span  if unsure.
+
+  // Depending on case
+  p
     if automaticallyMailed.includes('Ballot')
       span All registered voters in #{name} will be sent a vote-by-mail ballot. Follow these steps:
     else if automaticallyMailed.includes('Application')
@@ -25,11 +38,11 @@ block content
       != markdown(vbmExcuses)
 
   section
-    h4 Step 1
+    h5 Step 1
     include components/region-step-ballot-request.pug
   section 
-    h4 Step 2
+    h5 Step 2
     include components/region-step-reminders.pug
   section 
-    h4 Step 3
+    h5 Step 3
     include components/region-step-vote.pug
