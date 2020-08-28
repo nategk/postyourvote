@@ -5,17 +5,17 @@ block header
     span= title
 
 block content
-
-  h2 Vote early, vote from home
-  p.center Find out what you need to do to vote by mail in your state, enter your zip code to get started. 
-  ul#value-props
-    li 
-      svg.feather.icon-left
-        use(xlink:href='/assets/feather-sprite.svg#lock')
-      span No personal data
-    li 
-      svg.feather.icon-left
-        use(xlink:href='/assets/feather-sprite.svg#zap')
-      span Instant info
-  p
-    include components/location-input.pug
+  .center
+    h2 Vote early, vote from home
+    p Find out what you need to do to vote by mail in your state, enter your zip code to get started. 
+    ul#value-props
+      li 
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#lock')
+        span No personal data
+      li 
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#zap')
+        span Instant info
+    p
+      include components/location-input.pug

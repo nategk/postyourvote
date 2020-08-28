@@ -47,43 +47,50 @@ body
   background-size: 3.2em auto
   background-repeat: repeat-x
   background-position: right top
+  text-align: left
 
 // Text, type
+
+hr
+  margin: 2em 0 0 0
+  border: 0
+  border-top: 1px dashed $color-text-light
 
 h1, h2, h3, h4, h5, h6
   font-family: $font-header
   font-weight: normal
+  line-height: 1.2em
 h1
   font-size: 2.4em
 h2
   font-size: 2em
 
 h5
-  background-color: $brand-color-purple
+  background-color: $brand-color-blue-dark
   color: white
   display: inline-block
   font-family: $font-body
   text-transform: uppercase
   letter-spacing: .05em
-  font-size: .85em
-  padding: .25em .5em
+  font-size: .7em
+  padding: 0.25em .5em
+  font-weight: bold
 
 a, a:visited
   color: $color-link
   &:hover
     color: $color-link-hover
 
-p
-  max-width: 22em
-  margin-left: auto
-  margin-right: auto
-  text-align: left
-
 .center
   text-align: center
 
 small, .small
   font-size: .9em
+
+.subtle
+  font-size: .9em
+  color: $color-text-light
+  width: 80%
 
 .subhead
   margin-top: -1em
@@ -104,7 +111,7 @@ a.button, input[type="submit"]
     background: $color-button-hover
     color: white
 
-.error
+.error, .emphasis
   color: $color-text-error
 
 .lighter-text
@@ -163,7 +170,7 @@ table *
 // Layout
 
 .wrapper
-  padding-bottom: 5em
+  padding-bottom: 6em
 
 header, section, footer nav
   max-width: 960px
@@ -178,8 +185,7 @@ header
     margin: auto
 
 section
-  max-width: 480px
-  text-align: center
+  max-width: 25em
 
 footer
   padding: 0
@@ -187,16 +193,19 @@ footer
   bottom: 0
   left: 0
   width: 100%
-  height: 5rem
+  height: 6rem
+  text-align: center
   ul
     padding: 0
     padding-top: 1em
-    padding-left: 1em
+    padding-left: 1.5em
     // padding-bottom: 1em
     li
       display: inline-block
       margin-right: 1em
       font-size: .9em
+      a
+        color: $color-text-light
       // margin-bottom: .5em
 
 // One-offs
@@ -215,6 +224,12 @@ h1.logo
     position: absolute
     top: -100em
     left: -100em
+
+#region
+  text-align: center
+  p
+    margin-top: -1.8em
+    margin-bottom: 3em
 
 fieldset#zip
   input
