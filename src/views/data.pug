@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h3 Sources
+  ul
+    li About half our fields are sourced from the #[a(href='https://docs.voteamerica.com/api/') Vote America Election API]. VoteAmerica is a nonprofit organization providing access to trusted election information, open platform technology, and education programs to support and empower the most vulnerable voters to navigate the path to exercising their vote.
+    li We maintain an #[a(href='https://airtable.com/invite/l?inviteId=invOvJEQEAhZV646w&inviteToken=5826433648becba241ae4463becce0c0798baab7896e9c8bdb5628fa55be6a1d') independent Airtable dataset] that includes data from VoteAmerica, and adds more support for specific messages and county-level rules for relevant states. So no matter where you live in the US, we’re doing our best to provide you with the most accurate and most localized inforamtion possible.
+  iframe.airtable-embed(src='https://airtable.com/embed/shrucQebSKdUmqV5H?backgroundColor=purple&viewControls=on' frameborder='0' onmousewheel='' width='100%' height='533' style='background: transparent; border: 1px solid #ccc;')
+  h3 Want to help us? Have a correction?
+  p 
+    strong Help us out. 
+    | We’re a small team of collaborators and are looking for fact-checkers to help out as data is constantly changing.
+    | Slide into our DMs 
+    a(href="https://twitter.com/messages/compose?recipient_id=1289659075601420290") @postyourvote 
+    | on Twitter

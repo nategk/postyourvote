@@ -1,0 +1,36 @@
+ul#faq
+  li
+    h4.question Why should I vote by mail?
+    p.answer Voting by mail is the safest way to vote this fall, and could help you avoid contracting or spreading COVID-19. Prior to the pandemic, 34 states and the District of Columbia allowed anyone to vote absentee. Now, many of these places are making the process easier giving us little excuse to not vote. 
+  li
+    h4.question Does VBM increase voter fraud?
+    p.answer In short, not really. An analysis of vote-by-mail in three states by the The Washington Post found that instances of voter fraud in mailed-in ballots represented 0.0025% of votes cast. Yes, this is greater than in-person votes, but the concern is more voter suppression than fraud. 
+  li
+    h4.question What are the pitfalls? 
+    .answer
+      p Your mail-in ballot comes with instructions and is pretty easy, but there are a couple of common pitfalls!
+      ul
+        li Most states require you to sign the return envelope and your ballot. Make sure you do both! 
+        li Your signature should match your driver’s licenses - this is the one they have on file and will use to compare!
+        li The return envelope is special. Do not mess with it, tear it, or mishandle it. (If you do, try calling your county election office).
+        li A few states require a witness. Most often the witness only needs to sign the empty ballot (for anonymity) and the envelope.
+  li
+    h4.question Absentee ballot vs. Mail in ballot vs Vote by mail?
+    p.answer The two terms refer to the same thing: the ability to mail in your ballot.  depends on the state. Just know that in some states you’re requesting an “absentee ballot” so you get your ballot in the mail.
+
+script(src="/assets/jquery.min.js")
+script.
+  var contentAreas = $('#faq .answer').hide();
+  $('#faq .question').wrap('<a href="#">');
+  $.fx.speeds._default = 100;
+  //- var expandLink = $('.accordion-expand-all');
+  $('#faq a').click(function() {
+    var panel = $(this).next();
+    var isOpen = panel.is(':visible');
+    // open or close as necessary
+    panel[isOpen? 'slideUp': 'slideDown']()
+      // trigger the correct custom event
+      .trigger(isOpen? 'hide': 'show');
+    // stop the link from causing a pagescroll
+    return false;
+  });

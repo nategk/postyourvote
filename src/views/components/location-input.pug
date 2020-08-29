@@ -8,14 +8,14 @@ form#choose-location(action="/choose-location" method="POST")
             use(xlink:href='/assets/feather-sprite.svg#help-circle')
     input(name="query" type="number" placeholder="90210" maxlength="5" data-mask="00/00/0000")#zip
     input(type="submit" value="⭢")
-    p.center(style="display:none;")#detect-location
+    p(style="display:none;")#detect-location
       small
         a(href="javascript:void(0);")
           svg.feather.icon-left
             use(xlink:href='/assets/feather-sprite.svg#navigation')
           span Get current location
-    p.center(style="display:none;")#location-loading Finding your location...
-    p.center(style="display:none;").error#location-error Error
+    p(style="display:none;")#location-loading Finding your location...
+    p(style="display:none;").error#location-error Error
 
 
 script(src="/assets/jquery.min.js")

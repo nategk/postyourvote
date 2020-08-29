@@ -1,0 +1,27 @@
+footer
+  block footer
+    nav.subtle
+      ul 
+        each page in ["Vote", "About", "Data"]
+          - var pagePath = "/"+page.toLowerCase()+"/"
+          if pagePath === "/vote/"
+            - pagePath = "/"
+          li
+            unless pagePath === path
+            a(href=pagePath)
+              span=page
+
+          //- unless path === pagePath
+          //-   a(href="#{pagePath}") 
+          //- li
+          //-   unless path === '/about/'
+          //-     a(href="/about/") 
+          //-   | About
+          //- li
+          //-   unless path === '/data/'
+          //-     a(href="/data/") 
+          //-   | Data
+          //- li
+          //-   unless path === '/partner/'
+          //-     a(href="/partner/") 
+          //-   | Partner

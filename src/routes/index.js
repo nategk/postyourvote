@@ -39,12 +39,18 @@ router.get('/', async function(req, res) {
     }
   }
   // If we get this far, we haven't found a suitable location
-  res.render('home', { located: false });
+  res.locals.path = req.path;
+  res.render('home', { title: 'Post Your Vote', located: false });
 });
 
 router.get('/about', function(req, res) {
   res.locals.path = req.path;
-  res.render('about', { title: 'About' });
+  res.render('about', { title: 'About this project' });
+});
+
+router.get('/data', function(req, res) {
+  res.locals.path = req.path;
+  res.render('data', { title: 'Data we use' });
 });
 
 router.get('/share', function(req, res) {

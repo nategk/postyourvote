@@ -1,8 +1,9 @@
 extends layout
 
 block header
-  h1.logo 
-    span= title
+  a(href="/")
+    h1.logo 
+      span= title
 
 block content
   #region
@@ -14,41 +15,41 @@ block content
             use(xlink:href='/assets/feather-sprite.svg#map-pin')
           span Change location
   
-  section
-    // If you need to be registered first to VBM 
-    p
-      span You must be a registered voter to request a mail-in ballot. 
-      span
-        a(href="#") Check your status
-      span  if unsure.
+  // If you need to be registered first to VBM 
+  p
+    span You must be a registered voter to request a mail-in ballot. You can 
+    span
+      a(href="#") 
+        span check your registration status
+        svg.feather.icon-right
+          use(xlink:href='/assets/feather-sprite.svg#external-link')
+    span &#160;online if you are unsure, then come&#160;back.
 
-    // Depending on case — update per latest designs
-    p
-      if automaticallyMailed.includes('Ballot')
-        span All registered voters in #{name} will be sent a vote-by-mail ballot. Follow these steps:
-      else if automaticallyMailed.includes('Application')
-        span All registered voters in #{name} will be sent an Application for Absentee Ballot. Follow these steps:
-      else if needExcuse && !covidAsExcuse
-        span You need a valid reason to request a mail-in ballot. If the following reasons do not apply to you, we suggest voting in person:
-      else if needExcuse && covidAsExcuse
-        span [Need Excuse, covid accepted]
-      else
-        span Some sad text
+  // Depending on case — update per latest designs
+  p
+    if automaticallyMailed.includes('Ballot')
+      span All registered voters in #{name} will be sent a vote-by-mail ballot. Follow these steps:
+    else if automaticallyMailed.includes('Application')
+      span All registered voters in #{name} will be sent an Application for Absentee Ballot. Follow these steps:
+    else if needExcuse && !covidAsExcuse
+      span You need a valid reason to request a mail-in ballot. If the following reasons do not apply to you, we suggest voting in person:
+    else if needExcuse && covidAsExcuse
+      span [Need Excuse, covid accepted]
+    else
+      span Some sad text
 
   if needExcuse
-    section
       != markdown(vbmExcuses)
 
-  section
-    h5 Step 1
-    include components/region-step-ballot-request.pug
-  
-  section 
-    hr
-    h5 Step 2
-    include components/region-step-track-ballot.pug
-  
-  section 
-    hr
-    h5 Step 3
-    include components/region-step-vote.pug
+
+  h4.label Step 1
+  include components/region-step-ballot-request.pug
+  hr
+  h4.label Step 2
+  include components/region-step-track-ballot.pug
+  hr
+  h4.label Step 3
+  include components/region-step-vote.pug
+  hr
+  h3 Frequently Asked Questions
+  include components/frequently-asked-questions.pug
