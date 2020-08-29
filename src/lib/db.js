@@ -1,9 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { MongoClient } from 'mongodb';
+import { fileURLToPath } from 'url';
+import mongodb from 'mongodb';
 import Airtable from 'airtable';
 import logger from './logger.js'
 
+const { MongoClient } = mongodb;
 var dbConfig = {};
 
 function getDbConfig() {
@@ -11,11 +13,12 @@ function getDbConfig() {
     return dbConfig;
   }
   try {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const dbConfigPath = path.resolve(path.join(__dirname, '../dbConfig.json'));
     dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'UTF-8'));
   }
   catch (err) {
-    logger.warn("Couldn't get dbConfig.json");
+    logger.warn("Couldn't get dbConfig.json: %s", err);
   }
   dbConfig = {
     airtableKey: process.env.AIRTABLE_KEY || dbConfig.airtableKey,

@@ -1,18 +1,24 @@
-import createError from 'http-errors'
+// import createError from 'http-errors'
 import http from 'http';
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import sassMiddleware from 'node-sass-middleware'
-import config from './config.json'
+// import config from './config.json'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
 import { connectToDB, connectToAirtable} from './lib/db.js'
 import enforce from 'express-sslify'
 import logger from './lib/logger.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const configPath = path.resolve(path.join(__dirname, 'config.json'));
+const config = JSON.parse(fs.readFileSync(configPath, 'UTF-8'));
 
 let app = express();
 app.server = http.createServer(app);

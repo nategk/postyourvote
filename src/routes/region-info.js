@@ -1,9 +1,10 @@
-import { Router } from 'express'
+import express from 'express'
 import { getRegion } from '../lib/utils.js'
 import markdown from 'marked'
 import { createRequestBallotGoogle } from './reminders.js'
 import logger from '../lib/logger.js'
 
+const { Router } = express;
 var router = Router();
 
 router.get('/:state/:county', regionInfo);
