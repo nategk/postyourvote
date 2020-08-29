@@ -1,5 +1,6 @@
-import { createLogger, format, transports } from 'winston';
+import winston from 'winston';
 
+const { createLogger, format, transports } = winston;
 const { combine, timestamp, colorize, splat, printf } = format;
 
 const myFormat = printf(({level, message, timestamp}) => {

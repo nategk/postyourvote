@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist",
+  "type": "module",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets @babel/env\"",
     "build": "babel src -s -D -d dist --presets @babel/env",

@@ -1,8 +1,10 @@
-import { Router } from 'express'
+import express from 'express'
 import { get as queryLocation, queryLatLng } from '../lib/placesearch.js'
 import { urlFriendly } from '../lib/utils.js'
 import airtableDataloader from '../lib/airtableDataloader.js'
 import logger from '../lib/logger.js'
+
+const { Router } = express;
 
 var router = Router();
 

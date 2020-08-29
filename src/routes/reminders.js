@@ -1,10 +1,13 @@
-import { Router } from 'express'
+import express from 'express'
 import { getRegion } from '../lib/utils.js'
 // import markdown from 'marked'
 import ical from 'ical-generator'
 import moment from 'moment'
-import { googleCalendarEventUrl } from 'google-calendar-url'
+import googleCal from 'google-calendar-url'
 import logger from '../lib/logger.js'
+
+const { Router } = express;
+const { googleCalendarEventUrl } = googleCal;
 
 var router = Router();
 
