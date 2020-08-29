@@ -10,18 +10,37 @@ const baseName = 'TEST State Rules';
 // const baseName = 'State Rules';
 
 const electionDay = '2020-11-03';
-const daysBeforeElectionRe = /(?<when>Received|Postmarked)?\s?(?<days>\d+) days? before Election Day/;
+const daysBeforeElectionRe = /(?<when>Received|Postmarked)?\s?(?<days>\d+) days? before Election Day/i;
+const postmarkedOrReceivedByElectionRe = /(?<when>Received|Postmarked) by Election Day/i;
 
 function relativeDate(dateText) {
-  const dateText2 = dateText;
-  if (dateText2 == 'N/A') return null;
+  if (dateText == 'N/A') return null;
   try {
-    const matches = daysBeforeElectionRe.exec(dateText);
-    // logger.info("Parse dateText: %s, %O", dateText2, matches.groups.days);
-    return moment(electionDay).subtract(matches.groups.days, 'days').format('YYYY-MM-DD');
+    let matches = postmarkedOrReceivedByElectionRe.exec(dateText);
+    if (matches) {
+      return moment(electionDay).format('YYYY-MM-DD');
+    } else {
+      matches = daysBeforeElectionRe.exec(dateText);
+      // logger.info("Parse dateText: %s, %O", dateText2, matches.groups.days);
+      return moment(electionDay).subtract(matches.groups.days, 'days').format('YYYY-MM-DD');
+    }
   }
   catch (err) {
-    logger.error("Couldn't parse relative date: '%s'", dateText2);
+    logger.error("Couldn't parse relative date: '%s'", dateText);
+    throw err;
+  }
+}
+
+function postmarkedOrDelivered(dateText) {
+  try {
+    let matches = postmarkedOrReceivedByElectionRe.exec(dateText);
+    if (!matches) {
+      matches = daysBeforeElectionRe.exec(dateText);
+    }
+    return matches.groups.when;
+  }
+  catch (err) {
+    logger.error("Couldn't parse relative date: '%s'", dateText);
     throw err;
   }
 }
@@ -36,28 +55,26 @@ const fieldMap = {
     return relativeDate(r.vbm_deadline_online.text);
   },
   'Ballot Request Needs': r => {
-    return `${r.vbm_application_directions.text}\n${r.id_requirements_vbm.text}`
+    return [
+      r.vbm_application_directions.text,
+      r.id_requirements_vbm.text
+    ].filter(i => !!i).join("\n");
   },
   'Online Ballot Request URL': 'external_tool_vbm_application',
   'Check Voter Registration Status URL': 'external_tool_verify_status',
   'Check VBM Status URL': 'external_tool_absentee_ballot_tracker',
   'Early Voting Start Date': r => {
-    // if (r.early_voting_starts.text == 'N/A') {
-    //   return null;
-    // } else {
-    //   return moment(r.early_voting_starts.text).format('YYYY-MM-DD');
-    // }
     return relativeDate(r.early_voting_starts.text);
   },
   'Early Voting End Date': r => {
-    // if (r.early_voting_ends.text == 'N/A') {
-    //   return null;
-    // } else {
-    //   return moment(r.early_voting_ends.text).format('YYYY-MM-DD');
-    // }
     return relativeDate(r.early_voting_ends.text);
   },
-  // 'Ballot Officially Due': 'vbm_voted_ballot_deadline_mail',
+  'Ballot Officially Due': r => {
+    return relativeDate(r.vbm_voted_ballot_deadline_mail.text);
+  },
+  'Ballot Due Postmarked or Delivered': r => {
+    return postmarkedOrDelivered(r.vbm_voted_ballot_deadline_mail.text);
+  },
   // 'VBM Ballot In-Person Delivery': 'vbm_absentee_ballot_rules',
   'PDF Application URL': 'pdf_absentee_form',
   'Secretary of State URL': 'sos_election_website',
@@ -68,7 +85,8 @@ const fieldMap = {
 const uniqueCountyFields = [
   'Online Ballot Request URL',
   'Check VBM Status URL',
-  'PDF Application URL'
+  'PDF Application URL',
+  'Check Voter Registration Status URL'
 ];
 
 function mapVAtoPYV(vaState, hasCounties) {
@@ -148,9 +166,9 @@ async function updatePYVState(pyvId, pyvState) {
 (async () => {
   var states = await getStateList();
   for (const [stateCode, pyvIds] of Object.entries(states)) {
-    logger.info("Starting state %s", stateCode);
-    let vaState = await getVoteAmericaState(stateCode);
-    let pyvState = mapVAtoPYV(vaState);
+    const vaState = await getVoteAmericaState(stateCode);
+    const hasCounties = pyvIds.length > 1;
+    const pyvState = mapVAtoPYV(vaState, hasCounties);
     logger.info("State for %s: %O", stateCode, pyvState);
     for (const pyvId of pyvIds) {
       await updatePYVState(pyvId, pyvState);
