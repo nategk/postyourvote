@@ -5,9 +5,8 @@
   "main": "dist",
   "type": "module",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --presets @babel/env\"",
-    "build": "babel src -s -D -d dist --presets @babel/env",
-    "start": "node dist",
+    "dev": "nodemon -w src --exec \"node src\"",
+    "start": "node src",
     "test": "eslint src"
   },
   "dependencies": {
