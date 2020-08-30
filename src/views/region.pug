@@ -15,41 +15,63 @@ block content
             use(xlink:href='/assets/feather-sprite.svg#map-pin')
           span Change location
   
-  // If you need to be registered first to VBM 
-  p
-    span You must be a registered voter to request a mail-in ballot. You can 
-    span
-      a(href="#") 
-        span check your registration status
-        svg.feather.icon-right
-          use(xlink:href='/assets/feather-sprite.svg#external-link')
-    span &#160;online if you are unsure, then come&#160;back.
+  //- // If you need to be registered first to VBM 
+  //- p
+  //-   span You must be a registered voter to request a mail-in ballot. You can 
+  //-   span
+  //-     a(href="#") 
+  //-       span check your registration status
+  //-       svg.feather.icon-right
+  //-         use(xlink:href='/assets/feather-sprite.svg#external-link')
+  //-   span &#160;online if you are unsure, then come&#160;back.
 
   // Depending on case — update per latest designs
-  p
+  p.large
     if automaticallyMailed.includes('Ballot')
-      span All registered voters in #{name} will be sent a vote-by-mail ballot. Follow these steps:
+      span All registered voters in #{name} will be sent a ballot. You can still apply to receive a ballot.
     else if automaticallyMailed.includes('Application')
-      span All registered voters in #{name} will be sent an Application for Absentee Ballot. Follow these steps:
+      span All registered voters in #{name} will be sent an application to vote by mail.
     else if needExcuse && !covidAsExcuse
-      span You need a valid reason to request a mail-in ballot. If the following reasons do not apply to you, we suggest voting in person:
+      span You need a special excuse to vote by mail. If the following reasons do not apply to you, we suggest voting in person:
     else if needExcuse && covidAsExcuse
       span [Need Excuse, covid accepted]
     else
-      span Some sad text
+      span Can’t do anything online
 
   if needExcuse
-      != markdown(vbmExcuses)
+    != markdown(vbmExcuses)
 
-
-  h4.label Step 1
+  // Request ballot
+  .center
+    .calendar
+      .cal-page
+        .cal-message ASAP
+    h3 1. Request a ballot
   include components/region-step-ballot-request.pug
+  
   hr
-  h4.label Step 2
+  
+  // Recieve ballot
+  .center
+    .calendar
+      .cal-page 
+        .cal-month by Oct 
+        .cal-day 18
+    h3 2. Request a ballot
   include components/region-step-track-ballot.pug
+  
   hr
-  h4.label Step 3
+  
+  // Vote by mail
+  .center
+    .calendar
+      .cal-page 
+        .cal-month by Oct 
+        .cal-day 18
+    h3 3. Vote by mail
   include components/region-step-vote.pug
+  
   hr
+  
   h3 Frequently Asked Questions
   include components/frequently-asked-questions.pug

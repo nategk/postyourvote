@@ -6,7 +6,7 @@ form#choose-location(action="/choose-location" method="POST")
           span Help me
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#help-circle')
-    input(name="query" type="number" placeholder="90210" maxlength="5" data-mask="00/00/0000")#zip
+    input(name="query" type="number" placeholder="ZIP" maxlength="5" data-mask="00/00/0000")#zip
     input(type="submit" value="⭢")
     p(style="display:none;")#detect-location
       small
