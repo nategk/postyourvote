@@ -6,15 +6,15 @@ import logger from '../src/lib/logger.js';
 
 var airtable = connectToAirtable();
 
-const baseName = 'TEST State Rules';
-// const baseName = 'State Rules';
+// const baseName = 'TEST State Rules';
+const baseName = 'State Rules';
 
 const electionDay = '2020-11-03';
-const daysBeforeElectionRe = /(?<when>Received|Postmarked)?\s?(?<days>\d+) days? before Election Day/i;
-const postmarkedOrReceivedByElectionRe = /(?<when>Received|Postmarked) by Election Day/i;
+const daysBeforeElectionRe = /(?<when>Received|Postmarked)?\s?(?<days>\d+) days? (before|prior to) (Election Day|an election)/i;
+const postmarkedOrReceivedByElectionRe = /(?<when>Received|Postmarked) by( NOON on)? Election Day/i;
 
 function relativeDate(dateText) {
-  if (dateText == 'N/A') return null;
+  if (['n/a', 'varies by county', 'no specific deadline'].includes(dateText.toLowerCase())) return null;
   try {
     let matches = postmarkedOrReceivedByElectionRe.exec(dateText);
     if (matches) {
@@ -32,6 +32,7 @@ function relativeDate(dateText) {
 }
 
 function postmarkedOrDelivered(dateText) {
+  if (dateText.toLowerCase() == 'n/a' || dateText.toLowerCase() == 'varies by county') return null;
   try {
     let matches = postmarkedOrReceivedByElectionRe.exec(dateText);
     if (!matches) {
