@@ -42,28 +42,30 @@ block content
     != markdown(vbmExcuses)
 
   // Request ballot
-  .center
+  .step.center   
     .calendar
       .cal-page
-        .cal-message ASAP
+        .cal-message ASAP 
     h3 1. Request a ballot
+
   include components/region-step-ballot-request.pug
   
   hr
   
   // Recieve ballot
-  .center
+  .step.center
     .calendar
       .cal-page 
         .cal-month by Oct 
         .cal-day 18
     h3 2. Request a ballot
+    
   include components/region-step-track-ballot.pug
   
   hr
   
   // Vote by mail
-  .center
+  .step.center
     .calendar
       .cal-page 
         .cal-month by Oct 

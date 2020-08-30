@@ -52,7 +52,7 @@ body
 // Text, type
 
 hr
-  margin: 2em 0 0 0
+  margin: 3em 0
   border: 0
   border-top: 1px dashed $color-text-light
 
@@ -325,10 +325,13 @@ table.instructions
     li
       margin-left: 1em
 
-// Calendar
+// Steps
+.step
+  margin: 3em 0
 
+// Calendar
 .calendar
-  background: $brand-color-blue-medium
+  background: $brand-color-purple
   color: white
   display: inline-block
   text-align: center
@@ -337,16 +340,16 @@ table.instructions
   position: relative
   width: 5em
   height: 4.5em
+  font-size: .7em
   margin-bottom: -1em
-  margin-top: 2em
-  font-size: .8em
+  border-bottom: .4em solid $brand-color-purple-dark
   &:before, &:after
     content: ''
     position: absolute
     top: -.3em
-    height: .6em
+    height: .7em
     width: .25em
-    background-color: $brand-color-blue-dark
+    background-color: $brand-color-purple-dark
     border-radius: 20%
   &:before
     left: .8em
@@ -363,6 +366,7 @@ table.instructions
       position: relative
       margin-top: .8em
       margin-bottom: -.1em
+      letter-spacing: .05em
     .cal-day
       position: relative
       font-size: 2em
