@@ -29,7 +29,7 @@ router.post('/choose-location', async function(req, res) {
       return;
     }
   }
-  res.render('choose-location', {
+  res.render('home', {
     title: 'Choose your location',
     error: "Sorry, we couldn't find that postal code"
   });
