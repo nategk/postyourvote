@@ -18,7 +18,7 @@ const fieldNameMap = {
   recommendedReceivedByDate: 'Requested Ballots Received By Date',
   recommendedBallotReturnDate: 'Recommended Ballot Return Date',
   ballotRequestNeeds: 'Ballot Request Needs',
-  onlineBallotRequestURL: 'Online Ballot Request URL',
+  onlineBallotRequestUrl: 'Online Ballot Request URL',
   checkVoterRegistrationStatusUrl: 'Check Voter Registration Status URL',
   checkVBMStatusUrl: 'Check VBM Status URL',
   earlyVotingStartDate: 'Early Voting Start Date',
@@ -71,11 +71,11 @@ async function getRegion(airtableBase, stateKey, countyKey) {
   var regions = {};
   let filterFormula = null;
   if (stateKey && countyKey) {
-    filterFormula = 
+    filterFormula =
       `AND(
-        {State Key} = "${stateKey}", 
+        {State Key} = "${stateKey}",
         OR(
-          {County Key} = "${countyKey}", 
+          {County Key} = "${countyKey}",
           OR(
             {County Key} = "n/a",
             {County Key} = ""
