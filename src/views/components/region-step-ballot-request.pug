@@ -1,3 +1,15 @@
+// Add need to be registered
+if needToBeRegistered
+  p
+    span  You need to be registered to vote in order to apply to vote by mail. Unsure if you are registered? You can 
+    span
+      a(href=checkVoterRegistrationStatusUrl,target="_check") 
+        span check your status
+        svg.feather.icon-right
+          use(xlink:href='/assets/feather-sprite.svg#external-link')
+    span &#160;online, then come&#160;back.
+else 
+  p  You are automatically registered to vote when you apply to vote by mail.
 p 
   strong Fill out Application
   br

@@ -15,65 +15,38 @@ block content
             use(xlink:href='/assets/feather-sprite.svg#map-pin')
           span Change location
   
-  //- // If you need to be registered first to VBM 
-  //- p
-  //-   span You must be a registered voter to request a mail-in ballot. You can 
-  //-   span
-  //-     a(href="#") 
-  //-       span check your registration status
-  //-       svg.feather.icon-right
-  //-         use(xlink:href='/assets/feather-sprite.svg#external-link')
-  //-   span &#160;online if you are unsure, then come&#160;back.
-
-
   // Depending on case — update per latest designs
   p.large
     // TO-DO: "if" for deadline passed. Not relevant yet as of Sept. 1
-    if automaticallyMailed
-      // In all cases where applications or ballots are automatically mailed, no special excuses are needed
-      if automaticallyMailed.includes('Ballot')
-        // Example ZIP: 94110
-        span All registered voters in #{name} will be sent a ballot. You can still apply to receive a ballot.
-      else if automaticallyMailed.includes('Application')
-        // Example ZIP: 85002
-        span All registered voters in #{name} will be sent an application to vote by mail. You can also apply below.
-    else if !automaticallyMailed
-      // Request a mail in ballot (deadline okay, not automatically mailed)
-      if ballotRequestMethod.includes('Online')
-        // Online form happy path
-        if !needExcuse || covidAsExcuse
+    if needExcuse && !covidAsExcuse
+      // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
+      // Example ZIP: 70001
+      span In #{name} you will need a special excuse to vote by mail. If the reasons below do not apply to you, we suggest voting in person:
+      != markdown(vbmExcuses)
+    else 
+      // No special excuse required
+      if automaticallyMailed
+        // In all cases where applications or ballots are automatically mailed, no special excuses are needed
+        if automaticallyMailed.includes('Ballot')
+          // Example ZIP: 94110
+          span All registered voters in #{name} will be sent a ballot. You can still apply to receive a ballot.
+        else if automaticallyMailed.includes('Application')
+          // Example ZIP: 85002
+          span All registered voters in #{name} will be sent an application to vote by mail. You can also apply below.
+      else if !automaticallyMailed
+        // Request a mail in ballot (deadline okay, not automatically mailed)
+        if ballotRequestMethod.includes('Online')
           // Example ZIP: 15001
           span You can apply to vote by mail online in #{name}. 
-        else
-          // Example ZIP: 46001
-          span In #{name} you will need a special excuse to vote by mail. If the reasons below do not apply to you, we suggest voting in person. 
-      else if ballotRequestMethod.includes('Email')
-        // Email application fallback 
-        // Example ZIP: 
-        if !needExcuse || covidAsExcuse
+        else if ballotRequestMethod.includes('Email')
+          // Example ZIP: 30006
+          span In #{name} you can apply to request a ballot by email. 
         else 
-      else 
-        // Cannot request online or by email 
-        if !needExcuse || covidAsExcuse
-        else 
-    // Add need to be registered
-    if needToBeRegistered
-      span  Unsure if you are registered? You can 
-      span
-        a(href=checkVoterRegistrationStatusUrl,target="_check") 
-          span check your status
-          svg.feather.icon-right
-            use(xlink:href='/assets/feather-sprite.svg#external-link')
-      span &#160;online, then come&#160;back.
-    else 
-      span  You are automatically registered to vote when you apply to vote by mail.
-
-    
-    if needExcuse
-      != markdown(vbmExcuses)
+          // Example ZIP: 71630
+          span In #{name} you need to apply to request a ballot by mail—requesting online is not yet an option.  
 
   // Request ballot
-  .step  
+  .step.center
     .calendar
       .cal-page
         .cal-message ASAP 
@@ -84,19 +57,19 @@ block content
   hr
   
   // Recieve ballot
-  .step
+  .step.center
     .calendar
       .cal-page 
         .cal-month by Oct 
         .cal-day 18
-    h3 2. Request a ballot
+    h3 2. Track & receive your ballot
     
   include components/region-step-track-ballot.pug
   
   hr
   
   // Vote by mail
-  .step
+  .step.center
     .calendar
       .cal-page 
         .cal-month by Oct 
