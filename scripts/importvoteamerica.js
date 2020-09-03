@@ -6,6 +6,9 @@ import logger from '../src/lib/logger.js';
 
 var airtable = connectToAirtable();
 
+// Example: https://api.voteamerica.com/v1/election/state/CA/
+// Docs: https://docs.voteamerica.com/api/
+
 // const baseName = 'TEST State Rules';
 const baseName = 'State Rules';
 

@@ -55,14 +55,16 @@ block content
   include components/region-step-ballot-request.pug
   
   hr
-  
+
   // Recieve ballot
   .step.center
     .calendar
       .cal-page 
-        .cal-month by Oct 
-        .cal-day 18
-    h3 2. Track & receive your ballot
+        .cal-month by 
+          != moment(requestedBallotsReceivedByDate).format('MMM') 
+        .cal-day 
+          != moment(requestedBallotsReceivedByDate).format('D')
+    h3 2. Track &amp; receive your ballot
     
   include components/region-step-track-ballot.pug
   
@@ -72,8 +74,10 @@ block content
   .step.center
     .calendar
       .cal-page 
-        .cal-month by Oct 
-        .cal-day 18
+        .cal-month by 
+          != moment(officialBallotDueDate).format('MMM')
+        .cal-day 
+          != moment(officialBallotDueDate).format('D')
     h3 3. Vote by mail
   include components/region-step-vote.pug
   

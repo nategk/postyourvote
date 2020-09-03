@@ -1,6 +1,7 @@
 import express from 'express'
 import { getRegion } from '../lib/utils.js'
 import markdown from 'marked'
+import moment from 'moment';
 import { createRequestBallotGoogle } from './reminders.js'
 import logger from '../lib/logger.js'
 
@@ -21,7 +22,7 @@ async function regionInfo(req, res, next) {
   }
   logger.info("Region: %s", region);
   logger.info("methods: %s", region.ballotRequestMethod);
-  let data = {...region, markdown};
+  let data = {...region, markdown, moment};
   if (region.counties) {
     res.render('state-counties-list', data);
   } else {

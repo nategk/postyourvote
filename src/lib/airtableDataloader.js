@@ -15,7 +15,7 @@ const fieldNameMap = {
   timezone: 'Timezone',
   voterRegistrationDeadline: 'Online Voter Registration Deadline',
   officialBallotRequestDue: 'Official Ballot Request Due',
-  recommendedReceivedByDate: 'Requested Ballots Received By Date',
+  requestedBallotsReceivedByDate: 'Requested Ballots Received By Date',
   recommendedBallotReturnDate: 'Recommended Ballot Return Date',
   ballotRequestNeeds: 'Ballot Request Needs',
   onlineBallotRequestUrl: 'Online Ballot Request URL',
