@@ -21,8 +21,7 @@ block content
     if needExcuse && !covidAsExcuse
       // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
       // Example ZIP: 70001
-      span In #{name} you will need a special excuse to vote by mail. If the reasons below do not apply to you, we suggest voting in person:
-      != markdown(vbmExcuses)
+      span In #{name} you will need a special excuse to vote by mail. If the reasons below do not apply to you, we suggest voting in person.
     else 
       // No special excuse required
       if automaticallyMailed
@@ -43,7 +42,7 @@ block content
           span In #{name} you can apply to request a ballot by email. 
         else 
           // Example ZIP: 71630
-          span In #{name} you need to apply to request a ballot by mail—requesting online is not yet an option.  
+          span In #{name} you need to apply to request a ballot by mail. Requesting online is not yet an option. 
 
   // Request ballot
   .step.center
@@ -51,7 +50,6 @@ block content
       .cal-page
         .cal-message ASAP 
     h3 1. Request a ballot
-
   include components/region-step-ballot-request.pug
   
   hr
@@ -78,7 +76,7 @@ block content
           != moment(officialBallotDueDate).format('MMM')
         .cal-day 
           != moment(officialBallotDueDate).format('D')
-    h3 3. Vote by mail
+    h3 3. Vote
   include components/region-step-vote.pug
   
   hr

@@ -1,8 +1,11 @@
-p 
+p
   strong Track your ballot
-  br
-  span There’s more you can do than just play the waiting game. 
   if checkVBMStatusUrl
+    br
+    span There’s more you can do than just play the waiting game. 
     span You can track the status of your ballot directly through the #{name}: 
       a(href=checkVBMStatusUrl) Track your ballot
-  span .
+    span .
+  else 
+    br
+    span Unfortunately, in #{name} you cannot track your ballot online.
