@@ -45,7 +45,7 @@ if automaticallyMailed
 if ballotRequestMethod.includes('Online')
   // Example ZIP: 15001
   p.center
-    a(href=onlineBallotRequestUrl, target="_Request").button
+    a(href=onlineBallotRequestUrl, target="_external").button
       span Request your ballot online
       svg.feather.icon-right
         use(xlink:href='/assets/feather-sprite.svg#external-link')
@@ -55,7 +55,7 @@ if ballotRequestMethod.includes('Online')
 else 
   // Example ZIP: 71630
   p.center 
-    a(href=pdfApplicationUrl, target="_Request").button
+    a(href=pdfApplicationUrl, target="_external").button
       svg.feather.icon-left
         use(xlink:href='/assets/feather-sprite.svg#download')
       span Download a PDF ballot application
@@ -65,7 +65,7 @@ if needToBeRegistered
   p.subtle.center
     span You need to be registered to vote in order to apply to vote by mail. Unsure if you are registered? You can 
     span
-      a(href=checkVoterRegistrationStatusUrl,target="_check") 
+      a(href=checkVoterRegistrationStatusUrl,target="_external") 
         span check your status
         svg.feather.icon-right
           use(xlink:href='/assets/feather-sprite.svg#external-link')

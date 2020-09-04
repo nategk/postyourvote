@@ -1,6 +1,8 @@
 // Imports
 
-@import url('https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&display=swap')
+// @import url('https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&display=swap')
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap')
 
 // Variables
 
@@ -23,8 +25,8 @@ $color-emphasis: $brand-color-red
 $color-bright: $brand-color-red
 
 $background: white
-$font-body: 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
-$font-header: 'Crete Round', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
+$font-body: 'Inter', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
+$font-header: 'Inter', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
 
 // Standards
 
@@ -58,7 +60,7 @@ hr
 
 h1, h2, h3, h4, h5, h6
   font-family: $font-header
-  font-weight: normal
+  // font-weight: normal
   line-height: 1.2em
 h1
   font-size: 2.4em
@@ -139,6 +141,7 @@ a.button, input[type="submit"]
   border-radius: .2em
   box-sizing: border-box
   -webkit-appearance: none
+  font-weight: bold
   &:hover
     cursor: pointer
     background: $color-button-hover
@@ -263,7 +266,7 @@ h1.logo
 #region
   text-align: center
   p
-    margin-top: -1.8em
+    margin-top: -1.5em
     margin-bottom: 3em
 
 fieldset#zip

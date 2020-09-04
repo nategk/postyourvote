@@ -1,7 +1,7 @@
 p
   if checkVBMStatusUrl
     span We estimate that by this date you should have received your ballot. If you haven’t, contact your local election office. 
-    a(href=checkVBMStatusUrl) Track your ballot
+    a(href=checkVBMStatusUrl, target="_external") Track your ballot
     span .
   else 
     span Unfortunately, in #{name} you cannot track your ballot online.
@@ -9,7 +9,7 @@ p
 p.subtle.center 
   svg.feather.icon-left
     use(xlink:href='/assets/feather-sprite.svg#calendar')
-  span Add a calendar reminder
+  span Calendar reminder
 ul.subtle.center 
   li 
     a(href="#")
