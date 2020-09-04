@@ -1,11 +1,28 @@
 p
-  strong Track your ballot
   if checkVBMStatusUrl
-    br
-    span There’s more you can do than just play the waiting game. 
-    span You can track the status of your ballot directly through the #{name}: 
-      a(href=checkVBMStatusUrl) Track your ballot
+    span We estimate that by this date you should have received your ballot. If you haven’t, contact your local election office. 
+    a(href=checkVBMStatusUrl) Track your ballot
     span .
   else 
-    br
     span Unfortunately, in #{name} you cannot track your ballot online.
+
+p.subtle.center 
+  svg.feather.icon-left
+    use(xlink:href='/assets/feather-sprite.svg#calendar')
+  span Add a calendar reminder
+ul.subtle.center 
+  li 
+    a(href="#")
+      svg.feather.icon-left
+        use(xlink:href='/assets/feather-sprite.svg#download')
+      span Google
+  li
+    a(href="#")
+      svg.feather.icon-left
+        use(xlink:href='/assets/feather-sprite.svg#download')
+      span Outlook
+  li
+    a(href="#")
+      svg.feather.icon-left
+        use(xlink:href='/assets/feather-sprite.svg#download')
+      span iCal
