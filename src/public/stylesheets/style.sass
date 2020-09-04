@@ -158,13 +158,19 @@ a.button, input[type="submit"]
 form, fieldset
   border: 0
   padding: 0
+  &.inline
+    display: inline-block
+    input
+      margin-right: .5em
+      &:last-child
+        margin-right: 0
 
 input
   padding: .5em
   font-size: 1.2em
   border: 2px solid $color-button
   border-radius: .2em
-  display: inline-block
+  -webkit-appearance: none
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
   /* display: none; <- Crashes Chrome on hover */
