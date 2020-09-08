@@ -93,12 +93,12 @@ else
 // Add need to be registered
 if needToBeRegistered
   p.subtle.center
-    span You need to be registered to vote in order to apply to vote by mail. Unsure if you are registered? You can 
+    span You need to be registered to vote to receive a ballot. Unsure if you are registered? 
     span
       a(href=checkVoterRegistrationStatusUrl,target="_external") 
-        span check your status
+        span Check your status
         svg.feather.icon-right
           use(xlink:href='/assets/feather-sprite.svg#external-link')
     span  online, then come&#160;back.
 else 
-  p.subtle.center  You are automatically registered to vote when you apply to vote by mail.
+  p.subtle.center You are automatically registered to vote when you apply to vote by mail.

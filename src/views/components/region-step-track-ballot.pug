@@ -7,24 +7,27 @@
         != moment(requestedBallotsReceivedByDate).format('D')
   h3 2. Track &amp; receive your ballot
 
-p
-  If you requested your ballot early in the process, we estimate you will recieve your ballot by [date]
-  If your registration and address are up to date, we estimate you will recieve your ballot by [Date]
+p 
 
-p If you haven’t received it by this date, contact your local election official:
-ul 
-  li name
-  li Email 
-  li Website 
-  li Phone 
-
+  if automaticallyMailed
+    // Automatically mailed
+    span If your registration and address are up to date, we estimate 
+    strong you should recieve your ballot by #{moment(requestedBallotsReceivedByDate).format('LL')}. 
+    span When you get your ballot, fill it out & vote right away! 
+  else
+    // Had to request
+    span If you requested your ballot early in the process, we estimate 
+    strong you should recieve your ballot by #{moment(requestedBallotsReceivedByDate).format('LL')}. 
+    span When you get your ballot, fill it out & vote right away! 
 
   if checkVBMStatusUrl
-    span If you’ve requested and tracked your ballot with good time ahead, by this date you can exepect to have received your ballot. If you haven’t, contact your local election office. 
-    a(href=checkVBMStatusUrl, target="_external") Track your ballot
-    span .
+    span You can 
+      a(href=checkVBMStatusUrl, target="_external") track your ballot 
+      span  here.
   else 
-    span Unfortunately, in #{name} you cannot track your ballot online.
+    span You can 
+      a(href=countyClerkInfoUrl, target="_external") get in touch with your local election office 
+      span  to get your ballot status.
 
 p.subtle.center
   span Calendar reminder

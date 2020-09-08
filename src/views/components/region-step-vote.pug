@@ -7,7 +7,9 @@
         != moment(officialBallotDueDate).format('D')
   h3 3. Vote
 
-p Fill out your ballot as soon as it arrives. Read it carefully and mail your ballot back as soon as possible.
+p 
+  strong Mail in your ballot by #{moment(officialBallotDueDate).format('LL')}. 
+  span If you haven’t received it, or sent it by this date, we recommend voting safely in person.
 
 p.subtle.center 
   span Calendar reminder
