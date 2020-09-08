@@ -28,10 +28,10 @@ block content
         // In all cases where applications or ballots are automatically mailed, no special excuses are needed
         if automaticallyMailed.includes('Ballot')
           // Example ZIP: 94110
-          span All registered voters in #{name} will be sent a ballot. You can still apply to receive a ballot.
+          span All registered voters in #{name} will be sent a ballot. You can double-check you are registered and download calendar reminders below.
         else if automaticallyMailed.includes('Application')
           // Example ZIP: 85002
-          span All registered voters in #{name} will be sent an application to vote by mail. You can also apply below.
+          span All registered voters in #{name} will be sent an application to vote by mail. You can double-check you are registered and download calendar reminders below.
       else if !automaticallyMailed
         // Request a mail in ballot (deadline okay, not automatically mailed)
         if ballotRequestMethod.includes('Online')
