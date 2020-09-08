@@ -1,14 +1,32 @@
+.step.center
+  .calendar
+    .cal-page 
+      .cal-month by 
+        != moment(requestedBallotsReceivedByDate).format('MMM') 
+      .cal-day 
+        != moment(requestedBallotsReceivedByDate).format('D')
+  h3 2. Track &amp; receive your ballot
+
 p
+  If you requested your ballot early in the process, we estimate you will recieve your ballot by [date]
+  If your registration and address are up to date, we estimate you will recieve your ballot by [Date]
+
+p If you haven’t received it by this date, contact your local election official:
+ul 
+  li name
+  li Email 
+  li Website 
+  li Phone 
+
+
   if checkVBMStatusUrl
-    span We estimate that by this date you should have received your ballot. If you haven’t, contact your local election office. 
+    span If you’ve requested and tracked your ballot with good time ahead, by this date you can exepect to have received your ballot. If you haven’t, contact your local election office. 
     a(href=checkVBMStatusUrl, target="_external") Track your ballot
     span .
   else 
     span Unfortunately, in #{name} you cannot track your ballot online.
 
-p.subtle.center 
-  svg.feather.icon-left
-    use(xlink:href='/assets/feather-sprite.svg#calendar')
+p.subtle.center
   span Calendar reminder
 ul.subtle.center 
   li 

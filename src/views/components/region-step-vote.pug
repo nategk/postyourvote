@@ -1,8 +1,15 @@
+.step.center
+  .calendar
+    .cal-page 
+      .cal-month by 
+        != moment(officialBallotDueDate).format('MMM')
+      .cal-day 
+        != moment(officialBallotDueDate).format('D')
+  h3 3. Vote
+
 p Fill out your ballot as soon as it arrives. Read it carefully and mail your ballot back as soon as possible.
 
 p.subtle.center 
-  svg.feather.icon-left
-    use(xlink:href='/assets/feather-sprite.svg#calendar')
   span Calendar reminder
 ul.subtle.center 
   li 

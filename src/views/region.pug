@@ -44,43 +44,14 @@ block content
           // Example ZIP: 71630
           span In #{name} you need to apply to request a ballot by mail. Requesting online is not yet an option. 
 
-  // Request ballot
-  .step.center
-    .calendar
-      .cal-page
-        .cal-message ASAP 
-    h3 1. Request a ballot
+  // Step: Request ballot
   include components/region-step-ballot-request.pug
-  
   hr
-
-  // Recieve ballot
-  .step.center
-    .calendar
-      .cal-page 
-        .cal-month by 
-          != moment(requestedBallotsReceivedByDate).format('MMM') 
-        .cal-day 
-          != moment(requestedBallotsReceivedByDate).format('D')
-    h3 2. Track &amp; receive your ballot
-    
-    
+  // Step: Track ballot
   include components/region-step-track-ballot.pug
-  
   hr
-  
-  // Vote by mail
-  .step.center
-    .calendar
-      .cal-page 
-        .cal-month by 
-          != moment(officialBallotDueDate).format('MMM')
-        .cal-day 
-          != moment(officialBallotDueDate).format('D')
-    h3 3. Vote
+  // Step: Vote! by mail
   include components/region-step-vote.pug
-  
   hr
-  
   h3 Frequently Asked Questions
   include components/frequently-asked-questions.pug
