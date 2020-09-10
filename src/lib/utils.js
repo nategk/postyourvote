@@ -1,29 +1,30 @@
 import airtableDataloader from '../lib/airtableDataloader.js'
+import logger from './logger.js';
 
 function urlFriendly(value) {
   return value == undefined ? '' : value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
 }
 
 async function getRegion(req, state, county) {
-  var stateKey = urlFriendly(state);
-  var countyKey = urlFriendly(county);
+  const stateKey = urlFriendly(state);
+  const countyKey = urlFriendly(county);
   let cache = req.app.get('cache');
-  let regions = await cache.get(stateKey, async () => {
+  const region = await cache.get(stateKey, async () => {
     let airtable = req.app.get('airtable');
-    return await airtableDataloader(airtable, stateKey);
+    const results = await airtableDataloader(airtable, stateKey)
+    return results ? results[0] : null;
   });
   if (county) {
-    if (regions.length != 1 || !regions[0].counties || !regions[0].counties[countyKey]) {
+    if (!region || !region.counties || !region.counties[countyKey]) {
       // logger.error("Couldn't find state", stateKey);
-      // return next();
       throw `Couldn't find region for state: ${state} county: ${county}`;
     }
-    return regions[0].counties[countyKey];
+    return region.counties[countyKey];
   } else {
-    if (regions.length != 1) {
+    if (!region) {
       throw `Couldn't find region for state: ${state}`;
     }
-    return regions[0];
+    return region;
   }
 }
 

@@ -19,6 +19,10 @@ class Cache {
     return value;
   }
 
+  set(key, val) {
+    this.cache.set(key, val);
+  }
+
   flush() {
     this.cache.flushAll();
   }

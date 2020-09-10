@@ -5,10 +5,10 @@ import { getPostalcode } from '../lib/placesearch.js'
 import logger from '../lib/logger.js';
 
 // Sub section routers
+import adminRouter from './admin.js'
 import chooseLocationRouter from './chooselocation.js'
 import regionInfoRouter from './region-info.js'
 import remindersRouter from './reminders.js'
-import adminRouter from './admin.js'
 
 const { Router } = express;
 var router = Router();
