@@ -18,6 +18,14 @@ class Cache {
     this.cache.set(key, value);
     return value;
   }
+
+  flush() {
+    this.cache.flushAll();
+  }
+
+  stats() {
+    return this.cache.getStats();
+  }
 }
 
 export default Cache;

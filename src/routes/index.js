@@ -8,6 +8,7 @@ import logger from '../lib/logger.js';
 import chooseLocationRouter from './chooselocation.js'
 import regionInfoRouter from './region-info.js'
 import remindersRouter from './reminders.js'
+import adminRouter from './admin.js'
 
 const { Router } = express;
 var router = Router();
@@ -15,6 +16,7 @@ var router = Router();
 router.use(regionInfoRouter);
 router.use(remindersRouter);
 router.use(chooseLocationRouter);
+router.use('/admin', adminRouter);
 
 router.get('/', async function(req, res) {
   let location = await getIpLocation(req);
