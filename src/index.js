@@ -53,6 +53,11 @@ app.use(sassMiddleware({
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
+// This is done before every request
+app.use((req, res, next) => {
+  res.locals.env = app.locals.settings.env;
+  next();
+})
 
 // load assets
 app.use('/assets', [
