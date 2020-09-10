@@ -2,6 +2,6 @@
 	"port": 3000,
 	"bodyLimit": "100kb",
   "corsHeaders": ["Link"],
-  "defaultCacheSeconds": 14400,
+  "defaultCacheSeconds": 604800,
   "product": "Post Your Vote"
 }
