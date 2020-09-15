@@ -2,7 +2,7 @@
   .calendar
     .cal-page
       .cal-message ASAP 
-  h3 1. Get your ballot
+  h3 1. Request your ballot
 
 // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
 if needExcuse && !covidAsExcuse
@@ -34,7 +34,7 @@ if needExcuse && !covidAsExcuse
 
 // No special excuse required
 if automaticallyMailed
-  // In all cases where applications or ballots are automatically mailed, no special excuses are needed    
+  // In all cases where applications or ballots are automatically mailed, no special excuses are needed
 
   // What are you automatically mailed?
   if automaticallyMailed.includes('Ballot')
@@ -47,23 +47,40 @@ if automaticallyMailed
     - var thingSent = "application";
     - var thingSentDescription = "an application to request a ballot";
 
-  if checkVBMStatusUrl
-    // There is a way to check VBM status
-    p All registered voters in #{name} will be sent #{thingSentDescription}. Double-check that you are registered to vote, your address is correct, and your #{thingSent} is on the way.
-    p.center 
-      a(href=checkVBMStatusUrl, target="_external").button
-        span Check your #{thingSent} status
-        svg.feather.icon-right
-          use(xlink:href='/assets/feather-sprite.svg#external-link')
-
+  if automaticallyMailed.includes('Ballot')
+    if checkVBMStatusUrl
+      // There is a way to check VBM status
+      p All registered voters in #{name} will be sent #{thingSentDescription}. Double-check that you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p.center 
+        a(href=checkVBMStatusUrl, target="_external").button
+          span Check your #{thingSent} status
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+    else 
+      // There is not a way to check VBM status online—contact country clerk
+      p All registered voters in #{name} will be sent #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p.center 
+        a(href=countyClerkInfoUrl, target="_external").button
+          span Contact #{name} county clerk
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
   else 
-    // There is not a way to check VBM status online—contact country clerk
-    p All registered voters in #{name} will be sent #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
-    p.center 
-      a(href=countyClerkInfoUrl, target="_external").button
-        span Contact #{name} county clerk
-        svg.feather.icon-right
-          use(xlink:href='/assets/feather-sprite.svg#external-link')
+    if onlineBallotRequestUrl
+      p All registered voters in #{name} will be sent #{thingSentDescription}, but you can get ahead of it by applying online today.
+      p.center 
+        a(href=onlineBallotRequestUrl, target="_external").button
+          span Request your ballot online
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+    else 
+      p All registered voters in #{name} will be sent #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p.center 
+        a(href=countyClerkInfoUrl, target="_external").button
+          span Contact #{name} county clerk
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+
+
 
 else 
   // Not automatically mailed 
@@ -93,12 +110,14 @@ else
 // Add need to be registered
 if needToBeRegistered
   p.subtle.center
-    span You need to be registered to vote to receive a ballot. Unsure if you are registered? 
-    span
-      a(href=checkVoterRegistrationStatusUrl,target="_external") 
-        span Check your status
-        svg.feather.icon-right
-          use(xlink:href='/assets/feather-sprite.svg#external-link')
-    span  online, then come&#160;back.
+    small
+      span You need to be registered to vote to get a ballot. 
+      span
+        a(href=checkVoterRegistrationStatusUrl,target="_external") 
+          span Check your voter registration status
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+      span  online, then come&#160;back.
 else 
-  p.subtle.center You are automatically registered to vote when you apply to vote by mail.
+  small 
+    p.subtle.center You are automatically registered to vote when you apply to vote by mail.
