@@ -50,7 +50,7 @@ if automaticallyMailed
   if automaticallyMailed.includes('Ballot')
     if checkVBMStatusUrl
       // There is a way to check VBM status
-      p All registered voters in #{name} will be sent #{thingSentDescription}. Double-check that you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p All registered voters in #{name} will be mailed #{thingSentDescription}. Double-check that you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
         a(href=checkVBMStatusUrl, target="_external").button
           span Check your #{thingSent} status
@@ -58,7 +58,7 @@ if automaticallyMailed
             use(xlink:href='/assets/feather-sprite.svg#external-link')
     else 
       // There is not a way to check VBM status online—contact country clerk
-      p All registered voters in #{name} will be sent #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p All registered voters in #{name} will be mailed #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
         a(href=countyClerkInfoUrl, target="_external").button
           span Contact #{name} county clerk
@@ -66,14 +66,14 @@ if automaticallyMailed
             use(xlink:href='/assets/feather-sprite.svg#external-link')
   else 
     if onlineBallotRequestUrl
-      p All registered voters in #{name} will be sent #{thingSentDescription}, but you can get ahead of it by applying online today.
+      p All registered voters in #{name} will be mailed #{thingSentDescription}, but you can get ahead of it by requesting it online today.
       p.center 
         a(href=onlineBallotRequestUrl, target="_external").button
           span Request your ballot online
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
     else 
-      p All registered voters in #{name} will be sent #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p All registered voters in #{name} will be mailed #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
         a(href=countyClerkInfoUrl, target="_external").button
           span Contact #{name} county clerk

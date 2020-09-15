@@ -5,20 +5,18 @@
         != moment(requestedBallotsReceivedByDate).format('MMM') 
       .cal-day 
         != moment(requestedBallotsReceivedByDate).format('D')
-  h3 2. Track &amp; receive your ballot
+  h3 2. Get your ballot & fill it out
 
 p 
 
   if automaticallyMailed
     // Automatically mailed
     span If your registration and address are up to date, we estimate 
-    strong you should recieve your ballot by #{moment(requestedBallotsReceivedByDate).format('LL')}. 
-    span When you get your ballot, fill it out & vote right away! 
+    span you should receive your ballot around #{moment(requestedBallotsReceivedByDate).format('LL')}. 
   else
     // Had to request
     span If you requested your ballot early in the process, we estimate 
-    strong you should recieve your ballot by #{moment(requestedBallotsReceivedByDate).format('LL')}. 
-    span When you get your ballot, fill it out & vote right away! 
+    span you should receive your ballot around #{moment(requestedBallotsReceivedByDate).format('LL')}. 
 
   if checkVBMStatusUrl
     span You can 
@@ -29,9 +27,19 @@ p
       a(href=countyClerkInfoUrl, target="_external") get in touch with your local election office 
       span  to get your ballot status.
 
-p.subtle.center
+  p 
+    strong When you get your ballot, fill it out and return it right away. 
+    span Read the instructions and be careful not to tear the ballot and return envelope inside the carrier.
+  p 
+    strong Help others through the process
+    span  📸 Take a photo of your unopened or unsigned ballot without any personally identifable info, so fellow #{name} voters know what to expect. Share with the hashtag 
+      a(href="https://twitter.com/hashtag/postyourvote", target="_external") #postyourvote 
+      |  and your county.
+
+
+p.subtle.center.small
   span Calendar reminder
-ul.subtle.center 
+ul.subtle.center.small
   li 
     a(href="#")
       svg.feather.icon-left

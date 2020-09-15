@@ -1,19 +1,20 @@
 .step.center
   .calendar
     .cal-page 
-      .cal-month by 
-        != moment(officialBallotDueDate).format('MMM')
-      .cal-day 
-        != moment(officialBallotDueDate).format('D')
-  h3 3. Vote
+      .cal-month Oct 
+        // != moment(officialBallotDueDate).format('MMM')
+      .cal-day 20 
+        // != moment(officialBallotDueDate).format('D')
+  h3 3. Vote by mail or drop off in person
 
 p 
-  strong Mail in your ballot by #{moment(officialBallotDueDate).format('LL')}. 
-  span If you haven’t received it, or sent it by this date, we recommend voting safely in person.
+  strong Based on USPS recommendations, we recommend mailing in your completed ballot by October 20. 
+  span If you haven’t sent it by this date, we recommend dropping it off safely at your nearest drop-off location or local election office which you can do ahead of voting day. 
+  p Mail-in ballots will be counted until the official deadline of   #{moment(officialBallotDueDate).format('LL')}. If you are at all unsure about timing, bring your ballot with you on election day.
 
-p.subtle.center 
+p.subtle.center.small
   span Calendar reminder
-ul.subtle.center 
+ul.subtle.center.small
   li 
     a(href="#")
       svg.feather.icon-left

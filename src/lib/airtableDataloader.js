@@ -85,15 +85,11 @@ async function getRegion(airtableBase, stateKey, countyKey) {
   } else if (stateKey) {
     filterFormula = `{State Key} = "${stateKey}"`;
   }
-  let params = {
+  await airtableBase('State Rules').select({
     view: "Grid view",
+    filterByFormula: filterFormula,
     // fields: Object.values(fieldNameMap)
-  };
-  if (filterFormula) {
-    params.filterByFormula = filterFormula;
-  }
-  await airtableBase('State Rules').select(params)
-  .eachPage(function page(records, fetchNextPage) {
+  }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
     records.forEach(function(record) {
