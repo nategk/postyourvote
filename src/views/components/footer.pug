@@ -2,9 +2,9 @@ footer
   block footer
     nav.subtle
       ul 
-        each page in ["Vote", "About", "Data", "FAQ"]
+        each page in ["Home", "About", "Data", "FAQ"]
           - var pagePath = "/"+page.toLowerCase()+"/"
-          if pagePath === "/vote/"
+          if pagePath === "/home/"
             - pagePath = "/"
           li
             unless pagePath === path

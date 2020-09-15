@@ -1,7 +1,10 @@
 doctype html
 html
   head
-    title #{title} · Post Your Vote
+    if title === "Post Your Vote"
+      title #{title}
+    else
+      title #{title} · Post Your Vote
     link(rel='stylesheet', href='/assets/stylesheets/style.css')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     // LiveReload
