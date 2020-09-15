@@ -55,3 +55,20 @@ block content
   hr
   h3 Frequently Asked Questions
   include components/frequently-asked-questions.pug
+  // FAQ collapsed
+  script(src="/assets/jquery.min.js")
+  script.
+    var contentAreas = $('#faq .answer').hide();
+    $('#faq .question').wrap('<a href="#">');
+    $.fx.speeds._default = 100;
+    //- var expandLink = $('.accordion-expand-all');
+    $('#faq a').click(function() {
+      var panel = $(this).next();
+      var isOpen = panel.is(':visible');
+      // open or close as necessary
+      panel[isOpen? 'slideUp': 'slideDown']()
+        // trigger the correct custom event
+        .trigger(isOpen? 'hide': 'show');
+      // stop the link from causing a pagescroll
+      return false;
+    });

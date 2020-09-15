@@ -53,7 +53,12 @@ router.get('/about', function(req, res) {
 
 router.get('/data', function(req, res) {
   res.locals.path = req.path;
-  res.render('data', { title: 'Data we use' });
+  res.render('data', { title: 'Check our work' });
+});
+
+router.get('/faq', function(req, res) {
+  res.locals.path = req.path;
+  res.render('faq', { title: 'Frequently Asked Questions' });
 });
 
 router.get('/share', function(req, res) {

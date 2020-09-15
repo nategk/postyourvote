@@ -17,20 +17,3 @@ ul#faq
   li
     h4.question Absentee ballot vs. mail-in ballot vs vote by mail?
     p.answer These terms generally refer to the same thing: the ability to mail in your ballot. Just know that in some states you have to request an “absentee ballot” to get your ballot in the mail.
-
-script(src="/assets/jquery.min.js")
-script.
-  var contentAreas = $('#faq .answer').hide();
-  $('#faq .question').wrap('<a href="#">');
-  $.fx.speeds._default = 100;
-  //- var expandLink = $('.accordion-expand-all');
-  $('#faq a').click(function() {
-    var panel = $(this).next();
-    var isOpen = panel.is(':visible');
-    // open or close as necessary
-    panel[isOpen? 'slideUp': 'slideDown']()
-      // trigger the correct custom event
-      .trigger(isOpen? 'hide': 'show');
-    // stop the link from causing a pagescroll
-    return false;
-  });

@@ -14,8 +14,9 @@ form#choose-location(action="/choose-location" method="POST")
         svg.feather.icon-left
           use(xlink:href='/assets/feather-sprite.svg#navigation')
         span Get current location
-  p(style="display:none;")#location-loading Finding your location...
-  p(style="display:none;").error#location-error Error
+      br
+      span(style="display:none;")#location-loading Finding your location...
+      span(style="display:none;").error#location-error Error
 
 
 script(src="/assets/jquery.min.js")
