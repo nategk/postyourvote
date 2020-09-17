@@ -24,8 +24,10 @@ async function regionInfo(req, res, next) {
   logger.info("methods: %s", region.ballotRequestMethod);
   let data = {...region, markdown, moment};
   if (region.counties) {
+    res.locals.path = req.path;
     res.render('state-counties-list', data);
   } else {
+    res.locals.path = req.path;
     res.render('region', data);
   }
 }

@@ -33,6 +33,7 @@ router.get('/', async function(req, res) {
         logger.error("Couldn't get region from %s: %s", req.params.state, err);
       }
       if (region && !region.counties) {
+        res.locals.path = req.path;
         res.render('home', {
           located: true,
           ...region,
@@ -43,37 +44,36 @@ router.get('/', async function(req, res) {
   }
   // If we get this far, we haven't found a suitable location
   res.locals.path = req.path;
-  res.render('home', { title: 'Post Your Vote', located: false });
+  res.render('home', {
+    title: 'Post Your Vote',
+    description: 'Enter your zip to get just the info that matters to vote by mail.',
+    located: false
+  });
 });
 
 router.get('/about', function(req, res) {
   res.locals.path = req.path;
-  res.render('about', { title: 'About this project' });
+  res.render('about', {
+    title: 'About this project',
+    description: 'Fighting for your values is hard. The voting process should be simple.'
+  });
 });
 
 router.get('/data', function(req, res) {
   res.locals.path = req.path;
-  res.render('data', { title: 'Check our work' });
+  res.render('data', {
+    title: 'Check our work',
+    description: 'Most of our data is sourced from the VoteAmerica Election API. The rest we maintain in an open AirTable.'
+  });
 });
 
 router.get('/faq', function(req, res) {
   res.locals.path = req.path;
-  res.render('faq', { title: 'Frequently Asked Questions' });
+  res.render('faq', {
+    title: 'Frequently Asked Questions',
+    description: 'Everything you wanted to know about voting by mail but were afraid to ask.'
+  });
 });
 
-router.get('/share', function(req, res) {
-  res.locals.path = req.path;
-  res.render('share', { title: 'Share' });
-});
-
-router.get('/get-mail-in-ballot-status', function(req, res) {
-  res.locals.path = req.path;
-  res.render('get-mail-in-ballot-status', { title: 'Mail-in ballot status' });
-});
-
-router.get('/get-voter-registration-status', function(req, res) {
-  res.locals.path = req.path;
-  res.render('get-voter-registration-status', { title: 'Voter registration status' });
-});
 
 export default router;
