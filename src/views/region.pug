@@ -21,17 +21,17 @@ block content
     if needExcuse && !covidAsExcuse
       // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
       // Example ZIP: 70001
-      span In #{name} you will need a special excuse to vote by mail. If the reasons below do not apply to you, we suggest voting in person.
+      span In #{name} you need an excuse to vote by mail. If the reasons below do not apply to you, you should plan to vote in person.
     else 
       // No special excuse required
       if automaticallyMailed
         // In all cases where applications or ballots are automatically mailed, no special excuses are needed
         if automaticallyMailed.includes('Ballot')
           // Example ZIP: 94110
-          span All registered voters in #{name} will be sent a ballot. You can double-check you are registered and download calendar reminders below.
+          span Awesome news! All registered voters in #{name} will be sent a ballot. While you wait for it to arrive, you should double-check you are registered with your current mailing address, and download calendar reminders below.
         else if automaticallyMailed.includes('Application')
           // Example ZIP: 85002
-          span All registered voters in #{name} will be sent an application to vote by mail. You can double-check you are registered and download calendar reminders below.
+          span All registered voters in #{name} will be sent an application to vote by mail. You still have to fill out the application to then get a ballot to vote by mail. You should still double-check you are registered and download calendar reminders below.
       else if !automaticallyMailed
         // Request a mail in ballot (deadline okay, not automatically mailed)
         if ballotRequestMethod.includes('Online')
