@@ -1,8 +1,15 @@
 .step.center
-  .calendar
-    .cal-page
-      .cal-message ASAP 
-  h3 1. Request your ballot
+  
+  if automaticallyMailed && automaticallyMailed.includes('Ballot')
+    .calendar
+      .cal-page
+        .cal-message NOW 
+    h3 1. Wait for your ballot
+  else
+    .calendar
+      .cal-page
+        .cal-message ASAP
+    h3 1. Request your ballot
 
 // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
 if needExcuse && !covidAsExcuse
@@ -60,8 +67,8 @@ if automaticallyMailed
       // There is not a way to check VBM status online—contact country clerk
       p All registered voters in #{name} will be mailed #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
-        a(href=countyClerkInfoUrl, target="_external").button
-          span Contact #{name} county clerk
+        a(href=localElectionOfficesUrl, target="_external").button
+          span Contact your local election office
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
   else 
@@ -75,8 +82,8 @@ if automaticallyMailed
     else 
       p All registered voters in #{name} will be mailed #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
-        a(href=countyClerkInfoUrl, target="_external").button
-          span Contact #{name} county clerk
+        a(href=localElectionOfficesUrl, target="_external").button
+          span Contact your local election office
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
 

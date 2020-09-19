@@ -24,12 +24,15 @@ const fieldNameMap = {
   earlyVotingStartDate: 'Early Voting Start Date',
   earlyVotingEndDate: 'Early Voting End Date',
   officialBallotDueDate: 'Ballot Officially Due',
+  officialBallotDuePostmarkedOrReceived: 'Ballot Due Postmarked or Delivered',
   vbmVotingDirections: 'VBM Voting Directions',
   returnBallotInPerson: 'VBM Ballot In-Person Delivery',
   vbmExcuses: 'VBM Excuses',
   vbmRulesUrl: 'VBM Rules URL',
   pdfApplicationUrl: 'PDF Application URL',
-  countyClerkInfoUrl: 'County Clerk Info URL'
+  countyClerkInfoUrl: 'County Clerk Info URL',
+  localElectionOfficesUrl: 'Local Election Offices URL',
+  stateMailsOutBallots: 'State Mails Out Ballots'
 }
 
 const defaultValues = {
@@ -85,11 +88,15 @@ async function getRegion(airtableBase, stateKey, countyKey) {
   } else if (stateKey) {
     filterFormula = `{State Key} = "${stateKey}"`;
   }
-  await airtableBase('State Rules').select({
+  let params = {
     view: "Grid view",
-    filterByFormula: filterFormula,
     // fields: Object.values(fieldNameMap)
-  }).eachPage(function page(records, fetchNextPage) {
+  };
+  if (filterFormula) {
+    params.filterByFormula = filterFormula;
+  }
+  await airtableBase('State Rules').select(params)
+  .eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
     records.forEach(function(record) {

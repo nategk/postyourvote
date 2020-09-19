@@ -2,21 +2,21 @@
   .calendar
     .cal-page 
       .cal-month 
-        != moment(requestedBallotsReceivedByDate).format('MMM') 
+        != moment(stateMailsOutBallots).format('MMM') 
       .cal-day 
-        != moment(requestedBallotsReceivedByDate).format('D')
-  h3 2. Get your ballot & fill it out
+        != moment(stateMailsOutBallots).format('D')
+  h3 2. Get your ballot &amp; fill it out
 
 p 
 
   if automaticallyMailed
     // Automatically mailed
     span If your registration and address are up to date, we estimate 
-    span you'll receive your ballot around #{moment(requestedBallotsReceivedByDate).format('LL')}. 
+    span you'll receive your ballot around #{moment(stateMailsOutBallots).format('LL')}. 
   else
     // Had to request
     span If you requested your ballot early in the process, we estimate 
-    span you'll receive your ballot around #{moment(requestedBallotsReceivedByDate).format('LL')}. 
+    span you'll receive your ballot around #{moment(stateMailsOutBallots).format('LL')}. 
 
   if checkVBMStatusUrl
     span You can 
@@ -24,7 +24,7 @@ p
       span  here.
   else 
     span You can 
-      a(href=countyClerkInfoUrl, target="_external") get in touch with your local election office 
+      a(href=localElectionOfficesUrl, target="_external") get in touch with your local election office 
       span  to get your ballot status.
 
   p 
