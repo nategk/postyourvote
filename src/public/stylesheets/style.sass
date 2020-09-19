@@ -1,7 +1,5 @@
 // Imports
 
-// @import url('https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&display=swap')
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap')
 
 // Variables
@@ -28,6 +26,8 @@ $background: white
 $font-body: 'Inter', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
 $font-header: 'Inter', 'San Francisco', 'Roboto', Helvetica, Arial, sans-serif
 
+$border-radius: .4em
+
 // Standards
 
 html, body
@@ -46,7 +46,7 @@ body
   background-color: $background
   width: auto
   background-image: url('../img/mail-stripe.svg')
-  background-size: 3.2em auto
+  background-size: 2.8em auto
   background-repeat: repeat-x
   background-position: right top
   text-align: left
@@ -86,6 +86,7 @@ h4
 a, a:visited
   color: $color-link
   text-decoration: none
+  cursor: pointer
   &:hover
     color: $color-link-hover
 
@@ -141,7 +142,7 @@ a.button, input[type="submit"]
   text-decoration: none
   font-weight: normal
   border: 2px solid $color-button
-  border-radius: .2em
+  border-radius: $border-radius
   box-sizing: border-box
   -webkit-appearance: none
   font-weight: bold
@@ -180,7 +181,7 @@ input
   padding: .5em
   font-size: 1.2em
   border: 2px solid $color-button
-  border-radius: .2em
+  border-radius: $border-radius
   -webkit-appearance: none
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
@@ -229,12 +230,24 @@ header, section, footer nav
   margin: auto
 
 header
-  padding-top: 6%
-  padding-bottom: 1em
+  padding-top: 10%
+  padding-bottom: .75em
   text-align: center
-  h1.logo
-    display: block
-    margin: auto
+  // &:after
+  //   content: " "
+  //   background-image: url('../img/post-your-vote-logo.svg')
+  //   opacity: 1
+  //   top: 30%
+  //   left: 0
+  //   bottom: 30%
+  //   right: 0
+  //   position: fixed
+  //   z-index: -1
+  //   background-repeat: no-repeat
+  // &.page
+  //   &::after
+  //     background-image: url('../img/post-your-vote-ballot-box.svg')
+
 
 section
   // max-width: 25em
@@ -265,20 +278,40 @@ footer
 
 // One-offs
 
-h1.logo
-  width: 100%
-  max-width: 220px
-  height: 200px
-  background-image: url('../img/post-your-vote-logo.svg')
-  background-size: 100% auto
-  background-repeat: no-repeat
-  background-position: right top
-  text-align: right
-  margin: 0 0 1em
+h1.logo, h1.logo-alt
+  text-align: center
+  margin: 0 0 -1em
+  display: inline-block
+  position: relative
   span
-    position: absolute
-    top: -100em
-    left: -100em
+    width: 4em
+    height: 4.059em
+    display: inline-block
+    color: $color-text-light
+    text-align: center
+    padding-top: .4em
+    position: relative
+    &:before
+      content: ' '
+      position: absolute
+      top: -.4em
+      left: 0
+      right: 0
+      bottom: 0
+      background-image: url('../img/post-your-vote-logo.svg')
+      background-size: 100% auto
+      background-repeat: no-repeat
+      background-position: right top
+  a span
+    color: $color-text-light
+
+
+
+
+  // span
+  //   position: absolute
+  //   top: -100em
+  //   left: -100em
 
 #region
   text-align: center
@@ -365,6 +398,7 @@ table.instructions
   position: fixed
   line-height: 1em
   right: 1.5em
+  top: 2.5em
   text-align: right
   z-index: 10
   a#share-icon
@@ -386,7 +420,7 @@ table.instructions
     list-style: none
     background: white
     padding: 1em
-    border-radius: .5em
+    border-radius: $border-radius
     text-align: left
     a
       display: block
@@ -409,6 +443,7 @@ table.instructions
     list-style: none
     position: fixed
     right: 1.5em
+    top: 3em
     text-align: right
     li
       margin: 1em 0
@@ -422,7 +457,7 @@ table.instructions
   color: white
   display: inline-block
   text-align: center
-  border-radius: .4em
+  border-radius: $border-radius
   line-height: 1.4em
   position: relative
   width: 5em
@@ -466,20 +501,28 @@ table.instructions
       letter-spacing: .1em
       font-weight: bold
 
+#airtable-embed
+  width: 100%
+  height: 30em
+  iframe
+    border: 1px solid $color-text-light
+    position: absolute
+    left: 10%
+    right: 10%
+    width: 80%
+    height: 30em
+    background: transparent
+  // &::after
+  //   content: ' '
+  //   position: relative
+
 // Responsive overrides
 
 @media only screen and (min-width: 601px)
   section
     width: 70%
     max-width: 30em
-  // .airtable-embed
-  //   position: absolute
-  //   left: 10%
-  //   right: 10%
-  //   width: 80%
-  //   &::after
-  //     content: ' '
-  //     position: relative
+
   #social
     top: 2.5em
     #social-links
@@ -487,14 +530,26 @@ table.instructions
 
 @media only screen and (max-width: 600px)
   header, section
-    padding: 0 1em
+    padding: 0 1.5em
   header
     padding-top: 2em
+    padding-bottom: .75em
+    h1.logo, h1.page
+      display: block
+      margin: 1em auto -.5em
   ol#progress
     font-size: .9em
-
   #social
-    position: fixed
-    bottom: 2em
-    #social-links
-      bottom: 3em
+    // Don’t fix on mobile screens
+    position: absolute
+  #airtable-embed
+    width: 100%
+    height: 20em
+    position: relative
+    iframe
+      position: absolute
+      left: 0
+      right: 0
+      width: 100%
+      height: 20em
+      background: transparent

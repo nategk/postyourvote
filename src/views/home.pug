@@ -2,7 +2,7 @@ extends layout
 
 block header
   h1.logo 
-    span= title
+    span Post Your Vote
 
 block content
   .center
@@ -16,6 +16,6 @@ block content
       li 
         svg.feather.icon-left
           use(xlink:href='/assets/feather-sprite.svg#zap')
-        span Clear & instant info
+        span Clear instant info
     p
       include components/location-input.pug

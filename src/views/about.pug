@@ -1,5 +1,9 @@
 extends layout
 
+block header
+  h1.page 
+    span= title
+
 block content
   h2 Fighting for your values is hard. The process of voting should be simple. 
   p 
@@ -7,7 +11,7 @@ block content
     a(href="/data/") Data 
     | is fact-checked weekly.
   h3 Who we are 
-  p We are a group of civic-minded friends who started this website because voting by mail is too damn confusing. We’re product managers, designers, and engineers who volunteered nights & weekends. We are not a nonprofit nor do we work in government.
+  p We are a group of civic-minded friends who started this website because voting by mail is too damn confusing. We’re product managers, designers, and engineers who volunteered nights & weekends.
   ul
     li 
       a(href="https://www.linkedin.com/in/nategk") Nate Kerksick
