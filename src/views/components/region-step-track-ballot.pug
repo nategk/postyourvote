@@ -7,30 +7,25 @@
         != moment(stateMailsOutBallots).format('D')
   h3 2. Get your ballot &amp; fill it out
 
-p 
+p  #{name} will begin to mail out ballots to registered voters on #{moment(stateMailsOutBallots).format('LL')}. 
+  span You should receive your ballot 3-7 days after this date, depending on how early you requested your ballot.
+p If you think you should have received it or have questions about the status, contact your 
+  a(href=localElectionOfficesUrl, target="_external") local elections office
+  | .
 
-  if automaticallyMailed
-    // Automatically mailed
-    span If your registration and address are up to date, we estimate 
-    span you'll receive your ballot around #{moment(stateMailsOutBallots).format('LL')}. 
-  else
-    // Had to request
-    span If you requested your ballot early in the process, we estimate 
-    span you'll receive your ballot around #{moment(stateMailsOutBallots).format('LL')}. 
-
-  if checkVBMStatusUrl
-    span You can 
-      a(href=checkVBMStatusUrl, target="_external") track your ballot 
-      span  here.
-  else 
-    span You can 
-      a(href=localElectionOfficesUrl, target="_external") get in touch with your local election office 
-      span  to get your ballot status.
+  //- if checkVBMStatusUrl
+  //-   span You can 
+  //-     a(href=checkVBMStatusUrl, target="_external") track your ballot 
+  //-     span  here.
+  //- else 
+  //-   span You can 
+  //-     a(href=localElectionOfficesUrl, target="_external") get in touch with your local election office 
+  //-     span  to get your ballot status.
 
   p 
     strong When you get your ballot, fill it out and return it right away. 
     span Read the instructions and be careful not to tear the ballot or return envelope inside the carrier.
-  p 
+  p
     strong Help others on their voting journey
     span  📸 Take a photo of your unopened envelope or unfilled ballot (without any personally identifable info!) and share with the hashtag 
       a(href="https://twitter.com/hashtag/postyourvote", target="_external") #postyourvote 
