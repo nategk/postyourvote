@@ -360,11 +360,15 @@ table.instructions
     cursor: pointer
     background: $color-text-light
     padding: .5em .5em
-    border-radius: 1000em
+    border-radius: 50%
     color: white
     vertical-align: middle
     &:hover
       background: $brand-color-blue-medium
+    &.active
+      background: $brand-color-purple
+      &:hover
+        background: $brand-color-blue-medium
   ul
     list-style: none
     background: white
