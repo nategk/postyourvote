@@ -1,0 +1,31 @@
+#social
+  a(href="#")#share-icon
+    svg.feather.icon-left
+      use(xlink:href='/assets/feather-sprite.svg#share-2')
+    span#share-text Share
+  #social-links-open
+    ul#share-links
+      li Share
+      li
+        a(href="https://twitter.com/intent/tweet?text=Vote+safely%2C+vote+from+home+https%3A%2F%2Fpostyourvote.org+%40postyourvote" target="_share") Tweet
+    ul#follow-links
+      li Follow
+      li
+        a.twitter-follow-button(href='https://twitter.com/postyourvote' target="_share") Twitter
+      li
+        a.twitter-follow-button(href='https://www.instagram.com/postyour.vote/' target="_share") Instagram
+script(src="/assets/jquery.min.js")
+script.
+  $("a#share-icon").click(function(){
+    $("#social-links-open").toggle(100, function() {
+    });
+  });
+  var $temp = $("<input>");
+  var $url = $(location).attr('href');
+  $('.clipboard').on('click', function() {
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+    $("p").text("URL copied!");
+  })
