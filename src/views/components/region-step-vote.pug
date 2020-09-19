@@ -10,19 +10,26 @@
 p 
   strong Based on USPS recommendations, we recommend mailing in your completed ballot by October 20. 
   span If you haven’t sent it by this date, we recommend dropping it off safely at your nearest drop-off location or local election office which you can do ahead of voting day. 
-  p Mail-in ballots will be counted by #{name} as long as they are #{officialBallotDuePostmarkedOrReceived.toLowerCase()} by #{moment(officialBallotDueDate).format('LL')}. If you are at all unsure about timing, bring your ballot with you on election day.
+  p Mail-in ballots will be counted until the official deadline of   #{moment(officialBallotDueDate).format('LL')}. If you are at all unsure about timing, bring your ballot with you on election day.
 
-p
-  svg.feather.icon-left
-    use(xlink:href='/assets/feather-sprite.svg#calendar')
-  strong Get a calendar reminder
-ul.subtle
-  li 
-    a(href="#")
-      span Google
-  li
-    a(href="#")
-      span Outlook
-  li
-    a(href="#")
-      span iCal
+.calendar-events
+  p.center
+    svg.feather.icon-left
+      use(xlink:href='/assets/feather-sprite.svg#calendar')
+    strong Remind me to mail my vote
+  ul.subtle.center
+    li 
+      a(href="#")
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#download')
+        span Google
+    li
+      a(href="#")
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#download')
+        span Outlook
+    li
+      a(href="#")
+        svg.feather.icon-left
+          use(xlink:href='/assets/feather-sprite.svg#download')
+        span iCal
