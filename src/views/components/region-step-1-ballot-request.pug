@@ -116,7 +116,7 @@ else
         
 // Add need to be registered
 if needToBeRegistered
-  p.subtle.center
+  p.small.subtle.center
     small
       span You need to be registered to vote to get a ballot. 
       span
@@ -125,6 +125,5 @@ if needToBeRegistered
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
       span  online, then come&#160;back.
-else 
-  small 
-    p.subtle.center You are automatically registered to vote when you apply to vote by mail.
+else  
+  p.small.subtle.center You are automatically registered to vote when you apply to vote by mail.
