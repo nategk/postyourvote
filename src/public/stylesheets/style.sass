@@ -364,9 +364,9 @@ table.instructions
 #social
   position: fixed
   line-height: 1em
-  top: 2.5em
   right: 1.5em
   text-align: right
+  z-index: 10
   a#share-icon
     cursor: pointer
     background: $color-text-light
@@ -409,7 +409,6 @@ table.instructions
     list-style: none
     position: fixed
     right: 1.5em
-    top: 3em
     text-align: right
     li
       margin: 1em 0
@@ -481,6 +480,10 @@ table.instructions
   //   &::after
   //     content: ' '
   //     position: relative
+  #social
+    top: 2.5em
+    #social-links
+      top: 3em
 
 @media only screen and (max-width: 600px)
   header, section
@@ -489,3 +492,9 @@ table.instructions
     padding-top: 2em
   ol#progress
     font-size: .9em
+
+  #social
+    position: fixed
+    bottom: 2em
+    #social-links
+      bottom: 3em
