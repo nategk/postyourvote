@@ -70,7 +70,7 @@ router.get('/data', function(req, res) {
 router.get('/faq', function(req, res) {
   res.locals.path = req.path;
   res.render('faq', {
-    title: 'Frequently Asked Questions',
+    title: 'Common Questions',
     description: 'Everything you wanted to know about voting by mail but were afraid to ask.'
   });
 });
