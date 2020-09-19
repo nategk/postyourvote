@@ -2,7 +2,7 @@ import express from 'express'
 import { getRegion } from '../lib/utils.js'
 import markdown from 'marked'
 import moment from 'moment';
-import { createRequestBallotGoogle } from './reminders.js'
+import { createReturnBallotGoogle } from './reminders.js'
 import logger from '../lib/logger.js'
 
 const { Router } = express;
@@ -23,6 +23,7 @@ async function regionInfo(req, res, next) {
   logger.info("Region: %s", region);
   logger.info("methods: %s", region.ballotRequestMethod);
   let data = {...region, markdown, moment};
+  data.returnBallotGoogleEventUrl = createReturnBallotGoogle(req, region);
   if (region.counties) {
     res.locals.path = req.path;
     res.render('state-counties-list', data);

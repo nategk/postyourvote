@@ -11,7 +11,7 @@ const { googleCalendarEventUrl } = googleCal;
 
 var router = Router();
 
-function createRequestBallotIcal(req, region) {
+function createReturnBallotIcal(req, region) {
   const cal = ical({
     timezone: region.timezone,
     domain: req.get('host'),
@@ -19,27 +19,27 @@ function createRequestBallotIcal(req, region) {
     name: req.app.get('config').product
   });
   cal.createEvent({
-    start: moment(region.ballotRequestDeadline),
-    end: moment(region.ballotRequestDeadline).add(1, 'day'),
+    start: moment(region.recommendedBallotReturnDate),
+    end: moment(region.recommendedBallotReturnDate).add(1, 'day'),
     allDay: true,
     summary: "Last day to send back my ballot!",
-    description: `${region.name} voters should have their ballots postmarked by now.`,
+    description: `${region.name} voters should have their ballots ${region.officialBallotDuePostmarkedOrReceived} by now.`,
   });
   return cal;
 }
 
-function createRequestBallotGoogle(req, region) {
+function createReturnBallotGoogle(req, region) {
   const createEventUrl = googleCalendarEventUrl({
-    start: moment(region.ballotRequestDeadline).format('YYYYMMDD'),
-    end: moment(region.ballotRequestDeadline).add(1, 'day').format('YYYYMMDD'),
+    start: moment(region.recommendedBallotReturnDate).format('YYYYMMDD'),
+    end: moment(region.recommendedBallotReturnDate).add(1, 'day').format('YYYYMMDD'),
     title: "Last day to send back my ballot!",
-    details: `${region.name} voters should have their ballots postmarked by now.`,
+    details: `${region.name} voters should have their ballots ${region.officialBallotDuePostmarkedOrReceived} by now.`,
   });
   logger.debug("google calendar event url: %s", createEventUrl);
   return createEventUrl;
 }
 
-router.get('/:state/reminders/request-ballot.ics', async (req, res, next) => {
+router.get('/:state/reminders/return-ballot.ics', async (req, res, next) => {
   var region = null;
   try {
     region = await getRegion(req, req.params.state)
@@ -51,11 +51,11 @@ router.get('/:state/reminders/request-ballot.ics', async (req, res, next) => {
   if (region.counties) {
     return next();
   }
-  const cal = createRequestBallotIcal(req, region);
+  const cal = createReturnBallotIcal(req, region);
   cal.serve(res);
 });
 
-router.get('/:state/:county/reminders/request-ballot.ics', async (req, res, next) => {
+router.get('/:state/:county/reminders/return-ballot.ics', async (req, res, next) => {
   var region = null;
   try {
     region = await getRegion(req, req.params.state, req.params.county);
@@ -64,9 +64,9 @@ router.get('/:state/:county/reminders/request-ballot.ics', async (req, res, next
     logger.error("Couldn't get region from ", req.params.state);
     return next();
   }
-  const cal = createRequestBallotIcal(req, region);
+  const cal = createReturnBallotIcal(req, region);
   cal.serve(res);
 });
 
-export { createRequestBallotGoogle };
+export { createReturnBallotGoogle };
 export default router;
