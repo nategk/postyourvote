@@ -24,6 +24,7 @@ const fieldNameMap = {
   earlyVotingStartDate: 'Early Voting Start Date',
   earlyVotingEndDate: 'Early Voting End Date',
   officialBallotDueDate: 'Ballot Officially Due',
+  officialBallotDuePostmarkedOrReceived: 'Ballot Due Postmarked or Delivered',
   vbmVotingDirections: 'VBM Voting Directions',
   returnBallotInPerson: 'VBM Ballot In-Person Delivery',
   vbmExcuses: 'VBM Excuses',
