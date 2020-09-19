@@ -83,7 +83,10 @@ const fieldMap = {
   'PDF Application URL': 'pdf_absentee_form',
   'Secretary of State URL': 'sos_election_website',
   'Secretary of State Phone': 'sos_phone_number',
-  'Secretary of State Email': 'sos_contact_email'
+  'Secretary of State Email': 'sos_contact_email',
+  'State Mails Out Ballots': r => {
+    return moment(r['2020_ballot_drop_date'].text).format('YYYY-MM-DD');
+  }
 };
 
 const uniqueCountyFields = [
