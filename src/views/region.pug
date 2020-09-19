@@ -1,7 +1,7 @@
 extends layout
 
 block header
-  h1.logo 
+  h1#logo 
     a(href="/")
       span Post Your Vote
 
@@ -28,7 +28,7 @@ block content
         // In all cases where applications or ballots are automatically mailed, no special excuses are needed
         if automaticallyMailed.includes('Ballot')
           // Example ZIP: 94110
-          span Awesome news! All registered voters in #{name} will be sent a ballot. While you wait for it to arrive, you should double-check you are registered with your current mailing address, and download calendar reminders below.
+          span Good news! All registered voters in #{name} will be sent a ballot. While you wait for it to arrive, you should double-check you are registered with your current mailing address, and download calendar reminders below.
         else if automaticallyMailed.includes('Application')
           // Example ZIP: 85002
           span All registered voters in #{name} will be sent an application to vote by mail. You still have to fill out the application to then get a ballot to vote by mail. You should still double-check you are registered and download calendar reminders below.

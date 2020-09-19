@@ -1,14 +1,14 @@
 .step.center
   
   if automaticallyMailed && automaticallyMailed.includes('Ballot')
-    .calendar
-      .cal-page
-        .cal-message NOW 
+    #calendar
+      #cal-page
+        #cal-message NOW 
     h3 1. Wait for your ballot
   else
-    .calendar
-      .cal-page
-        .cal-message ASAP
+    #calendar
+      #cal-page
+        #cal-message ASAP
     h3 1. Request your ballot
 
 // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
@@ -121,7 +121,7 @@ if needToBeRegistered
       span You need to be registered to vote to get a ballot. 
       span
         a(href=checkVoterRegistrationStatusUrl,target="_external") 
-          span Check your voter registration status
+          span Check your registration status
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
       span  online, then come&#160;back.

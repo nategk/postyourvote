@@ -50,8 +50,6 @@ body
   background-repeat: repeat-x
   background-position: right top
   text-align: left
-  word-break: break-word
-  hyphens: auto
   min-width: 320px
 
 // Text, type
@@ -63,7 +61,6 @@ hr
 
 h1, h2, h3, h4, h5, h6
   font-family: $font-header
-  // font-weight: normal
   line-height: 1.2em
 h1
   font-size: 2.4em
@@ -102,7 +99,7 @@ a, a:visited
 
 small, .small
   font-size: .85em
-  line-height: 1.5em
+  line-height: .9em
 
 ul
   padding-left: 1em
@@ -113,6 +110,8 @@ ul
   li
     padding-left: 0
     margin-bottom: .5em
+    word-break: break-word
+    hyphens: auto
 
 .subtle
   color: $color-text-light
@@ -123,7 +122,8 @@ ul
       color: $color-link
   &.center
     margin-left: 10%
-ul.subtle
+
+ul.inline
   padding: 0
   margin-top: -.5em
   li
@@ -161,30 +161,36 @@ input
   border: 2px solid $color-button
   border-radius: $border-radius
   -webkit-appearance: none
+  font-size: 1.3em
+  max-width: 5em
+  letter-spacing: 0.1em
+  text-align: center
+  line-height: 1.4em
+  font-weight: bold
+  &[type="number"]
+    -moz-appearance:textfield
+  &[type="text"]
+    border: 2px solid $color-button
+
 // Hide number increment
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
   /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none
   margin: 0
-input[type=number]
-  -moz-appearance:textfield
-input[type="text"]
-  border: 1px solid $color-button
 
 // Buttons
-
 a.button, input[type="submit"]
   padding: .5em 1em
   background: $color-button
   display: inline-block
   color: white
   text-decoration: none
-  font-weight: normal
+  // font-weight: normal
   border: 2px solid $color-button
   border-radius: $border-radius
-  box-sizing: border-box
-  -webkit-appearance: none
-  font-weight: bold
+  // box-sizing: border-box
+  // -webkit-appearance: none
+  // font-weight: bold
   &:hover
     cursor: pointer
     background: $color-button-hover
@@ -250,11 +256,9 @@ header
     z-index: -1
     background-repeat: no-repeat
     transform: rotate(-10deg)
-    z-index: 90
   // &.page
   //   &::after
   //     background-image: url('../img/post-your-vote-ballot-box.svg')
-
 
 section
   // max-width: 25em
@@ -285,7 +289,7 @@ footer
 
 // One-offs
 
-h1.logo, h1.logo-alt
+h1#logo, h1#logo-alt
   text-align: center
   margin: 0 0 -1em
   display: inline-block
@@ -316,14 +320,6 @@ h1.logo, h1.logo-alt
       &:before
         background-image: url('../img/post-yourpost-your-vote-ballot-box.svg')
 
-
-
-
-  // span
-  //   position: absolute
-  //   top: -100em
-  //   left: -100em
-
 #region
   text-align: center
   p
@@ -332,37 +328,7 @@ h1.logo, h1.logo-alt
 
 fieldset#zip
   input
-    font-size: 1.3em
-    max-width: 5em
-    letter-spacing: 0.05em
-    text-align: center
-    &[type="number"]
-      font-weight: bold
   #detect-location
-
-  // input
-  //   color: #333
-  //   font-size: 1.2rem
-  //   margin: 0 auto
-  //   padding: 1.5rem 2rem
-  //   border-radius: 0.2rem
-  //   background-color: rgb(255, 255, 255)
-  //   border: 1px solid $color-button
-  //   display: block
-  //   border-bottom: 0.3rem solid transparent
-  //   transition: all 0.3s
-  //   &:placeholder-shown + label
-  //     opacity: 0
-  //     visibility: hidden
-  //     -webkit-transform: translateY(-4rem)
-  //     transform: translateY(-4rem)
-  // label
-  //   font-size: 1.2rem
-  //   margin-left: 2rem
-  //   margin-top: 0.7rem
-  //   display: block
-  //   transition: all 0.3s
-  //   transform: translateY(0rem)
 
 ul#value-props
   color: $color-text-light
@@ -439,16 +405,6 @@ table.instructions
     display: none
   #share-text
     display: none
-  // a.share
-  //   color: white
-  //   position: relative
-  //
-  //
-  //   &:hover
-  //     background-color: $brand-color-blue-medium
-  //     color: white
-  //   &.active
-  //     background-color: $color-text-light
   #social-links
     // display: none
     list-style: none
@@ -459,11 +415,11 @@ table.instructions
     li
       margin: 1em 0
 
-.calendar-events
+.download-cal-events
   margin-top: 2em
 
 // Calendar
-.calendar
+#calendar
   background: $brand-color-purple
   color: white
   display: inline-block
@@ -488,24 +444,24 @@ table.instructions
     left: .8em
   &:after
     right: .8em
-  .cal-page
+  #cal-page
     position: absolute
     top: 50%
     margin-top: -50%
     width: 100%
     height: 100%
     color: white
-    .cal-month
+    #cal-month
       position: relative
       margin-top: .8em
       margin-bottom: -.1em
       letter-spacing: .05em
-    .cal-day
+    #cal-day
       position: relative
       font-size: 2em
       padding: .25em 0
       font-weight: bold
-    .cal-message
+    #cal-message
       position: relative
       font-size: 1em
       margin-top: 1.8em
@@ -523,9 +479,6 @@ table.instructions
     width: 80%
     height: 30em
     background: transparent
-  // &::after
-  //   content: ' '
-  //   position: relative
 
 // Responsive overrides
 
@@ -533,7 +486,6 @@ table.instructions
   section
     width: 70%
     max-width: 30em
-
   #social
     top: 2.5em
     #social-links
@@ -543,7 +495,7 @@ table.instructions
   header, section
     padding: 0 1.5em
   header
-    padding-top: 3em
+    padding-top: 4em
     padding-bottom: .75em
     h1.logo, h1.page
       display: block
@@ -564,7 +516,6 @@ table.instructions
       width: 100%
       height: 20em
       background: transparent
-
   header
     &:after
       top: 10%
