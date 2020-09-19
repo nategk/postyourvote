@@ -356,10 +356,23 @@ table.instructions
   top: 2.5em
   right: 1.5em
   text-align: right
-  a
+  a#share-icon
     cursor: pointer
+    background: $color-text-light
+    padding: .5em .5em
+    border-radius: 1000em
+    color: white
+    vertical-align: middle
+    &:hover
+      background: $brand-color-blue-medium
   ul
     list-style: none
+    background: white
+    padding: 1em
+    border-radius: .5em
+    text-align: left
+    a
+      display: block
   #social-links-open
     display: none
   #share-text
@@ -367,9 +380,8 @@ table.instructions
   // a.share
   //   color: white
   //   position: relative
-  //   background: $brand-color-purple
-  //   padding: .5em .75em
-  //   border-radius: 1000em
+  //
+  //
   //   &:hover
   //     background-color: $brand-color-blue-medium
   //     color: white
