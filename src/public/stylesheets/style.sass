@@ -50,6 +50,9 @@ body
   background-repeat: repeat-x
   background-position: right top
   text-align: left
+  word-break: break-word
+  hyphens: auto
+  min-width: 320px
 
 // Text, type
 
@@ -540,7 +543,7 @@ table.instructions
   header, section
     padding: 0 1.5em
   header
-    padding-top: 2em
+    padding-top: 3em
     padding-bottom: .75em
     h1.logo, h1.page
       display: block
@@ -561,3 +564,10 @@ table.instructions
       width: 100%
       height: 20em
       background: transparent
+
+  header
+    &:after
+      top: 10%
+      left: 20%
+      width: 60%
+      height: 10em
