@@ -38,7 +38,7 @@ if automaticallyMailed.includes('Ballot') || automaticallyMailed.includes('Appli
             use(xlink:href='/assets/feather-sprite.svg#external-link')
     else 
       // There is not a way to check VBM status online—contact country clerk
-      p All registered voters in #{name} will be mailed #{thingSentDescription}. You can can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
+      p All registered voters in #{name} will be mailed #{thingSentDescription}. You can contact your local election office to make sure you are registered to vote, your address is correct, and your #{thingSent} is on the way.
       p.center 
         a(href=localElectionOfficesUrl, target="_external").button
           span Contact your local election office
@@ -124,7 +124,7 @@ else
       //-   a In #{name} you can apply to request a ballot by email. 
 
       else if ballotRequestMethod.includes('PDF (mail)')
-        span Fill out this PDF to mail or e-mail to your local office. 
+        span Fill out this PDF to mail or email to your local election office, just follow the instructions on the application. 
         p.center
           a(href=pdfApplicationUrl, target="_external").button
             span Download PDF to send to local office
