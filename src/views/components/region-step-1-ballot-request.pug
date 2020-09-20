@@ -1,5 +1,4 @@
 .step.center
-  
   if automaticallyMailed && automaticallyMailed.includes('Ballot')
     #calendar
       #cal-page
@@ -11,36 +10,10 @@
         #cal-message ASAP
     h3 1. Request your ballot
 
-// You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
-if needExcuse && !covidAsExcuse
-  // Example ZIP: 70001
-  div#special-excuses
-    p
-      strong #{name} voters need 
-        span#special-excuses-expand a special excuse 
-        span to vote by mail.
-    p#special-excuses-list
-      != markdown(vbmExcuses)
-  // Expand inline
-  //- script(src="/assets/jquery.min.js")
-  //- script.
-  //-   var contentAreas = $('#special-excuses-list').hide();
-  //-   $('#special-excuses-expand').wrap('<a href="#">');
-  //-   $.fx.speeds._default = 100;
-  //-   //- var expandLink = $('.accordion-expand-all');
-  //-   $('#special-excuses a').click(function() {
-  //-     var panel = $('#special-excuses-list');
-  //-     var isOpen = panel.is(':visible');
-  //-     // open or close as necessary
-  //-     panel[isOpen? 'slideUp': 'slideDown']()
-  //-       // trigger the correct custom event
-  //-       .trigger(isOpen? 'hide': 'show');
-  //-     // stop the link from causing a pagescroll
-  //-     return false;
-  //-   });
 
-// No special excuse required
-if automaticallyMailed
+// AUTOMATICALLY SENT BALLOT OR APP
+
+if automaticallyMailed.includes('Ballot') || automaticallyMailed.includes('Application')
   // In all cases where applications or ballots are automatically mailed, no special excuses are needed
 
   // What are you automatically mailed?
@@ -87,43 +60,92 @@ if automaticallyMailed
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
 
+else
+  // The common (not automatically sent anything) path...
 
-
-else 
-  // Not automatically mailed 
-
-  // REQUESTING A BALLOT
-  // Request a mail in ballot (deadline okay, not automatically mailed)
-  if ballotRequestMethod.includes('Online')
-    // Example ZIP: 15001
-    p All registered voters in #{name} can request a ballot online.
-    p.center
-      a(href=onlineBallotRequestUrl, target="_external").button
-        span Request your ballot online
-        svg.feather.icon-right
-          use(xlink:href='/assets/feather-sprite.svg#external-link')
-  //- else if ballotRequestMethod.includes('Email')
-  //-   // Example ZIP: 30006
-  //-   a In #{name} you can apply to request a ballot by email. 
+  // EXCUSE REQUIRED?
+  
+  // You need a special excuse to vote by mail—we will recommend most people vote in person (but can still continue)
+  if needExcuse && !covidAsExcuse
+    // Example ZIP: 70001
+    div#special-excuses
+      p
+        strong #{name} voters need 
+          span#special-excuses-expand a special excuse 
+          span to vote by mail. 
+        span If any of these apply to you, voting by mail is a good option. 
+        strong Otherwise, make plans to vote in person.
+      p#special-excuses-list
+        != markdown(vbmExcuses)
+      // Expand inline
+      //- script(src="/assets/jquery.min.js")
+      //- script.
+      //-   var contentAreas = $('#special-excuses-list').hide();
+      //-   $('#special-excuses-expand').wrap('<a href="#">');
+      //-   $.fx.speeds._default = 100;
+      //-   //- var expandLink = $('.accordion-expand-all');
+      //-   $('#special-excuses a').click(function() {
+      //-     var panel = $('#special-excuses-list');
+      //-     var isOpen = panel.is(':visible');
+      //-     // open or close as necessary
+      //-     panel[isOpen? 'slideUp': 'slideDown']()
+      //-       // trigger the correct custom event
+      //-       .trigger(isOpen? 'hide': 'show');
+      //-     // stop the link from causing a pagescroll
+      //-     return false;
+      //-   });
+  
   else 
-    // Example ZIP: 71630
-    p All registered voters in #{name} can download a PDF to mail in a ballot request.
-    p.center 
-      a(href=pdfApplicationUrl, target="_external").button
-        svg.feather.icon-left
-          use(xlink:href='/assets/feather-sprite.svg#download')
-        span Download a PDF ballot application
-        
+  
+  p
+    if needExcuse && covidAsExcuse
+      span In #{name} registered voters can use Covid as a valid excuse to request a mail-in ballot. If you don’t see Covid listed explicitly, select the excuse that includes illness or unavoidably absent as your reason for voting by mail.
+    else 
+      span All registered #{name} voters can vote by mail without an excuse! 🇺🇸  
+
+    //METHOD 
+
+    // REQUESTING A BALLOT
+    // Request a mail in ballot (deadline okay, not automatically mailed)
+    if ballotRequestMethod.includes('Online')
+      // Example ZIP: 15001
+      span You can request your ballot online. 
+      p.center
+        a(href=onlineBallotRequestUrl, target="_external").button
+          span Request your ballot online
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+    //- else if ballotRequestMethod.includes('Email')
+    //-   // Example ZIP: 30006
+    //-   a In #{name} you can apply to request a ballot by email. 
+
+    else if ballotRequestMethod.includes('PDF (mail)')
+      span You can download a PDF to mail or e-mail into your local election office. 
+      p.center
+        a(href=pdfApplicationUrl, target="_external").button
+          span Download PDF application
+          svg.feather.icon-right
+            use(xlink:href='/assets/feather-sprite.svg#download')
+      
+    else 
+      // Example ZIP: 71630
+      span Contact your local election office by phone or email to request a ballot.
+      p.center 
+        a(href=localElectionOfficesUrl, target="_external").button
+          svg.feather.icon-left
+            use(xlink:href='/assets/feather-sprite.svg#external-link')
+          span #{name} local election office
+          
 // Add need to be registered
 if needToBeRegistered
   p.small.subtle.center
     small
-      span You need to be registered to vote to get a ballot. 
+      span You need to be registered to vote to get a ballot. You can  
       span
         a(href=checkVoterRegistrationStatusUrl,target="_external") 
           span Check your registration status
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
-      span  online, then come&#160;back.
+      span  and come&#160;back.
 else  
   p.small.subtle.center You are automatically registered to vote when you apply to vote by mail.
