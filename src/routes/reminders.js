@@ -23,7 +23,7 @@ function createReturnBallotIcal(req, region) {
     end: moment(region.recommendedBallotReturnDate).add(1, 'day'),
     allDay: true,
     summary: "Last day to send back my ballot!",
-    description: `${region.name} voters should have their ballots ${region.officialBallotDuePostmarkedOrReceived} by now.`,
+    description: `${region.name} voters should have their ballots in hand, filled out, and today is the last day we recommend sending it back, either by taking it to  Ballot Drop Box, or a blue USPS mailbox. After today, you should make plans to vote in person and, if you do, don't forget to take your ballot with you.`,
   });
   return cal;
 }
@@ -33,7 +33,7 @@ function createReturnBallotGoogle(req, region) {
     start: moment(region.recommendedBallotReturnDate).format('YYYYMMDD'),
     end: moment(region.recommendedBallotReturnDate).add(1, 'day').format('YYYYMMDD'),
     title: "Last day to send back my ballot!",
-    details: `${region.name} voters should have their ballots ${region.officialBallotDuePostmarkedOrReceived} by now.`,
+    details: `${region.name} voters should have their ballots in hand, filled out, and today is the last day we recommend sending it back, either by taking it to  Ballot Drop Box, or a blue USPS mailbox. After today, you should make plans to vote in person and, if you do, don't forget to take your ballot with you.`,
   });
   logger.debug("google calendar event url: %s", createEventUrl);
   return createEventUrl;
