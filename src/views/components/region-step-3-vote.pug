@@ -9,14 +9,14 @@
 
 p 
   strong Based on state deadlines and USPS recommendations, you should return your completed ballot no later than October 20, preferrably at a Ballot Drop Box or a USPS blue mailbox. 
-  span If you are running late, we recommend dropping it off at your local election office, which you can do ahead of voting day. 
-  p Mail-in ballots will be counted until the official deadline of #{moment(officialBallotDueDate).format('LL')}. If you are at all unsure about timing, bring your ballot with you on election day.
+  span If you are running late, we recommend dropping it off in person at your local election office, which you can do ahead of voting day. 
+  p Mail-in ballots will be counted until the official deadline of #{moment(officialBallotDueDate).format('LL')} but if you are at all unsure about timing, you should vote in person and bring your ballot with you on election day.
 
 .download-cal-events
   p.center
     svg.feather.icon-left
       use(xlink:href='/assets/feather-sprite.svg#calendar')
-    strong Reminder: Last day to mail my ballot
+    strong Reminder me to return my ballot!
   ul.inline.center
     li 
       a(href=returnBallotGoogleEventUrl, target="_blank")
