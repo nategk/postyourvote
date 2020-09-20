@@ -1,10 +1,15 @@
 extends layout
 
-block append header
-  - var flowStep = "requirements" // location · requirements · reminder · request
-  include components/flow-progress.pug
+block header
+  h1#logo 
+    a(href="/")
+      span Post Your Vote
 
 block content
+  #region
+    h2 #{name} Counties
+    p Counties in #{name} have unique election rules. Please select the county you live in to continue.
+
   ul
     each county in counties
       li
