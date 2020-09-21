@@ -30,14 +30,19 @@ async function getGeonames(q) {
       let response = await fetch(url);
       let responseJson = await response.json();
       let data = responseJson.geonames.map(result => {
-        return {
+        let data = {
           name: result.name,
           geonameId: result.geonameId,
           lng: result.lng,
           lat: result.lat,
           state: result.adminName1,
           stateCode: result.adminCode1
+        };
+        if (data.state == 'District of Columbia') {
+          data.state = 'Washington DC';
+          data.county = 'Washington DC';
         }
+        return data;
       });
       return {status: "success", data};
     }
@@ -59,18 +64,21 @@ async function queryLatLng(db, lat, lng) {
     }}
   });
   if (result) {
+    let data = {
+      name: result["place name"],
+      lng: result.longitude,
+      lat: result.latitude,
+      state: result["admin name1"],
+      stateCode: result["admin code1"],
+      county: result["admin name2"]
+    };
+    if (data.state == 'District of Columbia') {
+      data.state = 'Washington DC';
+      data.county = 'Washington DC';
+    }
     return {
       status: "success",
-      data: [
-        {
-          name: result["place name"],
-          lng: result.longitude,
-          lat: result.latitude,
-          state: result["admin name1"],
-          stateCode: result["admin code1"],
-          county: result["admin name2"]
-        }
-      ]
+      data: [ data ]
     };
   } else {
     return {
@@ -83,18 +91,21 @@ async function getPostalcode(db, postalcode) {
   postalcode = parseInt(postalcode);
     let result = await db.collection('postalcodes').findOne({"postal code": postalcode});
     if (result) {
+      let data = {
+        name: result["place name"],
+        lng: result.longitude,
+        lat: result.latitude,
+        state: result["admin name1"],
+        stateCode: result["admin code1"],
+        county: result["admin name2"]
+      };
+      if (data.state == 'District of Columbia') {
+        data.state = 'Washington DC';
+        data.county = 'Washington DC';
+      }
       return {
         status: "success",
-        data: [
-          {
-            name: result["place name"],
-            lng: result.longitude,
-            lat: result.latitude,
-            state: result["admin name1"],
-            stateCode: result["admin code1"],
-            county: result["admin name2"]
-          }
-        ]
+        data: [ data ]
       };
     } else {
       return {
