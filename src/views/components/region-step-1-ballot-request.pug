@@ -10,7 +10,6 @@
         #cal-message ASAP
     h3 1. Request your ballot
 
-
 // AUTOMATICALLY SENT BALLOT OR APP
 
 if automaticallyMailed.includes('Ballot') || automaticallyMailed.includes('Application')
@@ -142,14 +141,15 @@ else
             
 // Add need to be registered
 if needToBeRegistered
-  p.small.subtle.center
+  p.small.center
     small
-      span You need to be registered to vote to be eligible. You can  
-      span
+      span You need to be registered to vote to be eligible. 
+      br
+      span You can 
         a(href=checkVoterRegistrationStatusUrl,target="_external") 
-          span Check your registration status
+          span check your registration status
           svg.feather.icon-right
             use(xlink:href='/assets/feather-sprite.svg#external-link')
       span  and come&#160;back.
 else  
-  p.small.subtle.center You are automatically registered to vote when you apply to vote by mail.
+  p.small.center You are automatically registered to vote when you apply to vote by mail.
