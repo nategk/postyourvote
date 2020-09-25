@@ -1,4 +1,3 @@
-// import createError from 'http-errors'
 import http from 'http';
 import express from 'express'
 import cors from 'cors'
@@ -9,7 +8,6 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import sassMiddleware from 'node-sass-middleware'
-// import config from './config.json'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
 import { connectToDB, connectToAirtable} from './lib/db.js'
@@ -70,11 +68,6 @@ app.set('config', config);
 
 app.use('/', indexRouter);
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
-
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
@@ -96,10 +89,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', error);
 });
-// app.use(function (err, req, res, next) {
-//   console.error(err.stack)
-//   res.status(500).send('Something broke!')
-// });
 
 (async () => {
   try {
@@ -120,6 +109,5 @@ app.use(function (err, req, res, next) {
 
   logger.info('Started on port %s', app.server.address().port);
 })();
-
 
 export default app
