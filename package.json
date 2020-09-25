@@ -29,6 +29,7 @@
     "ical-generator": "^1.15.0",
     "jquery": "^3.5.1",
     "jquery-mask-plugin": "^1.14.16",
+    "js2xmlparser": "^4.0.1",
     "marked": "^1.1.1",
     "moment": "^2.28.0",
     "mongodb": "^3.6.2",

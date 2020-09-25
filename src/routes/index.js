@@ -6,6 +6,7 @@ import logger from '../lib/logger.js';
 
 // Sub section routers
 import adminRouter from './admin.js'
+import sitemapRouter from './sitemap.js'
 import chooseLocationRouter from './chooselocation.js'
 import regionInfoRouter from './region-info.js'
 import remindersRouter from './reminders.js'
@@ -17,6 +18,7 @@ router.use(regionInfoRouter);
 router.use(remindersRouter);
 router.use(chooseLocationRouter);
 router.use('/admin', adminRouter);
+router.use(sitemapRouter);
 
 router.get('/', async function(req, res) {
   let location = await getIpLocation(req);
@@ -74,6 +76,5 @@ router.get('/faq', function(req, res) {
     description: 'Everything you wanted to know about voting by mail but were afraid to ask.'
   });
 });
-
 
 export default router;
