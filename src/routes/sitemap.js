@@ -68,7 +68,7 @@ router.get("/sitemap.xml", async function(req, res, next) {
 async function getRecordsFromDataSource(req) {
 
     //TO DO: Iterate through each location and add here.
-    
+
     let today = moment();
     today = today.format("YYYY-MM-DD");
     const domain = "https://www.postyourvote.org";
@@ -115,7 +115,7 @@ async function getRecordsFromDataSource(req) {
           pageList.push({
             url: domain+"/"+county.url,
             description:
-                `Voter information for ${county.name}`,
+                `Everything ${county.name} voters need to vote by mail`,
             featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
             updated_at: today,
           });
@@ -125,7 +125,7 @@ async function getRecordsFromDataSource(req) {
         pageList.push({
           url: domain+"/"+state.url,
           description:
-              `Voter information for ${state.name}`,
+              `Everything ${state.name} voters need to vote by mail`,
           featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
           updated_at: today,
         });

@@ -10,22 +10,23 @@
 p  #{name} will begin to mail out ballots to registered voters on 
   strong #{moment(stateMailsOutBallots).format('LL')}
   span . You should receive yours soon after, depending on how early you requested it.
-p If you think you should have received it by now or have questions about the status, contact your 
-  a(href=localElectionOfficesUrl, target="_external") local elections office
+p If you think you should have received it by now or have questions about the status, visit your 
+  a(href=localElectionOfficesUrl, target="_external")
+    span elections office website
+    svg.feather.icon-right
+      use(xlink:href='/assets/feather-sprite.svg#external-link')
+  if secretaryOfStateEmail
+    span  or email 
+    a(href=`mailto:${secretaryOfStateEmail}`) #{secretaryOfStateEmail}
   | .
-
-  //- if checkVBMStatusUrl
-  //-   span You can 
-  //-     a(href=checkVBMStatusUrl, target="_external") track your ballot 
-  //-     span  here.
-  //- else 
-  //-   span You can 
-  //-     a(href=localElectionOfficesUrl, target="_external") get in touch with your local election office 
-  //-     span  to get your ballot status.
 
   p 
     strong When you get your ballot, fill it out and return it right away. 
     span Read the instructions and be careful not to tear the ballot or return envelope inside the carrier.
+  
+  //- if vbmVotingDirections
+  //-   div!= markdown(vbmVotingDirections)
+
   p
     strong Help others on their voting journey
     span  📸 Take a photo of your unopened envelope or unfilled ballot—avoiding any personally identifable info—and share with hashtags 

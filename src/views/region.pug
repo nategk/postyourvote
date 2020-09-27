@@ -15,6 +15,13 @@ block content
             use(xlink:href='/assets/feather-sprite.svg#map-pin')
           span Change location
   
+  // TODO - Add the voter journey summary
+  //- ol#voter-journey 
+  //-   li Request ballot 
+  //-   li Get your ballot - a few days after #{moment(stateMailsOutBallots).format('LL')}
+  //-   li Mail it back - by #{moment(recommendedBallotReturnDate).format('LL')}
+  //-   li Vote in person - 
+  
   // Step: Request ballot
   include components/region-step-1-ballot-request.pug
   hr

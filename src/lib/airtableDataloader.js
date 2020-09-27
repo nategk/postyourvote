@@ -32,7 +32,9 @@ const fieldNameMap = {
   pdfApplicationUrl: 'PDF Application URL',
   countyClerkInfoUrl: 'County Clerk Info URL',
   localElectionOfficesUrl: 'Local Election Offices URL',
-  stateMailsOutBallots: 'State Mails Out Ballots'
+  stateMailsOutBallots: 'State Mails Out Ballots',
+  secretaryOfStatePhone: 'Secretary of State Phone',
+  secretaryOfStateEmail: 'Secretary of State Email',
 }
 
 const defaultValues = {
