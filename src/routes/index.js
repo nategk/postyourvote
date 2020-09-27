@@ -14,11 +14,11 @@ import remindersRouter from './reminders.js'
 const { Router } = express;
 var router = Router();
 
-router.use(regionInfoRouter);
-router.use(remindersRouter);
 router.use(chooseLocationRouter);
 router.use('/admin', adminRouter);
 router.use(sitemapRouter);
+router.use(regionInfoRouter);
+router.use(remindersRouter);
 
 router.get('/', async function(req, res) {
   let location = await getIpLocation(req);
