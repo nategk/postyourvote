@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
     "@babel/runtime": "^7.11.2",
-    "@types/node": "^14.10.1",
+    "@types/node": "^14.11.2",
     "airtable": "^0.10.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -31,7 +31,7 @@
     "jquery-mask-plugin": "^1.14.16",
     "js2xmlparser": "^4.0.1",
     "marked": "^1.1.1",
-    "moment": "^2.28.0",
+    "moment": "^2.29.0",
     "mongodb": "^3.6.2",
     "morgan": "~1.9.1",
     "node-cache": "^5.1.2",
@@ -50,7 +50,7 @@
     "@babel/node": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
-    "eslint": "^7.9.0",
-    "migrate-mongo": "^8.1.1"
+    "eslint": "^7.10.0",
+    "migrate-mongo": "^8.1.2"
   }
 }
