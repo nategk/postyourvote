@@ -2,7 +2,7 @@ import express from 'express'
 import logger from '../lib/logger.js'
 import js2xmlparser from 'js2xmlparser'
 import moment from 'moment';
-import fs from 'fs';
+import airtableDataloader from '../lib/airtableDataloader.js'
 
 const { Router } = express;
 
@@ -14,10 +14,10 @@ var router = Router();
 /**
  * It generates a standard sitemal.xml for SEO purposes
  */
-router.get("/sitemap.xml", function(req, res, next) {
+router.get("/sitemap.xml", async function(req, res, next) {
     try {
         //our records to index
-        const records = getRecordsFromDataSource();
+        const records = await getRecordsFromDataSource(req);
         const collection = [];
         let today = moment();
         today = today.format("YYYY-MM-DD");
@@ -65,42 +65,74 @@ router.get("/sitemap.xml", function(req, res, next) {
 /**
  * @return a collection to index (typically we'll get these records from our database)
  */
-function getRecordsFromDataSource() {
+async function getRecordsFromDataSource(req) {
 
     //TO DO: Iterate through each location and add here.
     
     let today = moment();
     today = today.format("YYYY-MM-DD");
+    const domain = "https://www.postyourvote.org";
 
-    const record1 = {
-      url: "https://www.postyourvote.org/about/",
+    let pageList = [];
+    pageList.push({
+      url: domain+"/about/",
       description:
           "Fighting for your values is hard. The voting process should be simple.",
-      featured_image_url: "https://www.postyourvote.org/assets/img/post-your-vote-share-card.jpg",
+      featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
       updated_at: today,
-    };
-    const record2 = {
-      url: "https://www.postyourvote.org/about/",
+    });
+    pageList.push({
+      url: domain+"/about/",
       description:
           "Fighting for your values is hard. The voting process should be simple.",
-      featured_image_url: "https://www.postyourvote.org/assets/img/post-your-vote-share-card.jpg",
+      featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
       updated_at: today,
-    };
-    const record3 = {
-      url: "https://www.postyourvote.org/data/",
+    });
+    pageList.push({
+      url: domain+"/data/",
       description:
           "Most of our data is sourced from the VoteAmerica Election API. The rest we maintain in an open AirTable.",
-      featured_image_url: "https://www.postyourvote.org/assets/img/post-your-vote-share-card.jpg",
+      featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
       updated_at: today,
-    };
-    const record4 = {
-      url: "https://www.postyourvote.org/faq/",
+    });
+    pageList.push({
+      url: domain+"/faq/",
       description:
           "Everything you wanted to know about voting by mail but were afraid to ask.",
-      featured_image_url: "https://www.postyourvote.org/assets/img/post-your-vote-share-card.jpg",
+      featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
       updated_at: today,
-    };
-    return [record1, record2, record3, record4];
+    });
+
+    let cache = req.app.get('cache');
+    let allStates = await cache.get('allStates', async () => {
+      const airtable = req.app.get('airtable');
+      return await airtableDataloader(airtable);
+    });
+
+    for (const state of allStates) {
+      if (state.counties) {
+        for (const county of Object.values(state.counties)) {
+          pageList.push({
+            url: domain+"/"+county.url,
+            description:
+                `Voter information for ${county.name}`,
+            featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
+            updated_at: today,
+          });
+        }
+      }
+      else {
+        pageList.push({
+          url: domain+"/"+state.url,
+          description:
+              `Voter information for ${state.name}`,
+          featured_image_url: domain+"/assets/img/post-your-vote-share-card.jpg",
+          updated_at: today,
+        });
+      }
+    }
+
+    return pageList;
 }
 
 export default router;
