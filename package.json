@@ -30,7 +30,7 @@
     "jquery": "^3.5.1",
     "jquery-mask-plugin": "^1.14.16",
     "js2xmlparser": "^4.0.1",
-    "marked": "^1.1.1",
+    "marked": "^4.0.10",
     "moment": "^2.29.4",
     "mongodb": "^3.6.2",
     "morgan": "~1.9.1",
