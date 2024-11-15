@@ -1,6 +1,6 @@
 import express from 'express'
 import { getRegion } from '../lib/utils.js'
-import markdown from 'marked'
+import { marked } from 'marked'
 import moment from 'moment';
 import { createReturnBallotGoogle } from './reminders.js'
 import logger from '../lib/logger.js'

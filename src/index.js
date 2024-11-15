@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
-import sassMiddleware from 'node-sass-middleware'
+import sassMiddleware from 'sass-middleware'
 import cache from './lib/cache.js'
 import indexRouter from './routes/index.js'
 import { connectToDB, connectToAirtable} from './lib/db.js'
@@ -46,9 +46,9 @@ app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
-	prefix: '/assets',
-	outputStyle: 'compressed',
-  indentedSyntax: true, // true = .sass and false = .scss
+  prefix: '/assets',
+  outputStyle: 'compressed',
+  indentedSyntax: true,
   sourceMap: true
 }));
 // This is done before every request

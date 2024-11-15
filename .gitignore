@@ -1,6 +1,9 @@
 # Mac stuff
 .DS_Store
 
+#VSCode workspace
+*.code-workspace
+
 # Logs
 logs
 *.log
